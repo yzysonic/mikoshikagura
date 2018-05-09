@@ -10,6 +10,9 @@
     <Filter Include="GameObject">
       <UniqueIdentifier>{d43ddb14-8b67-4857-ac58-72b53e0af9d0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Script">
+      <UniqueIdentifier>{b7642f98-93c3-44b2-9973-ee22d40fa9dc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\System.h">
@@ -166,6 +169,12 @@
       <Filter>GameObject</Filter>
     </ClInclude>
     <ClInclude Include="Light.h" />
+    <ClInclude Include="CameraSmooth.h">
+      <Filter>Script</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraPlay.h">
+      <Filter>Script</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\Texture.cpp">
@@ -305,5 +314,11 @@
       <Filter>GameObject</Filter>
     </ClCompile>
     <ClCompile Include="Light.cpp" />
+    <ClCompile Include="CameraSmooth.cpp">
+      <Filter>Script</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraPlay.cpp">
+      <Filter>Script</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
