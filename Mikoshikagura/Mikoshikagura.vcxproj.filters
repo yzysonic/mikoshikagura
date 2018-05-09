@@ -162,6 +162,10 @@
     <ClInclude Include="MainCamera.h">
       <Filter>GameObject</Filter>
     </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\Texture.cpp">
@@ -297,5 +301,9 @@
     <ClCompile Include="MainCamera.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Light.cpp" />
   </ItemGroup>
 </Project>

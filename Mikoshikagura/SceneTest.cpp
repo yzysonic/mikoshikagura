@@ -1,11 +1,16 @@
 #include "SceneTest.h"
 #include "FadeScreen.h"
 #include "Core\Game.h"
+#include "Light.h"
 
 void SceneTest::Init(void)
 {
 
 	FadeScreen::FadeIn(Color::black, 0.0f);
+	Light::Init();
+
+	Texture::LoadTexture("body_sum", "body_sum.tga");
+	Texture::LoadTexture("misaki_head", "misaki_head.tga");
 
 	test = new Object;
 	test->AddComponent<RectPolygon>("magic_square");
@@ -13,6 +18,7 @@ void SceneTest::Init(void)
 	//test->transform.position.z = -100.0f;
 
 	camera = new MainCamera;
+	player = new Player;
 
 	Renderer::GetInstance()->setCamera(camera);
 }
