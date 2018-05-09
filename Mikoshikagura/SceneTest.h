@@ -1,6 +1,6 @@
 #pragma once
 #include "Core/Core.h"
-
+#include "MainCamera.h"
 
 class SceneTest : public Scene
 {
@@ -11,4 +11,5 @@ public:
 
 private:
 	Object *test;
+	MainCamera *camera;
 };

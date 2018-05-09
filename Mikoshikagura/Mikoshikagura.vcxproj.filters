@@ -159,6 +159,9 @@
     <ClInclude Include="FadeScreen.h">
       <Filter>GameObject</Filter>
     </ClInclude>
+    <ClInclude Include="MainCamera.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\Texture.cpp">
@@ -289,6 +292,9 @@
     </ClCompile>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="FadeScreen.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="MainCamera.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
   </ItemGroup>

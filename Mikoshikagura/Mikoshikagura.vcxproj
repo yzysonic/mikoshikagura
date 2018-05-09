@@ -191,6 +191,7 @@
     <ClInclude Include="Core\Vector.h" />
     <ClInclude Include="Core\Window.h" />
     <ClInclude Include="FadeScreen.h" />
+    <ClInclude Include="MainCamera.h" />
     <ClInclude Include="SceneGlobal.h" />
     <ClInclude Include="SceneTest.h" />
   </ItemGroup>
@@ -237,6 +238,7 @@
     <ClCompile Include="Core\Window.cpp" />
     <ClCompile Include="FadeScreen.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MainCamera.cpp" />
     <ClCompile Include="SceneGlobal.cpp" />
     <ClCompile Include="SceneTest.cpp" />
   </ItemGroup>
