@@ -290,12 +290,12 @@
     <ClCompile Include="SceneGlobal.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp" />
     <ClCompile Include="FadeScreen.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
     <ClCompile Include="MainCamera.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
 </Project>

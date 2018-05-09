@@ -12,6 +12,14 @@ void SceneTest::Init(void)
 	test->transform.scale = Vector3::one*100.f;
 	//test->transform.position.z = -100.0f;
 
+
+	testBG = new Object;
+	Texture::LoadTexture("testbg");
+	testBG->AddComponent<RectPolygon>("testbg");
+	testBG->transform.scale = Vector3::one*2000.f;
+
+
+
 	camera = new MainCamera;
 
 	Renderer::GetInstance()->setCamera(camera);
