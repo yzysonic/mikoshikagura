@@ -12,5 +12,6 @@ public:
 private:
 	Object *test;
 	Object *testBG;
+	Object *target;
 	MainCamera *camera;
 };

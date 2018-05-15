@@ -20,6 +20,13 @@ void SceneTest::Init(void)
 
 
 
+	target = new Object;
+	Texture::LoadTexture("target");
+	target->AddComponent<RectPolygon>("target");
+	target->transform.scale = Vector3::one*20.f;
+
+	target->transform.position = Vector3(500, 500, 0);
+
 	camera = new MainCamera;
 
 	Renderer::GetInstance()->setCamera(camera);
