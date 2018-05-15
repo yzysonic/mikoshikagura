@@ -144,6 +144,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CameraPlay.h" />
+    <ClInclude Include="CameraSmooth.h" />
     <ClInclude Include="Core\AllocateHirerachy.h" />
     <ClInclude Include="Core\Billboard.h" />
     <ClInclude Include="Core\BoneFrame.h" />
@@ -191,11 +193,15 @@
     <ClInclude Include="Core\Vector.h" />
     <ClInclude Include="Core\Window.h" />
     <ClInclude Include="FadeScreen.h" />
+    <ClInclude Include="Light.h" />
     <ClInclude Include="MainCamera.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="SceneGlobal.h" />
     <ClInclude Include="SceneTest.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CameraPlay.cpp" />
+    <ClCompile Include="CameraSmooth.cpp" />
     <ClCompile Include="Core\AllocateHirerachy.cpp" />
     <ClCompile Include="Core\Billboard.cpp" />
     <ClCompile Include="Core\BoneFrame.cpp" />
@@ -237,8 +243,10 @@
     <ClCompile Include="Core\Vector.cpp" />
     <ClCompile Include="Core\Window.cpp" />
     <ClCompile Include="FadeScreen.cpp" />
+    <ClCompile Include="Light.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainCamera.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="SceneGlobal.cpp" />
     <ClCompile Include="SceneTest.cpp" />
   </ItemGroup>

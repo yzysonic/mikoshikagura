@@ -9,6 +9,8 @@ void SceneGlobal::Init(void)
 	FadeScreen::Create();
 	FadeScreen::FadeOut(Color::black, 0.0f);
 
+	
+
 	Texture::LoadTexture("magic_square");
 }
 
