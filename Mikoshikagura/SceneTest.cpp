@@ -25,25 +25,34 @@ void SceneTest::Init(void)
 
 
 
-	target = new Object;
 	Texture::LoadTexture("target");
-	target->AddComponent<RectPolygon>("target");
-	target->transform.scale = Vector3::one*20.f;
 
-	target->transform.position = Vector3(100, 20, 0);
+	target1 = new Object;
+	target1->AddComponent<RectPolygon>("target");
+	target1->transform.scale = Vector3::one*20.f;
+	target1->transform.position = Vector3(100, 20, 0);
+	target2 = new Object;
+	target2->AddComponent<RectPolygon>("target");
+	target2->transform.scale = Vector3::one*20.f;
+	target2->transform.position = Vector3(150, 25, 0);
 
 	camera = new MainCamera;
 	player = new Player;
 
 	camera->SetTarget(&player->transform);
+
+	camera->AddSnapper(&target1->transform);
+	camera->AddSnapper(&target2->transform);
+	//camera->RemoveSnapper(&target1->transform);
+
 	Renderer::GetInstance()->setCamera(camera);
 }
 
 void SceneTest::Update(void)
 {
 	//test->transform.position.x += 0.3f;
-	test->transform.rotate(0.05f,0,0);
-
+	//test->transform.rotate(0.05f,0,0);
+	camera->SearchSnapper();
 }
 
 void SceneTest::Uninit(void)

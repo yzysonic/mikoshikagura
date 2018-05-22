@@ -13,7 +13,8 @@ public:
 private:
 	Object *test;
 	Object *testBG;
-	Object *target;
+	Object *target1;
+	Object *target2;
 	MainCamera *camera;
 	Player *player;
 };
