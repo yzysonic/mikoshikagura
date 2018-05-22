@@ -51,8 +51,8 @@ void SceneTest::Init(void)
 void SceneTest::Update(void)
 {
 	//test->transform.position.x += 0.3f;
-	//test->transform.rotate(0.05f,0,0);
-	camera->SearchSnapper();
+	test->transform.rotate(0.05f,0,0);
+
 }
 
 void SceneTest::Uninit(void)
