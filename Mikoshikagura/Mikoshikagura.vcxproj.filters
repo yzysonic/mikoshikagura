@@ -175,7 +175,7 @@
     <ClInclude Include="CameraPlay.h">
       <Filter>Script</Filter>
     </ClInclude>
-    <ClInclude Include="XMLPerser.h">
+    <ClInclude Include="CameraSnap.h">
       <Filter>Script</Filter>
     </ClInclude>
   </ItemGroup>
@@ -323,7 +323,7 @@
     <ClCompile Include="CameraPlay.cpp">
       <Filter>Script</Filter>
     </ClCompile>
-    <ClCompile Include="XMLPerser.cpp">
+    <ClCompile Include="CameraSnap.cpp">
       <Filter>Script</Filter>
     </ClCompile>
   </ItemGroup>

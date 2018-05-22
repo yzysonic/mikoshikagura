@@ -1,6 +1,7 @@
 #include "MainCamera.h"
 #include "CameraPlay.h"
 #include "CameraSmooth.h"
+#include "CameraSnap.h"
 
 MainCamera::MainCamera(void)
 {
@@ -9,49 +10,32 @@ MainCamera::MainCamera(void)
 	this->fov = Deg2Rad(60.0f);
 	this->AddComponent<CameraPlay>();
 	this->AddComponent<CameraSmooth>();
+	this->AddComponent<CameraSnap>();
 }
 
 void MainCamera::SetTarget(Transform * target)
 {
 	auto smooth = this->GetComponent<CameraSmooth>();
-	this->target = target;
 	smooth->target = target;
 	smooth->SetActive(true);
+
+	auto snap = this->GetComponent<CameraSnap>();
+	snap->target = target;
+	snap->SetActive(true);
 }
 
 void MainCamera::AddSnapper(Transform* target)
 {
-	this->snappers.push_back(target);
+	auto snap = this->GetComponent<CameraSnap>();
+	snap->snappers.push_back(target);
 }
 
 void MainCamera::RemoveSnapper(Transform* target)
 {
-	auto snapper = std::find(this->snappers.begin(), this->snappers.end(), target);
-	if (snapper != this->snappers.end())
+	auto snap = this->GetComponent<CameraSnap>();
+	auto snapper = std::find(snap->snappers.begin(), snap->snappers.end(), target);
+	if (snapper != snap->snappers.end())
 	{
-		this->snappers.erase(snapper);
-	}
-}
-
-void MainCamera::SearchSnapper(void)
-{
-	float base_length = 50.0f;
-	this->focus = new Transform();
-	auto smooth = this->GetComponent<CameraSmooth>();
-	for (auto snapper = this->snappers.begin(); snapper != this->snappers.end(); ++snapper)
-	{
-		float distance = (this->target->position.toVector2() - (*snapper)->position.toVector2()).length();
-	
-		if (distance < base_length)
-		{
-			base_length = distance;
-			this->focus->position = (this->target->position + (*snapper)->position) * 0.5f;
-			smooth->target = this->focus;
-		}
-	}
-
-	if(base_length == 50.0f)
-	{
-		smooth->target = this->target;
+		snap->snappers.erase(snapper);
 	}
 }

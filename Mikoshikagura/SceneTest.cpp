@@ -1,6 +1,6 @@
 #include "SceneTest.h"
 #include "FadeScreen.h"
-#include "Core\Game.h"
+#include "Core/Game.h"
 #include "Light.h"
 
 void SceneTest::Init(void)
@@ -30,7 +30,7 @@ void SceneTest::Init(void)
 	target1 = new Object;
 	target1->AddComponent<RectPolygon>("target");
 	target1->transform.scale = Vector3::one*20.f;
-	target1->transform.position = Vector3(100, 20, 0);
+	target1->transform.position = Vector3(100, 20, 100);
 	target2 = new Object;
 	target2->AddComponent<RectPolygon>("target");
 	target2->transform.scale = Vector3::one*20.f;
@@ -46,21 +46,12 @@ void SceneTest::Init(void)
 	//camera->RemoveSnapper(&target1->transform);
 
 	Renderer::GetInstance()->setCamera(camera);
-
-
-
-
-	//0522nagai mapdataì¬
-
-
-
 }
 
 void SceneTest::Update(void)
 {
 	//test->transform.position.x += 0.3f;
 	//test->transform.rotate(0.05f,0,0);
-
 }
 
 void SceneTest::Uninit(void)
