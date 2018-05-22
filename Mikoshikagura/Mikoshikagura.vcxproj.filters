@@ -175,6 +175,9 @@
     <ClInclude Include="CameraPlay.h">
       <Filter>Script</Filter>
     </ClInclude>
+    <ClInclude Include="XMLPerser.h">
+      <Filter>Script</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\Texture.cpp">
@@ -318,6 +321,9 @@
       <Filter>Script</Filter>
     </ClCompile>
     <ClCompile Include="CameraPlay.cpp">
+      <Filter>Script</Filter>
+    </ClCompile>
+    <ClCompile Include="XMLPerser.cpp">
       <Filter>Script</Filter>
     </ClCompile>
   </ItemGroup>

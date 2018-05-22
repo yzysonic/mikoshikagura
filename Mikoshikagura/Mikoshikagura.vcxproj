@@ -198,6 +198,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="SceneGlobal.h" />
     <ClInclude Include="SceneTest.h" />
+    <ClInclude Include="XMLPerser.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CameraPlay.cpp" />
@@ -249,6 +250,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="SceneGlobal.cpp" />
     <ClCompile Include="SceneTest.cpp" />
+    <ClCompile Include="XMLPerser.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
