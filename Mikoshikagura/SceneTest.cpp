@@ -46,12 +46,21 @@ void SceneTest::Init(void)
 	//camera->RemoveSnapper(&target1->transform);
 
 	Renderer::GetInstance()->setCamera(camera);
+
+
+
+
+	//0522nagai mapdataì¬
+
+
+
 }
 
 void SceneTest::Update(void)
 {
 	//test->transform.position.x += 0.3f;
 	//test->transform.rotate(0.05f,0,0);
+	camera->SearchSnapper();
 }
 
 void SceneTest::Uninit(void)
