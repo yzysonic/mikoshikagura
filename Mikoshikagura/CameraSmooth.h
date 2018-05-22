@@ -1,12 +1,12 @@
 #pragma once
-#include "Core\Core.h"
+#include "Core/Core.h"
 
 #define SmoothOffsetY (10.0f)
 
 class CameraSmooth : public Script
 {
 public:
-	Transform *target = nullptr;
+	Transform* target = nullptr;
 	float speed;
 	float offset_y = SmoothOffsetY;
 

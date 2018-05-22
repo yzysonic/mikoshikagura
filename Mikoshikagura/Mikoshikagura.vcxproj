@@ -146,6 +146,7 @@
   <ItemGroup>
     <ClInclude Include="CameraPlay.h" />
     <ClInclude Include="CameraSmooth.h" />
+    <ClInclude Include="CameraSnap.h" />
     <ClInclude Include="Core\AllocateHirerachy.h" />
     <ClInclude Include="Core\Billboard.h" />
     <ClInclude Include="Core\BoneFrame.h" />
@@ -202,6 +203,7 @@
   <ItemGroup>
     <ClCompile Include="CameraPlay.cpp" />
     <ClCompile Include="CameraSmooth.cpp" />
+    <ClCompile Include="CameraSnap.cpp" />
     <ClCompile Include="Core\AllocateHirerachy.cpp" />
     <ClCompile Include="Core\Billboard.cpp" />
     <ClCompile Include="Core\BoneFrame.cpp" />
