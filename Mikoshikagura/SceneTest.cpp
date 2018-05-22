@@ -42,7 +42,7 @@ void SceneTest::Init(void)
 void SceneTest::Update(void)
 {
 	//test->transform.position.x += 0.3f;
-	test->transform.rotate(0.05f,0,0);
+	//test->transform.rotate(0.05f,0,0);
 
 }
 
