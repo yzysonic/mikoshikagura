@@ -2,7 +2,7 @@
 #include "Core/Core.h"
 #include "MainCamera.h"
 #include "Player.h"
-
+#include "XMLPerser.h"
 class SceneTest : public Scene
 {
 public:
@@ -17,4 +17,8 @@ private:
 	Object *target2;
 	MainCamera *camera;
 	Player *player;
+
+	Mapdata *mapdata;
+
+	std::vector<Object> mapobj;
 };

@@ -50,17 +50,17 @@ void SceneTest::Init(void)
 
 
 
+
 	//0522nagai mapdata作成
 
-
-
+	mapdata = new Mapdata("Data/Map/プロトステージ2.tmx");
+	mapdata->CreateMapObject();
 }
 
 void SceneTest::Update(void)
 {
 	//test->transform.position.x += 0.3f;
 	//test->transform.rotate(0.05f,0,0);
-	camera->SearchSnapper();
 }
 
 void SceneTest::Uninit(void)

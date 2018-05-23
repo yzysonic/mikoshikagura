@@ -49,6 +49,11 @@ Mapdata::Mapdata(std::string str)
 	}
 
 
+
+	layermax = layer.size();
+	height = layer[0].maptip.size();
+	width = layer[0].maptip[0].size();
+
 }
 
 void Mapdata::Load(std::string str)
@@ -86,6 +91,26 @@ void Mapdata::MapView()
 		}
 		i++;
 
+	}
+
+
+}
+
+void Mapdata::CreateMapObject(){
+
+	for (int i = 0; i < layermax; i++) {
+		for (int j = 0; j < height; j++) {
+			for (int k = 0; k < width; k++) {
+				if (layer[i].maptip[j][k] >0) {
+
+					Object  *objtemp = new Object;
+					objtemp->AddComponent<RectPolygon>("magic_square")->SetSize(Vector2(10, 10));
+					objtemp->transform.position = Vector3(k*10 - 300, -j*10+500, i*10);
+					objtemp->transform.scale = Vector3::one*1.f;
+					mapobj.push_back(objtemp);
+				}
+			}
+		}
 	}
 }
 

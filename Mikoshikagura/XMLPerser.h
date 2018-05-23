@@ -19,7 +19,7 @@ public:
 };
 
 
-class Mapdata :public Script {
+class Mapdata :public Object {
 
 
 	int layermax;
@@ -28,19 +28,20 @@ class Mapdata :public Script {
 
 	std::vector<maplayer> layer;
 
+	std::vector<Object*> mapobj;
+
 public:
 	Mapdata();								//コンストラクタ
 	Mapdata(std::string str);
 	~Mapdata() {};								//デストラクタ
 
-
 	void Load(std::string);					//マップロード
 	void SetMaptip(int x, int y, int value) {};//マップ変更
-
 
 	bool IsCollison(int x, int y){};//マップ変更			//当たり判定
 
 	void MapView();
+	void CreateMapObject();
 private:
 
 	void Mapdata::Perse(std::ifstream ifs, std::string str);

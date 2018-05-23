@@ -175,8 +175,9 @@
     <ClInclude Include="CameraPlay.h">
       <Filter>Script</Filter>
     </ClInclude>
-    <ClInclude Include="CameraSnap.h">
-      <Filter>Script</Filter>
+    <ClInclude Include="CameraSnap.h" />
+    <ClInclude Include="XMLPerser.h">
+      <Filter>GameObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -323,8 +324,9 @@
     <ClCompile Include="CameraPlay.cpp">
       <Filter>Script</Filter>
     </ClCompile>
-    <ClCompile Include="CameraSnap.cpp">
-      <Filter>Script</Filter>
+    <ClCompile Include="CameraSnap.cpp" />
+    <ClCompile Include="XMLPerser.cpp">
+      <Filter>GameObject</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
