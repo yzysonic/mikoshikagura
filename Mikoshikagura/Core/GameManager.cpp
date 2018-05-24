@@ -1,6 +1,10 @@
 #include "GameManager.h"
 #include "ObjectManager.h"
 
+#ifdef IMGUI
+#include "../Imgui/ImGuiImpl.h"
+#endif
+
 void GameManager::Create(void)
 {
 	Singleton<GameManager>::Create();
@@ -104,6 +108,10 @@ void GameManager::SetScene(Scene * scene, int no)
 
 	if (scene != nullptr)
 		m_pInstance->scene[no]->Init();
+
+#ifdef IMGUI
+	ImGui::GetIO().DisplaySize.x = 0.0f;
+#endif
 }
 
 void GameManager::ClearSceneStack(void)

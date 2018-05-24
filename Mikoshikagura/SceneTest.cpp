@@ -64,4 +64,5 @@ void SceneTest::Update(void)
 
 void SceneTest::Uninit(void)
 {
+	Renderer::GetInstance()->setCamera(nullptr);
 }

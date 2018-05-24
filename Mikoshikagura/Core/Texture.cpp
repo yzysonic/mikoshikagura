@@ -100,9 +100,9 @@ bool Texture::LoadTexture(std::string name, std::string file_name, int divX, int
 
 void Texture::ReleaseTexture(std::string name)
 {
-	auto tex = Get(name);
+	auto& tex = texture_list[name];
 	
-	if (tex == nullptr)
+	if (!tex)
 		return;
 
 	tex->Release();
@@ -143,9 +143,10 @@ void Texture::MakeTexture(std::string name, int width, int height)
 void Texture::Release(void)
 {
 	SafeRelease(this->pDXTex);
+	texture_list[this->name].reset();
 }
 
 Texture::~Texture(void)
 {
-	Release();
+	SafeRelease(this->pDXTex);
 }

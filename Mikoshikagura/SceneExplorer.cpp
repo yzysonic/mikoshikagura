@@ -6,7 +6,7 @@
 void SceneExplorer::Init(void)
 {
 	columns = 3;
-	isAutoSnapshot = true;
+	isAutoSnapshot = false;
 	sceneList.reserve(30);
 
 	// ImGuiウインドウの設定
@@ -50,8 +50,8 @@ void SceneExplorer::Update(void)
 			auto fileName = GameManager::GetInstance()->Var<std::string>("SnapshotName") = "Snapshot_" + sceneList[i]->name;
 			if(isAutoSnapshot)
 				DebugManager::TakeSnapshot(fileName.c_str(), 1.0f);
-			sceneList[i]->SetScene();
 			ImGui::End();
+			sceneList[i]->SetScene();
 			return;
 		}
 		
@@ -71,4 +71,5 @@ void SceneExplorer::Uninit(void)
 	{
 		scene->texture->Release();
 	}
+	sceneList.clear();
 }

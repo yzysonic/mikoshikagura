@@ -264,7 +264,7 @@ IMGUI_API void ImGuiImpl::_Draw(void)
 {
 	ImGui::Render();
 	ImDrawData* draw_data = ImGui::GetDrawData();
-
+	
 	// Avoid rendering when minimized
 	ImGuiIO& io = ImGui::GetIO();
 	if (io.DisplaySize.x <= 0.0f || io.DisplaySize.y <= 0.0f)
