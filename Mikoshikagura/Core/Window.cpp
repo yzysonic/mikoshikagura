@@ -3,6 +3,10 @@
 #include "Direct3D.h"
 #include "Game.h"
 
+#ifdef _DEBUG
+#include "../Imgui/ImGuiImpl.h"
+#endif
+
 HINSTANCE Window::s_hInstance = NULL;
 HWND Window::s_hWnd = NULL;
 MSG  Window::s_Msg;
@@ -90,6 +94,11 @@ void Window::Uninit()
 //=============================================================================
 LRESULT CALLBACK Window::WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+#ifdef IMGUI
+	if (ImGuiImpl::WndProcHandler(hWnd, message, wParam, lParam))
+		return true;
+#endif
+
 	switch (message)
 	{
 	case WM_CLOSE:

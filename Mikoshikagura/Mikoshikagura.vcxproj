@@ -89,7 +89,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;IMGUI;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -193,6 +193,11 @@
     <ClInclude Include="Core\Vector.h" />
     <ClInclude Include="Core\Window.h" />
     <ClInclude Include="FadeScreen.h" />
+    <ClInclude Include="SceneImGuiTest.h" />
+    <ClInclude Include="Imgui\imconfig.h" />
+    <ClInclude Include="Imgui\imgui.h" />
+    <ClInclude Include="Imgui\ImGuiImpl.h" />
+    <ClInclude Include="Imgui\imgui_internal.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="MainCamera.h" />
     <ClInclude Include="Player.h" />
@@ -243,11 +248,16 @@
     <ClCompile Include="Core\Vector.cpp" />
     <ClCompile Include="Core\Window.cpp" />
     <ClCompile Include="FadeScreen.cpp" />
+    <ClCompile Include="Imgui\imgui.cpp" />
+    <ClCompile Include="Imgui\ImGuiImpl.cpp" />
+    <ClCompile Include="Imgui\imgui_demo.cpp" />
+    <ClCompile Include="Imgui\imgui_draw.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainCamera.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="SceneGlobal.cpp" />
+    <ClCompile Include="SceneImGuiTest.cpp" />
     <ClCompile Include="SceneTest.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
