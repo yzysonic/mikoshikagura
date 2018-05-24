@@ -210,4 +210,6 @@ FakesAssemblies/
 GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
-/Mikoshikagura/Mikoshikagura.VC.VC.opendb
+
+*.opendb
+*.db
