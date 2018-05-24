@@ -30,7 +30,8 @@ private:
 	// メンバー変数
 	int columns;
 	bool isAutoSnapshot;
-	std::vector<SceneDataBase*> sceneList;
+	
+	std::vector<smart_ptr<SceneDataBase>> sceneList;
 	ImGuiWindowFlags windowFlags;
 
 	// メンバー関数
@@ -44,7 +45,7 @@ inline void SceneExplorer::AddScene(void)
 {
 	static_assert(std::is_base_of<Scene, T>::value, "Not a subclass of Scene.");
 
-	sceneList.push_back(new SceneData<T>);
+	sceneList.push_back(std::make_unique<SceneData<T>>());
 }
 
 template<class T>
