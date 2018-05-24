@@ -2,13 +2,7 @@
 
 Scene::~Scene(void)
 {
-	for (auto obj : this->obj_list)
-	{
-		obj->scene = nullptr;
-		obj->Destroy();
-	}
-
-	this->obj_list.clear();
+	DestroyAllObject();
 }
 
 void Scene::RemoveObject(Object * object)
@@ -16,6 +10,17 @@ void Scene::RemoveObject(Object * object)
 	this->obj_list[object->sceneIndex] = this->obj_list.back();
 	this->obj_list[object->sceneIndex]->sceneIndex = object->sceneIndex;
 	this->obj_list.pop_back();
+}
+
+void Scene::DestroyAllObject(void)
+{
+	for (auto obj : this->obj_list)
+	{
+		obj->scene = nullptr;
+		obj->Destroy();
+	}
+
+	this->obj_list.clear();
 }
 
 

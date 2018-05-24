@@ -71,6 +71,18 @@ void GameManager::PopScene(void)
 	m_pInstance->scene_stack_num--;
 }
 
+void GameManager::ReloadScene(void)
+{
+	if (m_pInstance->scene[1] == nullptr)
+		return;
+	
+	m_pInstance->scene[1]->Uninit();
+	m_pInstance->scene[1]->DestroyAllObject();
+	ObjectManager::KillObject();
+	m_pInstance->scene[1]->Init();
+
+}
+
 Scene * GameManager::GetScene(void)
 {
 	return m_pInstance->scene[m_pInstance->scene_stack_num + 1].get();

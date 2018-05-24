@@ -25,6 +25,7 @@ public:
 	static void SetScene(Scene* scene);
 	static void PushScene(Scene* scene);
 	static void PopScene(void);
+	static void ReloadScene(void);
 	static Scene* GetScene(void);
 	static Scene* GetGlobalScene(void);
 

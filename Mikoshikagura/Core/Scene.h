@@ -26,6 +26,7 @@ public:
 	template<class T>
 	T* AddObject(T* object);
 	void RemoveObject(Object* object);
+	void DestroyAllObject(void);
 	void UpdateObjects(void);
 	void PauseObjects(void);
 	void ResumeObjects(void);
