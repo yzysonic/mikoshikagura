@@ -52,7 +52,6 @@ void SceneTest::Init(void)
 
 
 	//0522nagai mapdata作成
-
 	mapdata = new Mapdata("Data/Map/プロトステージ2.tmx");
 	mapdata->CreateMapObject();
 }
