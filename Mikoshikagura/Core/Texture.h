@@ -13,7 +13,8 @@ public:
 	static void Init(void);
 	static void Uninit(void);
 	static Texture* Get(std::string name);
-	static void LoadTexture(std::string name, std::string file_name = "", int divX = 1, int divY = 1);
+	static bool LoadTexture(std::string name, std::string file_name = "", int divX = 1, int divY = 1);
+	static void ReleaseTexture(std::string name);
 	static void MakeTexture(std::string name, int width, int height);
 
 	static Texture* const none;
@@ -26,6 +27,7 @@ public:
 	int divideX;				// テクスチャ内X分割数
 	int divideY;				// テクスチャ内Y分割数
 
+	void Release(void);
 	~Texture(void);
 
 private:

@@ -36,11 +36,11 @@ Texture * Texture::Get(std::string name)
 	}
 }
 
-void Texture::LoadTexture(std::string name, std::string file_name, int divX, int divY)
+bool Texture::LoadTexture(std::string name, std::string file_name, int divX, int divY)
 {
 
 	if (texture_list[name])
-		return;
+		return true;
 
 	char file_dir[256];
 
@@ -73,11 +73,16 @@ void Texture::LoadTexture(std::string name, std::string file_name, int divX, int
 	{
 		TCHAR s[128];
 		wsprintf(s, _T("テクスチャー「%s」の読込に失敗しました。"), file_name.c_str());
-		MessageBox(Window::GetHWnd(), s, _T("エラー"), MB_OK | MB_ICONWARNING);
 
+#ifndef _DEBUG
+		MessageBox(Window::GetHWnd(), s, _T("エラー"), MB_OK | MB_ICONWARNING);
+#else
+		OutputDebugString(s);
+#endif
+		texture->pDXTex = nullptr;
 		delete texture;
 
-		return;
+		return false;
 
 	}
 
@@ -90,6 +95,17 @@ void Texture::LoadTexture(std::string name, std::string file_name, int divX, int
 
 	texture_list[name].reset(texture);
 
+	return true;
+}
+
+void Texture::ReleaseTexture(std::string name)
+{
+	auto tex = Get(name);
+	
+	if (tex == nullptr)
+		return;
+
+	tex->Release();
 }
 
 void Texture::MakeTexture(std::string name, int width, int height)
@@ -124,7 +140,12 @@ void Texture::MakeTexture(std::string name, int width, int height)
 
 }
 
-Texture::~Texture(void)
+void Texture::Release(void)
 {
 	SafeRelease(this->pDXTex);
+}
+
+Texture::~Texture(void)
+{
+	Release();
 }
