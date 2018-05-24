@@ -7,6 +7,17 @@
 
 class ImGuiImpl : public Singleton<ImGuiImpl>, public ILostAndReset
 {
+public:
+	static void Create(void * hwnd, IDirect3DDevice9 * device);
+	static void Destroy(void);
+	static void NewFrame(void);
+	static void EndFrame(void);
+	static void Draw(void);
+	static LRESULT WndProcHandler(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
+
+	HRESULT OnLostDevice(void) override;
+	HRESULT OnResetDevice(void) override;
+
 private:
 	struct CUSTOMVERTEX
 	{
@@ -29,19 +40,6 @@ private:
 	int						m_vertexBufferSize;
 	int						m_indexBufferSize;
 
-public:
-	static void Create(void * hwnd, IDirect3DDevice9 * device);
-	static void Destroy(void);
-	static void NewFrame(void);
-	static void EndFrame(void);
-	static void Draw(void);
-	static LRESULT WndProcHandler(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
-
-	HRESULT OnLostDevice(void) override;
-	HRESULT OnResetDevice(void) override;
-
-
-private:
 	friend Singleton<ImGuiImpl>;
 	ImGuiImpl(void);
 

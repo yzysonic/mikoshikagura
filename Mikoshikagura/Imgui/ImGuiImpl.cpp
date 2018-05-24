@@ -164,7 +164,7 @@ IMGUI_API bool ImGuiImpl::Init(void * hwnd, IDirect3DDevice9 * device)
 	io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;   // We can honor GetMouseCursor() values (optional)
 	io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;    // We can honor io.WantSetMousePos requests (optional, rarely used)
 
-															// Keyboard mapping. ImGui will use those indices to peek into the io.KeysDown[] array that we will update during the application lifetime.
+	// Keyboard mapping. ImGui will use those indices to peek into the io.KeysDown[] array that we will update during the application lifetime.
 	io.KeyMap[ImGuiKey_Tab] = VK_TAB;
 	io.KeyMap[ImGuiKey_LeftArrow] = VK_LEFT;
 	io.KeyMap[ImGuiKey_RightArrow] = VK_RIGHT;
@@ -188,8 +188,12 @@ IMGUI_API bool ImGuiImpl::Init(void * hwnd, IDirect3DDevice9 * device)
 	io.KeyMap[ImGuiKey_Z] = 'Z';
 
 	io.ImeWindowHandle = m_hWnd;
-	
-	ImGui::StyleColorsDark();
+
+	//ImGui::StyleColorsDark();
+	ImGui::StyleColorsLight();
+
+	auto& style = ImGui::GetStyle();
+	style.WindowRounding = 0.0f;
 
 	return true;
 }
@@ -211,8 +215,9 @@ IMGUI_API void ImGuiImpl::_NewFrame(void)
 
 	// Setup display size (every frame to accommodate for window resizing)
 	RECT rect;
-	GetClientRect(m_hWnd, &rect);
-	io.DisplaySize = ImVec2((float)(rect.right - rect.left), (float)(rect.bottom - rect.top));
+	//GetClientRect(m_hWnd, &rect);
+	GetWindowRect(m_hWnd, &rect);
+	io.DisplaySize = ImVec2((float)SystemParameters::ResolutionX, (float)SystemParameters::ResolutionY);
 
 	// Setup time step
 	INT64 current_time;

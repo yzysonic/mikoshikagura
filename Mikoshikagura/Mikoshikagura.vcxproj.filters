@@ -16,6 +16,9 @@
     <Filter Include="Imgui">
       <UniqueIdentifier>{9d2843cd-bd43-487a-8e3c-0d2b643fb108}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject\Debug">
+      <UniqueIdentifier>{aebdffef-a90b-4c47-a1c0-5cf24774cd89}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\System.h">
@@ -193,9 +196,23 @@
     <ClInclude Include="SceneImGuiTest.h">
       <Filter>Scene</Filter>
     </ClInclude>
-    <ClInclude Include="CameraSnap.h" />
     <ClInclude Include="XMLPerser.h">
       <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneExplorer.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraSnap.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugMenu.h">
+      <Filter>GameObject\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugManager.h">
+      <Filter>GameObject\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Snapshot.h">
+      <Filter>GameObject\Debug</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -357,9 +374,23 @@
     <ClCompile Include="SceneImGuiTest.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
-    <ClCompile Include="CameraSnap.cpp" />
     <ClCompile Include="XMLPerser.cpp">
       <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraSnap.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneExplorer.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugMenu.cpp">
+      <Filter>GameObject\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugManager.cpp">
+      <Filter>GameObject\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Snapshot.cpp">
+      <Filter>GameObject\Debug</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

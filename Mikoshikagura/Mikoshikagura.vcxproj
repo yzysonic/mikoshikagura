@@ -193,7 +193,10 @@
     <ClInclude Include="Core\Transform.h" />
     <ClInclude Include="Core\Vector.h" />
     <ClInclude Include="Core\Window.h" />
+    <ClInclude Include="DebugManager.h" />
+    <ClInclude Include="DebugMenu.h" />
     <ClInclude Include="FadeScreen.h" />
+    <ClInclude Include="SceneExplorer.h" />
     <ClInclude Include="SceneImGuiTest.h" />
     <ClInclude Include="Imgui\imconfig.h" />
     <ClInclude Include="Imgui\imgui.h" />
@@ -204,6 +207,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="SceneGlobal.h" />
     <ClInclude Include="SceneTest.h" />
+    <ClInclude Include="Snapshot.h" />
     <ClInclude Include="XMLPerser.h" />
   </ItemGroup>
   <ItemGroup>
@@ -250,6 +254,8 @@
     <ClCompile Include="Core\Transform.cpp" />
     <ClCompile Include="Core\Vector.cpp" />
     <ClCompile Include="Core\Window.cpp" />
+    <ClCompile Include="DebugManager.cpp" />
+    <ClCompile Include="DebugMenu.cpp" />
     <ClCompile Include="FadeScreen.cpp" />
     <ClCompile Include="Imgui\imgui.cpp" />
     <ClCompile Include="Imgui\ImGuiImpl.cpp" />
@@ -259,9 +265,11 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainCamera.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="SceneExplorer.cpp" />
     <ClCompile Include="SceneGlobal.cpp" />
     <ClCompile Include="SceneImGuiTest.cpp" />
     <ClCompile Include="SceneTest.cpp" />
+    <ClCompile Include="Snapshot.cpp" />
     <ClCompile Include="XMLPerser.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

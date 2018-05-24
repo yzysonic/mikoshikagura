@@ -1,8 +1,6 @@
 #include "SceneImGuiTest.h"
 #include "FadeScreen.h"
 
-#ifdef IMGUI
-
 void SceneImGuiTest::Init(void)
 {
 	clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
@@ -59,5 +57,3 @@ void SceneImGuiTest::Uninit(void)
 {
 	Renderer::GetInstance()->setCamera(nullptr);
 }
-
-#endif
