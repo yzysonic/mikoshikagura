@@ -29,6 +29,10 @@
 #include <list>
 #include <memory>
 
+#ifdef IMGUI
+#include "../Imgui/ImGuiImpl.h"
+#endif
+
 #ifdef _DEBUG
 #define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
 #endif

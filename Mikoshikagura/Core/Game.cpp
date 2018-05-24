@@ -10,6 +10,10 @@
 #include "Random.h"
 #include "Texture.h"
 
+#ifdef _DEBUG
+#include "../Imgui/ImGuiImpl.h"
+#endif
+
 bool Game::run_game;
 
 void Game::Init(void)
@@ -30,9 +34,18 @@ void Game::Run(void)
 	{
 		Window::CheckMesg();
 		UpdateInput();
+
+#ifdef IMGUI
+		ImGuiImpl::NewFrame();
+#endif
+
 		Physics::Update();
 		GameManager::Update();
 		ObjectManager::Update();
+
+#ifdef IMGUI
+		ImGuiImpl::EndFrame();
+#endif
 		Renderer::DrawFrame();
 		Time::FramerateControl();
 	}

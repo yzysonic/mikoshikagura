@@ -2,6 +2,9 @@
 #include "Direct3D.h"
 #include "RenderSpace.h"
 
+#ifdef IMGUI
+#include "../Imgui/ImGuiImpl.h"
+#endif
 
 //=============================================================================
 // グローバル変数
@@ -81,6 +84,11 @@ void Renderer::DrawFrame()
 
 		// デバッグ
 		DrawDebug();
+
+#ifdef IMGUI
+		// ImGuiの描画
+		ImGuiImpl::Draw();
+#endif
 
 		// Direct3Dによる描画の終了
 		pDevice->EndScene();
