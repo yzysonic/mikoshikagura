@@ -103,10 +103,15 @@ void Mapdata::CreateMapObject(){
 			for (int k = 0; k < width; k++) {
 				if (layer[i].maptip[j][k] >0) {
 
+					Vector3 objscale;
 					Object  *objtemp = new Object;
-					objtemp->AddComponent<RectPolygon>("magic_square")->SetSize(Vector2(10, 10));
-					objtemp->transform.position = Vector3(k*10 - 300, -j*10+500, i*10);
-					objtemp->transform.scale = Vector3::one*1.f;
+					objtemp->AddComponent<StaticModel>("field");
+					objtemp->transform.scale = Vector3(0.2f, 0.2f, 0.2f);
+					objscale = objtemp->transform.scale;
+
+					objtemp->transform.position = Vector3((float)(k * 100 * objscale.x), (float)(- j * 100 * objscale.y), float(i* objscale.z * 100));
+					objtemp->transform.position.y += 5000 * objscale.x;
+					objtemp->transform.position.x -= 5000 * objscale.y;
 					mapobj.push_back(objtemp);
 				}
 			}
@@ -120,3 +125,25 @@ void Mapdata::Perse(std::ifstream ifs , std::string str)
 
 
 }
+
+std::pair<int, int> Mapdata::WorldtoCell(Vector3 worldpos)
+{
+	int x, y;
+	x = (int)(worldpos.x / transform.scale.x);
+	y = (int)(worldpos.y / transform.scale.y);
+
+	return std::pair<int, int>(x,y);
+}
+
+bool Mapdata::IsCollison(Vector3 pos)
+{
+
+	std::pair<int, int> cellpos = WorldtoCell(pos);
+
+	if (layer[0].maptip[cellpos.second + 1][cellpos.first] > 0) {
+		return true;
+	}
+
+	return false;
+}
+

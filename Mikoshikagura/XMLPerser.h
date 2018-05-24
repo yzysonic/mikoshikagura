@@ -45,8 +45,10 @@ public:
 private:
 
 	void Mapdata::Perse(std::ifstream ifs, std::string str);
-	std::pair<int, int> WorldtoCell(float valuex, float valuey) {};			//ワールドとセルの変換
+	std::pair<int, int> WorldtoCell(Vector3 worldpos);			//ワールドとセルの変換
 	std::pair<float, float> CelltoWorld(int valuex, int valuey) {};			//ワールドとセルの変換
+
+	bool IsCollison(Vector3 pos);
 };
 
 //
