@@ -7,7 +7,8 @@ Script::Script(void)
 
 bool Script::SetActive(bool value)
 {
-	this->Component::SetActive(value);
+	if (!this->Component::SetActive(value))
+		return false;
 
 	if (value) 
 		Init();

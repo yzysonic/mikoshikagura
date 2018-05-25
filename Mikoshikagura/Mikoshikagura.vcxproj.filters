@@ -19,144 +19,39 @@
     <Filter Include="GameObject\Debug">
       <UniqueIdentifier>{aebdffef-a90b-4c47-a1c0-5cf24774cd89}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\Manager">
+      <UniqueIdentifier>{a05c4068-c38b-42ce-bf96-7c2a91a5563d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Math">
+      <UniqueIdentifier>{6fb1525f-f96b-4f7a-a875-14e934014ecb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Physics">
+      <UniqueIdentifier>{8dacb2a0-43fc-4cb1-b335-e4950fb04f39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\System">
+      <UniqueIdentifier>{a05dad9b-415f-4005-81c5-40b8bb702308}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Graphic">
+      <UniqueIdentifier>{650d21e1-685d-4d18-bf8f-139cc1629e5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Graphic\Model">
+      <UniqueIdentifier>{33c48334-fcdf-4cbd-b5e6-b3488b1a6144}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Graphic\Polygon">
+      <UniqueIdentifier>{fbacaf57-b070-4027-834f-57620594e411}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Base">
+      <UniqueIdentifier>{cf0f344f-a0eb-4e22-aaf7-e61f991a30b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Graphic\Resource">
+      <UniqueIdentifier>{04b73bb9-bc03-4c09-948c-7ed63c1b93d5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Core\System.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Texture.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Time.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Transform.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Vector.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Window.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\AllocateHirerachy.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Billboard.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\BoneFrame.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Camera.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Collider.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Collision.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Color.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="Core\Common.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="Core\Component.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="Core\Core.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Direct3D.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Drawable.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Easing.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Event.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Game.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\GameManager.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Input.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Layer.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Lerp.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Math.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Object.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\ObjectManager.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\ObjectType.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\ParticleSystem.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\PerlinNoise.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Physics.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Polygon.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Random.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Renderer.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\RendererType.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\RenderSpace.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\RenderTarget.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Rigidbody.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Scene.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Script.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Shader.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Singleton.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\SkinnedModel.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Sound.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\StaticModel.h">
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="SceneGlobal.h">
@@ -214,126 +109,141 @@
     <ClInclude Include="Snapshot.h">
       <Filter>GameObject\Debug</Filter>
     </ClInclude>
+    <ClInclude Include="Core\Color.h">
+      <Filter>Core\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Transform.h">
+      <Filter>Core\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Vector.h">
+      <Filter>Core\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Easing.h">
+      <Filter>Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Lerp.h">
+      <Filter>Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\PerlinNoise.h">
+      <Filter>Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Random.h">
+      <Filter>Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\AllocateHirerachy.h">
+      <Filter>Core\Graphic\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\BoneFrame.h">
+      <Filter>Core\Graphic\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\StaticModel.h">
+      <Filter>Core\Graphic\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\SkinnedModel.h">
+      <Filter>Core\Graphic\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Collision.h">
+      <Filter>Core\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Collider.h">
+      <Filter>Core\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Rigidbody.h">
+      <Filter>Core\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Polygon.h">
+      <Filter>Core\Graphic\Polygon</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Direct3D.h">
+      <Filter>Core\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Game.h">
+      <Filter>Core\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\GameManager.h">
+      <Filter>Core\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Billboard.h">
+      <Filter>Core\Graphic\Polygon</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Window.h">
+      <Filter>Core\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Input.h">
+      <Filter>Core\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Sound.h">
+      <Filter>Core\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Camera.h">
+      <Filter>Core\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Drawable.h">
+      <Filter>Core\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Event.h">
+      <Filter>Core\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Component.h">
+      <Filter>Core\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\System.h">
+      <Filter>Core\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\ObjectManager.h">
+      <Filter>Core\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Math.h">
+      <Filter>Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\ParticleSystem.h">
+      <Filter>Core\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\RenderTarget.h">
+      <Filter>Core\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\RendererType.h">
+      <Filter>Core\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\RenderSpace.h">
+      <Filter>Core\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Physics.h">
+      <Filter>Core\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Layer.h">
+      <Filter>Core\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Object.h">
+      <Filter>Core\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\ObjectType.h">
+      <Filter>Core\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Scene.h">
+      <Filter>Core\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Script.h">
+      <Filter>Core\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Singleton.h">
+      <Filter>Core\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Time.h">
+      <Filter>Core\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Renderer.h">
+      <Filter>Core\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Texture.h">
+      <Filter>Core\Graphic\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Shader.h">
+      <Filter>Core\Graphic\Resource</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Core\Texture.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Time.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Transform.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Vector.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Window.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\AllocateHirerachy.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Billboard.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\BoneFrame.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Camera.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Collider.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Collision.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Color.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
     <ClCompile Include="Core\Common.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Component.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Direct3D.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Drawable.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Easing.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Event.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Game.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\GameManager.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Input.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Lerp.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Object.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\ObjectManager.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\ParticleSystem.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\PerlinNoise.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Physics.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Polygon.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Random.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Renderer.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\RenderSpace.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\RenderTarget.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Rigidbody.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Scene.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Script.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Shader.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\SkinnedModel.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Sound.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\StaticModel.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\System.cpp">
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="SceneTest.cpp">
@@ -391,6 +301,123 @@
     </ClCompile>
     <ClCompile Include="Snapshot.cpp">
       <Filter>GameObject\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Color.cpp">
+      <Filter>Core\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Transform.cpp">
+      <Filter>Core\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Vector.cpp">
+      <Filter>Core\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Easing.cpp">
+      <Filter>Core\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Lerp.cpp">
+      <Filter>Core\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\PerlinNoise.cpp">
+      <Filter>Core\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Random.cpp">
+      <Filter>Core\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\AllocateHirerachy.cpp">
+      <Filter>Core\Graphic\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\BoneFrame.cpp">
+      <Filter>Core\Graphic\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\SkinnedModel.cpp">
+      <Filter>Core\Graphic\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\StaticModel.cpp">
+      <Filter>Core\Graphic\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Collider.cpp">
+      <Filter>Core\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Collision.cpp">
+      <Filter>Core\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Rigidbody.cpp">
+      <Filter>Core\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Polygon.cpp">
+      <Filter>Core\Graphic\Polygon</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Direct3D.cpp">
+      <Filter>Core\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Game.cpp">
+      <Filter>Core\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\GameManager.cpp">
+      <Filter>Core\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Billboard.cpp">
+      <Filter>Core\Graphic\Polygon</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Window.cpp">
+      <Filter>Core\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Input.cpp">
+      <Filter>Core\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Sound.cpp">
+      <Filter>Core\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Camera.cpp">
+      <Filter>Core\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Drawable.cpp">
+      <Filter>Core\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Event.cpp">
+      <Filter>Core\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Component.cpp">
+      <Filter>Core\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\System.cpp">
+      <Filter>Core\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\ObjectManager.cpp">
+      <Filter>Core\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\ParticleSystem.cpp">
+      <Filter>Core\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\RenderSpace.cpp">
+      <Filter>Core\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\RenderTarget.cpp">
+      <Filter>Core\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Physics.cpp">
+      <Filter>Core\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Object.cpp">
+      <Filter>Core\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Scene.cpp">
+      <Filter>Core\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Script.cpp">
+      <Filter>Core\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Time.cpp">
+      <Filter>Core\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Renderer.cpp">
+      <Filter>Core\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Texture.cpp">
+      <Filter>Core\Graphic\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Shader.cpp">
+      <Filter>Core\Graphic\Resource</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
