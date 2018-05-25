@@ -4,12 +4,12 @@
 void CameraSnap::Init(void)
 {
 	camera = dynamic_cast<Camera*>(object);
+	this->focus = new Transform();	// 5/25 Init重複でメモリリーク。要修正
 }
 
 void CameraSnap::Update(void)
 {
 	float base_length = SnapDistance;
-	this->focus = new Transform();
 	auto smooth = this->object->GetComponent<CameraSmooth>();
 	for (auto snapper = this->snappers.begin(); snapper != this->snappers.end(); ++snapper)
 	{
@@ -27,4 +27,9 @@ void CameraSnap::Update(void)
 	{
 		smooth->target = this->target;
 	}
+}
+
+void CameraSnap::Uninit(void)
+{
+	delete(focus);
 }

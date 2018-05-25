@@ -207,6 +207,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="SceneGlobal.h" />
     <ClInclude Include="SceneTest.h" />
+    <ClInclude Include="SceneTitle.h" />
     <ClInclude Include="Snapshot.h" />
     <ClInclude Include="XMLPerser.h" />
   </ItemGroup>
@@ -269,6 +270,7 @@
     <ClCompile Include="SceneGlobal.cpp" />
     <ClCompile Include="SceneImGuiTest.cpp" />
     <ClCompile Include="SceneTest.cpp" />
+    <ClCompile Include="SceneTitle.cpp" />
     <ClCompile Include="Snapshot.cpp" />
     <ClCompile Include="XMLPerser.cpp" />
   </ItemGroup>
