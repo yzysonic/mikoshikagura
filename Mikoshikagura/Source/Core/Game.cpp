@@ -68,5 +68,8 @@ bool Game::End(void)
 
 void Game::Stop(void)
 {
-	run_game = false;
+	if(Window::GetHWnd())
+		Window::Destroy();
+	else
+		run_game = false;
 }

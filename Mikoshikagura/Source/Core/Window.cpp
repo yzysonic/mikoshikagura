@@ -103,7 +103,7 @@ LRESULT CALLBACK Window::WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPAR
 	case WM_CLOSE:
 		if (Game::End())
 		{
-			DestroyWindow(Window::GetHWnd());	// ウィンドウを破棄するよう指示する
+			Destroy();	// ウィンドウを破棄するよう指示する
 		}
 		break;
 	case WM_DESTROY:
