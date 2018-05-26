@@ -9,8 +9,8 @@ void SceneTest::Init(void)
 	FadeScreen::FadeIn(Color::black, 0.0f);
 	Light::Init();
 
-	Texture::LoadTexture("body_sum", "body_sum.tga");
-	Texture::LoadTexture("misaki_head", "misaki_head.tga");
+	Texture::Load("body_sum.tga");
+	Texture::Load("misaki_head.tga");
 
 	//test = new Object;
 	//test->AddComponent<RectPolygon>("magic_square")->SetSize(Vector2(100, 100));
@@ -19,13 +19,13 @@ void SceneTest::Init(void)
 
 
 	//testBG = new Object;
-	//Texture::LoadTexture("testbg");
+	//Texture::Load("testbg");
 	//testBG->AddComponent<RectPolygon>("testbg")->SetSize(Vector2(1000, 1000));
 	//testBG->transform.scale = Vector3::one*10.f;
 
 
 
-	Texture::LoadTexture("target");
+	Texture::Load("target");
 	ModelData::Load("field");
 
 	target1 = new Object;

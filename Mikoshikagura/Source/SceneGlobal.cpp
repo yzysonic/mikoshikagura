@@ -13,7 +13,7 @@ void SceneGlobal::Init(void)
 	FadeScreen::Create();
 	FadeScreen::FadeOut(Color::black, 0.0f);
 
-	Texture::LoadTexture("magic_square");
+	Texture::Load("magic_square");
 
 #ifdef _DEBUG
 	DebugManager::Create();

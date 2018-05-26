@@ -1,42 +1,24 @@
 #include "RenderTarget.h"
 #include "Common.h"
 
-RenderTarget RenderTarget::back_buffer = RenderTarget(SystemParameters::ResolutionX, SystemParameters::ResolutionY, false);
-std::vector<RenderTarget*> RenderTarget::render_target_list;
+RenderTarget *const RenderTarget::back_buffer = new RenderTarget("BackBuffer");
+//std::vector<RenderTarget*> RenderTarget::render_target_list;
 
-RenderTarget::RenderTarget(int width, int height, bool create)
+RenderTarget::RenderTarget(std::string name) : Texture(name)
 {
-	this->name = "RenderTarget";
-	this->size.x = (float)width;
-	this->size.y = (float)height;
-	this->divideX = 1;
-	this->divideY = 1;
-	this->pDXTex = nullptr;
 	this->pSurface = nullptr;
 	this->pDepthSurface = nullptr;
 	this->index = -1;
-
-	if (create)
-	{
-		Create();
-		this->index = render_target_list.size();
-		render_target_list.push_back(this);
-	}
-
-}
-
-RenderTarget::RenderTarget(bool create) : RenderTarget(SystemParameters::ResolutionX, SystemParameters::ResolutionY, create)
-{
 }
 
 RenderTarget::~RenderTarget(void)
 {
-	if (this->index >= 0)
-	{
-		render_target_list[this->index] = render_target_list.back();
-		render_target_list[this->index]->index = this->index;
-		render_target_list.pop_back();
-	}
+	//if (this->index >= 0)
+	//{
+	//	render_target_list[this->index] = render_target_list.back();
+	//	render_target_list[this->index]->index = this->index;
+	//	render_target_list.pop_back();
+	//}
 	SafeRelease(pDXTex);
 	SafeRelease(pSurface);
 	SafeRelease(pDepthSurface);
@@ -97,10 +79,31 @@ RenderTarget* RenderTarget::BackBuffer(void)
 
 		back_buffer.pSurface = pSurface;
 		back_buffer.pDepthSurface = pDepthSurface;
+		back_buffer.size = back_buffer.raw_size = Vector2((float)SystemParameters::ResolutionX, (float)SystemParameters::ResolutionY);
 
 	}
 	
 	return &back_buffer;
+}
+
+RenderTarget * RenderTarget::Make(std::string name, int width, int height)
+{
+	auto pDevice = Direct3D::GetDevice();
+	auto renderTarget = new RenderTarget(name);
+
+	renderTarget->size = renderTarget->raw_size = Vector2((float)width, (float)height);
+
+	if (FAILED(renderTarget->Create()))
+	{
+		delete renderTarget;
+		return nullptr;
+	}
+
+	//renderTarget->index = render_target_list.size();
+	//render_target_list.push_back(renderTarget);
+	InsertToMap(renderTarget);
+
+	return renderTarget;
 }
 
 HRESULT RenderTarget::OnLostDevice(void)

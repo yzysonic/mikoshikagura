@@ -1,35 +1,33 @@
 #pragma once
 #include "Direct3D.h"
 #include "Vector.h"
-#include <unordered_map>
-#include <memory>
+#include "Resource.h"
 #include <string>
 
-constexpr const char* TextureDir = "Data/Texture/";
-
-class Texture
+class Texture : public Resource<Texture>
 {
-public:
-	static void Init(void);
-	static void Uninit(void);
-	static Texture* Get(std::string name);
-	static bool LoadTexture(std::string name, std::string file_name = "", int divX = 1, int divY = 1);
-	static void ReleaseTexture(std::string name);
-	static void MakeTexture(std::string name, int width, int height);
-
-	static Texture* const none;
+	friend class Resource<Texture>;
 
 public:
-	std::string name;
-	std::string file_name;
+	static constexpr char* BasePath = "Texture/";
+	static constexpr char* DefaultExtension = ".png";
+	static Texture *const none;
+	static Texture* Make(std::string name, int width, int height);
+
+private:
+	static Texture* InternalLoad(std::string name, std::string ext);
+
+public:
 	LPDIRECT3DTEXTURE9 pDXTex;	// テクスチャポインタ
 	Vector2 size;				// テクスチャサイズ
+	Vector2 raw_size;			// テクスチャ画像のサイズ
 	int divideX;				// テクスチャ内X分割数
 	int divideY;				// テクスチャ内Y分割数
 
-	void Release(void);
+	Texture(std::string name);
 	~Texture(void);
+	void SetDivision(int x, int y);
 
 private:
-	static std::unordered_map<std::string, std::unique_ptr<Texture>> texture_list;
+	Texture(std::string name, bool insertToMap);
 };

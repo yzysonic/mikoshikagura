@@ -57,7 +57,7 @@ inline SceneExplorer::SceneData<T>::SceneData(void)
 	name = name.substr(6, (name.size() - 6));
 
 	std::string texName = "Snapshot_" + name;
-	if (Texture::LoadTexture(texName))
+	if (Texture::Load(texName))
 		texture = Texture::Get(texName);
 	else
 		texture = Texture::none;
