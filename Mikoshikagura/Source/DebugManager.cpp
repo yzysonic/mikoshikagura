@@ -1,15 +1,21 @@
 #include "DebugManager.h"
-#include "DebugMenu.h"
 #include "Snapshot.h"
+
+#ifdef IMGUI
+#include "DebugMenu.h"
+#endif
 
 DebugManager::DebugManager(void)
 {
+#ifdef IMGUI
 	AddComponent<DebugMenu>();
+#endif
 	AddComponent<Snapshot>();
 }
 
 void DebugManager::Update(void)
 {
+#ifdef IMGUI
 	if (GetKeyboardTrigger(DIK_F11))
 	{
 		auto menu = GetComponent<DebugMenu>();
@@ -18,6 +24,7 @@ void DebugManager::Update(void)
 		else
 			menu->SetActive(true);
 	}
+#endif
 }
 
 void DebugManager::TakeSnapshot(const char * fileName, float waitTime)

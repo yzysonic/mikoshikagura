@@ -1,4 +1,6 @@
 #pragma once
+#ifdef IMGUI
+
 #include "Core\Core.h"
 
 class SceneExplorer : public Scene
@@ -66,3 +68,5 @@ inline void SceneExplorer::SceneData<T>::SetScene(void)
 {
 	GameManager::GetInstance()->SetScene(new T);
 }
+
+#endif

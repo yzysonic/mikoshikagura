@@ -1,3 +1,5 @@
+#ifdef IMGUI
+
 #include "DebugMenu.h"
 #include "Core\Game.h"
 #include "SceneExplorer.h"
@@ -70,3 +72,6 @@ void DebugMenu::OnPress(bool trigger, std::function<void(void)> callBack)
 	callBack();
 	SetActive(false);
 }
+
+
+#endif

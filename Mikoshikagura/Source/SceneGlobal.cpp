@@ -23,8 +23,6 @@ void SceneGlobal::Init(void)
 
 void SceneGlobal::Update(void)
 {
-	if (GetKeyboardPress(DIK_RETURN))
-		Game::Stop();
 }
 
 void SceneGlobal::Uninit(void)

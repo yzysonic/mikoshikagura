@@ -1,4 +1,6 @@
 #pragma once
+#ifdef IMGUI
+
 #include "Core\Core.h"
 
 class SceneImGuiTest : public Scene
@@ -14,3 +16,5 @@ private:
 	bool show_demo_window;
 	bool show_another_window;
 };
+
+#endif

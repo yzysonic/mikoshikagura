@@ -14,6 +14,7 @@ public:
 	static bool GetWindowMode(void);
 	static void SetWindowMode(bool windowMode);
 	static void SetWindowSize(int x, int y);
+	static void Destroy(void);
 
 private:
 	static HINSTANCE s_hInstance;

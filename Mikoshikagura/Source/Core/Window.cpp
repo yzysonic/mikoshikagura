@@ -81,8 +81,7 @@ HRESULT Window::Init()
 void Window::Uninit()
 {
 	// ウィンドウのデストロイド
-	//DestroyWindow(g_hWnd);
-	s_hWnd = NULL;
+	Destroy();
 
 	// ウィンドウクラスの登録を解除
 	UnregisterClass(s_ClassName, s_hInstance);
@@ -203,4 +202,13 @@ void Window::SetWindowSize(int x, int y)
 		x + GetSystemMetrics(SM_CXDLGFRAME) * 2,
 		y + GetSystemMetrics(SM_CXDLGFRAME) * 2 + GetSystemMetrics(SM_CYCAPTION),
 		SWP_NOZORDER | SWP_SHOWWINDOW);
+}
+
+void Window::Destroy(void)
+{
+	if (s_hWnd == NULL)
+		return;
+
+	DestroyWindow(s_hWnd);
+	s_hWnd = NULL;
 }
