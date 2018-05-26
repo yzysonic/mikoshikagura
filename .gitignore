@@ -213,3 +213,5 @@ ModelManifest.xml
 
 *.opendb
 *.db
+*.iobj
+*.ipdb

@@ -26,6 +26,7 @@ void SceneTest::Init(void)
 
 
 	Texture::LoadTexture("target");
+	ModelData::Load("field");
 
 	target1 = new Object;
 	target1->AddComponent<RectPolygon>("target");
@@ -65,4 +66,6 @@ void SceneTest::Update(void)
 void SceneTest::Uninit(void)
 {
 	Renderer::GetInstance()->setCamera(nullptr);
+	ModelData::Release("field");
+
 }

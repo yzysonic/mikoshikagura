@@ -73,12 +73,15 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)\</OutDir>
+    <TargetName>$(ProjectName)_Debug</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -144,6 +147,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Core\ModelData.h" />
+    <ClInclude Include="Source\Core\Resource.h" />
     <ClInclude Include="Source\CameraPlay.h" />
     <ClInclude Include="Source\CameraSmooth.h" />
     <ClInclude Include="Source\CameraSnap.h" />
@@ -207,6 +212,7 @@
     <ClInclude Include="Source\Player.h" />
     <ClInclude Include="Source\SceneGlobal.h" />
     <ClInclude Include="Source\SceneTest.h" />
+    <ClInclude Include="Source\SceneYangTest.h" />
     <ClInclude Include="Source\Snapshot.h" />
     <ClInclude Include="Source\XMLPerser.h" />
   </ItemGroup>
@@ -231,6 +237,7 @@
     <ClCompile Include="Source\Core\GameManager.cpp" />
     <ClCompile Include="Source\Core\Input.cpp" />
     <ClCompile Include="Source\Core\Lerp.cpp" />
+    <ClCompile Include="Source\Core\ModelData.cpp" />
     <ClCompile Include="Source\Core\Object.cpp" />
     <ClCompile Include="Source\Core\ObjectManager.cpp" />
     <ClCompile Include="Source\Core\ParticleSystem.cpp" />
@@ -269,6 +276,7 @@
     <ClCompile Include="Source\SceneGlobal.cpp" />
     <ClCompile Include="Source\SceneImGuiTest.cpp" />
     <ClCompile Include="Source\SceneTest.cpp" />
+    <ClCompile Include="Source\SceneYangTest.cpp" />
     <ClCompile Include="Source\Snapshot.cpp" />
     <ClCompile Include="Source\XMLPerser.cpp" />
   </ItemGroup>
