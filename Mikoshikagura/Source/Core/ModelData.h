@@ -9,10 +9,10 @@ class ModelData : public Resource<ModelData>
 	friend class Resource<ModelData>;
 public:
 	static constexpr char* BasePath = "Model/";
-	static constexpr char* FileExtension = ".x";
+	static constexpr char* DefaultExtension = ".x";
 
 private:
-	static ModelData* _Load(std::string path);
+	static ModelData* InternalLoad(std::string name, std::string ext);
 
 public:
 	Texture				**pTextures;	// テクスチャへのポインタ

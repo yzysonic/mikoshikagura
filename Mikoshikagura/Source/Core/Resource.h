@@ -1,7 +1,6 @@
 #pragma once
-#include <memory>
+#include "Common.h"
 #include <unordered_map>
-#include <string>
 
 //=============================================================================
 // リソースクラス定義
@@ -19,12 +18,14 @@ public:
 
 protected:
 	static void InsertToMap(T* ptr);
-	static int ShowErrorMessage(const char* mesg);
+	static int ShowErrorMessage(const char* mesg, const char* extra);
+	static std::string GetFullPath(std::string short_path);
 	static std::unordered_map<std::string, std::unique_ptr<T>> name_map;
 
 
 public:
 	std::string name;
+	std::string file_extension;
 	Resource(std::string name) : name(name) {};
 	void Release(void);
 	
@@ -40,13 +41,26 @@ std::unordered_map<std::string, std::unique_ptr<T>> Resource<T>::name_map;
 template<class T>
 inline T* Resource<T>::Load(std::string path)
 {
+	// 拡張子処理
+	auto name	= path;
+	auto ext	= std::string(T::DefaultExtension);
+	auto dotPos = path.find(".");
+
+	if (dotPos != std::string::npos)
+	{
+		name = path.substr(0, dotPos);
+		ext = path.substr(dotPos, path.size());
+	}
+
 	// 既存確認
-	auto resource = Get(path);
+	auto resource = Get(name);
+
 	if (resource)
 		return resource;
 
 	// ロードする
-	resource = T::_Load(path);
+	resource = T::InternalLoad(name, ext);
+
 	if (resource)
 	{
 		name_map[resource->name].reset(resource);
@@ -79,15 +93,21 @@ inline void Resource<T>::Release(std::string name)
 template<class T>
 inline void Resource<T>::InsertToMap(T * ptr)
 {
-	name_map[ptr->name] = this;
+	name_map[ptr->name].reset(ptr);
 }
 
 template<class T>
-inline int Resource<T>::ShowErrorMessage(const char* mesg)
+inline int Resource<T>::ShowErrorMessage(const char* name, const char* extra)
 {
-	TCHAR title[128];
-	wsprintf(title, _T("%s エラー"), typeid(T).name()+5);
-	return MessageBox(Window::GetHWnd(), mesg, title, MB_ABORTRETRYIGNORE | MB_ICONWARNING);
+	TCHAR mesg[128];
+	wsprintf(mesg, _T("%s「%s」の読込に失敗しました。\n%s"), typeid(T).name()+5, name, extra);
+	return MessageBox(Window::GetHWnd(), mesg, "エラー", MB_ABORTRETRYIGNORE | MB_ICONWARNING);
+}
+
+template<class T>
+inline std::string Resource<T>::GetFullPath(std::string short_path)
+{
+	return BasePath + (T::BasePath + short_path);
 }
 
 

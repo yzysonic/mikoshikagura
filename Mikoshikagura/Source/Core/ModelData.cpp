@@ -4,12 +4,10 @@
 
 using namespace std;
 
-ModelData* ModelData::_Load(string path)
+ModelData* ModelData::InternalLoad(string name, std::string ext)
 {
-
-	auto pDevice	= Direct3D::GetDevice();
-	auto fullpath	= Resource<ModelData>::BasePath + (BasePath + path + FileExtension);
-	auto data		= new ModelData(path);
+	auto fullpath	= GetFullPath(name+ext);
+	auto data		= new ModelData(name);
 
 	while(true)
 	{
@@ -17,7 +15,7 @@ ModelData* ModelData::_Load(string path)
 		auto hr = D3DXLoadMeshFromX(
 			fullpath.c_str(),
 			D3DXMESH_SYSTEMMEM,
-			pDevice,
+			Direct3D::GetDevice(),
 			NULL,
 			&data->pBuffMaterial,
 			NULL,
@@ -28,19 +26,13 @@ ModelData* ModelData::_Load(string path)
 			break;
 
 		// エラー処理
-		TCHAR s[128];
-
 #ifdef _DEBUG
-		wsprintf(s, _T("モデル「%s」の読込に失敗しました。\n%s"), path.c_str(), Direct3D::GetErrorMesg(hr));
+		auto d3dMesg = Direct3D::GetErrorMesg(hr);
 #else
-		wsprintf(s, _T("モデル「%s」の読込に失敗しました。"), path.c_str());
+		auto d3dMesg = "";
 #endif
-			
-		switch (ShowErrorMessage(s))
+		switch (ShowErrorMessage(name.c_str(), d3dMesg))
 		{
-		case IDRETRY:
-			break;
-
 		case IDABORT:
 			Game::Stop();
 		case IDIGNORE:
