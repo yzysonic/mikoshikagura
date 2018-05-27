@@ -213,6 +213,8 @@
     <ClInclude Include="Source\SceneGlobal.h" />
     <ClInclude Include="Source\SceneTest.h" />
     <ClInclude Include="Source\SceneYangTest.h" />
+    <ClInclude Include="Source\SeasonManager.h" />
+    <ClInclude Include="Source\SeasonObject.h" />
     <ClInclude Include="Source\Snapshot.h" />
     <ClInclude Include="Source\XMLPerser.h" />
   </ItemGroup>
@@ -277,6 +279,8 @@
     <ClCompile Include="Source\SceneImGuiTest.cpp" />
     <ClCompile Include="Source\SceneTest.cpp" />
     <ClCompile Include="Source\SceneYangTest.cpp" />
+    <ClCompile Include="Source\SeasonManager.cpp" />
+    <ClCompile Include="Source\SeasonObject.cpp" />
     <ClCompile Include="Source\Snapshot.cpp" />
     <ClCompile Include="Source\XMLPerser.cpp" />
   </ItemGroup>

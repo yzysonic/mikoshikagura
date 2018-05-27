@@ -10,7 +10,8 @@ void SceneYangTest::Init(void)
 	
 	test = new Object;
 	test->AddComponent<StaticModel>("field");
-	
+	test->transform.scale = Vector3::one*0.1f;
+
 	camera = new Camera;
 	camera->setBackColor(Color(250, 250, 250, 255));
 	camera->AddComponent<CameraPlay>()->SetActive(true);
