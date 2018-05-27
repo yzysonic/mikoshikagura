@@ -46,6 +46,9 @@
     <Filter Include="Core\Resource">
       <UniqueIdentifier>{04b73bb9-bc03-4c09-948c-7ed63c1b93d5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Script\Debug">
+      <UniqueIdentifier>{2ec880c9-6d27-40de-9bb2-ad631bf27309}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Core\AllocateHirerachy.h">
@@ -256,6 +259,12 @@
     <ClInclude Include="Source\SeasonManager.h">
       <Filter>GameObject</Filter>
     </ClInclude>
+    <ClInclude Include="Source\ImGuiCamera.h">
+      <Filter>Script\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ImGuiObject.h">
+      <Filter>Script\Debug</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Core\AllocateHirerachy.cpp">
@@ -444,5 +453,11 @@
       <Filter>GameObject</Filter>
     </ClCompile>
     <ClCompile Include="Source\SeasonObject.cpp" />
+    <ClCompile Include="Source\ImGuiCamera.cpp">
+      <Filter>Script\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ImGuiObject.cpp">
+      <Filter>Script\Debug</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
