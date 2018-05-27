@@ -14,7 +14,7 @@ public:
 	float aspect;
 	float near_z;
 	float far_z;
-	D3DCOLOR backColor;
+	Color backColor;
 	RenderTarget* render_target;
 
 	Camera(RenderTarget* render_target = nullptr);

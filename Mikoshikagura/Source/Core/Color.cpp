@@ -12,60 +12,45 @@ Color::Color(void) : Color(0,0,0,0)
 {
 }
 
+Color::Color(unsigned long color)
+{
+	*this = *(Color*)&color;
+}
+
 Color::Color(unsigned char r, unsigned char g, unsigned char b, unsigned char a)
 {
 	setRGBA(r, g, b, a);
 }
 
-//unsigned char Color::getR(void)
-//{
-//	return (unsigned char)(this->data >> 16);
-//}
-//
-//unsigned char Color::getG(void)
-//{
-//	return (unsigned char)(this->data >> 8);
-//}
-//
-//unsigned char Color::getB(void)
-//{
-//	return (unsigned char)(this->data);
-//}
-//
-//unsigned char Color::getA(void)
-//{
-//	return (unsigned char)(this->data >> 24);
-//}
 
 void Color::setRGBA(unsigned char r, unsigned char g, unsigned char b, unsigned char a)
 {
-	//this->data = (unsigned long)((a << 24) | (r << 16) | (g << 8) | (b));
 	this->r = r;
 	this->g = g;
 	this->b = b;
 	this->a = a;
 }
 
-//void Color::setR(unsigned char value)
-//{
-//	this->data &= 0xff00ffff;
-//	this->data += (unsigned long)value << 16;
-//}
-//
-//void Color::setG(unsigned char value)
-//{
-//	this->data &= 0xffff00ff;
-//	this->data += (unsigned long)value << 8;
-//}
-//
-//void Color::setB(unsigned char value)
-//{
-//	this->data &= 0xffffff00;
-//	this->data += value;
-//}
-//
-//void Color::setA(unsigned char value)
-//{
-//	this->data &= 0x00ffffff;
-//	this->data += (unsigned long)value << 24;
-//}
+Color::operator unsigned long() const
+{
+	return *(unsigned long*)this;
+}
+
+
+
+Colorf::Colorf(void) : r(0.0f), g(0.0f), b(0.0f), a(0.0f){}
+Colorf::Colorf(float r, float g, float b, float a) : r(r), g(g), b(b), a(a){}
+
+Colorf::operator Color() const
+{
+	return Color((unsigned char)(r * 255), (unsigned char)(g * 255), (unsigned char)(b * 255), (unsigned char)(a * 255));
+}
+
+Colorf::Colorf(Color color)
+{
+	a = color.a*Color::Divisor;
+	r = color.r*Color::Divisor;
+	g = color.g*Color::Divisor;
+	b = color.b*Color::Divisor;
+}
+

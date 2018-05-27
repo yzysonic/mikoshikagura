@@ -3,26 +3,23 @@
 class Color
 {
 public:
+	static constexpr float Divisor = 1 / 255.0f;
+
+public:
 	unsigned char b;
 	unsigned char g;
 	unsigned char r;
 	unsigned char a;
-	//unsigned long data;
 
 	Color(void);
+	Color(unsigned long color);
 	Color(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
 
-	//unsigned char getR(void);
-	//unsigned char getG(void);
-	//unsigned char getB(void);
-	//unsigned char getA(void);
 	
 	void setRGBA(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
 
-	//void setR(unsigned char value);
-	//void setG(unsigned char value);
-	//void setB(unsigned char value);
-	//void setA(unsigned char value);
+	operator unsigned long() const;
+
 
 public:
 	static const Color white;
@@ -31,4 +28,19 @@ public:
 	static const Color green;
 	static const Color blue;
 	static const Color none;
+};
+
+class Colorf
+{
+public:
+	float r;
+	float g;
+	float b;
+	float a;
+
+	Colorf(void);
+	Colorf(float r, float g, float b, float a);
+	Colorf(Color color);
+	
+	operator Color() const;
 };

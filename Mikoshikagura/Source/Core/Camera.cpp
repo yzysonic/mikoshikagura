@@ -7,6 +7,7 @@ Camera::Camera(RenderTarget* render_target)
 	if (render_target == nullptr)
 		this->render_target = RenderTarget::BackBuffer();
 	else this->render_target = render_target;
+	this->name = "Camera";
 	this->transform.position = Vector3(0.0f, 0.0f, -150.0f);
 	this->setBackColor(Color(255, 255, 255, 255));
 	this->at = Vector3(0.0f, 0.0f, 1.0f);
