@@ -65,7 +65,7 @@ HRESULT RenderTarget::Create(void)
 
 RenderTarget* RenderTarget::BackBuffer(void)
 {
-	if (back_buffer.pSurface == nullptr)
+	if (back_buffer->pSurface == nullptr)
 	{
 		auto pDevice = Direct3D::GetDevice();
 
@@ -77,13 +77,13 @@ RenderTarget* RenderTarget::BackBuffer(void)
 		if (FAILED(pDevice->GetDepthStencilSurface(&pDepthSurface)))
 			return nullptr;
 
-		back_buffer.pSurface = pSurface;
-		back_buffer.pDepthSurface = pDepthSurface;
-		back_buffer.size = back_buffer.raw_size = Vector2((float)SystemParameters::ResolutionX, (float)SystemParameters::ResolutionY);
+		back_buffer->pSurface = pSurface;
+		back_buffer->pDepthSurface = pDepthSurface;
+		back_buffer->size = back_buffer->raw_size = Vector2((float)SystemParameters::ResolutionX, (float)SystemParameters::ResolutionY);
 
 	}
 	
-	return &back_buffer;
+	return back_buffer;
 }
 
 RenderTarget * RenderTarget::Make(std::string name, int width, int height)
@@ -118,7 +118,7 @@ HRESULT RenderTarget::OnLostDevice(void)
 
 HRESULT RenderTarget::OnResetDevice(void)
 {
-	if (this == &this->back_buffer)
+	if (this == this->back_buffer)
 	{
 		BackBuffer();
 		return S_OK;
