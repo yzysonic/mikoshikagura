@@ -31,9 +31,17 @@ public:
 	ComponentType GetType(void);
 	bool GetActive(void);
 
+#ifdef _DEBUG
+	const char* GetName(void);
+#endif
+
 protected:
 	ComponentType type;
 	bool active;
 	bool active_on_load;
+
+#ifdef _DEBUG
+	std::string name;
+#endif
 };
 

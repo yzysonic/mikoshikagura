@@ -53,10 +53,7 @@ inline void SceneExplorer::AddScene(void)
 template<class T>
 inline SceneExplorer::SceneData<T>::SceneData(void)
 {
-	name = typeid(T).name();
-	name = name.substr(6, (name.size() - 6));
-
-	std::string texName = "Snapshot_" + name;
+	std::string texName = "Snapshot_" + TypeName<T>();
 	if (Texture::Load(texName))
 		texture = Texture::Get(texName);
 	else

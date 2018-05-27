@@ -50,6 +50,8 @@ public:
 	T* AddComponent(Args&&... args);
 	template<class T>
 	T* GetComponent(void);
+	std::vector<Component*> GetComponents(void);
+	std::vector<Script*> GetScripts(void);
 
 	virtual void SetActive(bool value);
 	bool GetActive(void);
@@ -113,7 +115,8 @@ inline T * Object::AddComponent(Args&&... args)
 #ifndef _DEBUG
 	this->components[typeid(T).hash_code()].reset(component);
 #else
-	this->components[typeid(T).name()].reset(component);
+	component->name = TypeName<T>();
+	this->components[component->name].reset(component);
 #endif
 
 	if (component->type == ComponentType::Script)
@@ -134,7 +137,7 @@ inline T * Object::GetComponent(void)
 #ifndef _DEBUG
 		component = this->components.at(typeid(T).hash_code()).get();
 #else
-		component = this->components.at(typeid(T).name()).get();
+		component = this->components.at(TypeName<T>()).get();
 #endif
 	}
 	catch (std::out_of_range)

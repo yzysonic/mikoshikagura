@@ -1,6 +1,6 @@
 #include "Component.h"
 
-Component::Component(void) : object(nullptr), active(false), active_on_load(true), type(ComponentType::Unknow) {}
+Component::Component(void) : object(nullptr), active(false), active_on_load(true), type(ComponentType::Unknow), name("Component") {}
 
 void Component::BindObject(Object * object)
 {
@@ -24,4 +24,9 @@ ComponentType Component::GetType(void)
 bool Component::GetActive(void)
 {
 	return this->active;
+}
+
+const char * Component::GetName(void)
+{
+	return this->name.c_str();
 }

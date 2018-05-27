@@ -46,6 +46,26 @@ void SafeFree(T *&ptr)
 	ptr = nullptr;
 }
 
+inline std::string TypeName(const std::type_info& type)
+{
+	auto char_name = type.name();
+	auto name = std::string(char_name);
+
+	if (name.find("class") != std::string::npos)
+		char_name += 6;
+	else if (name.find("struct") != std::string::npos)
+		char_name += 7;
+
+	return std::string(char_name);
+
+}
+
+template<class T>
+std::string TypeName(void)
+{
+	return TypeName(typeid(T));
+}
+
 #define ColorRGBA(r,g,b,a)		D3DCOLOR_RGBA(r,g,b,a)
 
 

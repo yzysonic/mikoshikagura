@@ -48,6 +48,21 @@ Object::~Object()
 
 }
 
+std::vector<Component*> Object::GetComponents(void)
+{
+	std::vector<Component*> list;
+	for (auto& component : components)
+	{
+		list.emplace_back(component.second.get());
+	}
+	return list;
+}
+
+std::vector<Script*> Object::GetScripts(void)
+{
+	return scripts;
+}
+
 void Object::SetActive(bool value)
 {
 	if (this->isActive == value)
