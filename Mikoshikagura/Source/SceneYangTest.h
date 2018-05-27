@@ -2,6 +2,18 @@
 #include "Core/Core.h"
 #include "Player.h"
 #include "SeasonManager.h"
+#include "DebugMenu.h"
+
+class SeasonTestObject : public SeasonObject
+{
+public:
+	SeasonTestObject(void);
+	void SetSummer(void) override;
+	void SetWinter(void) override;
+
+private:
+	StaticModel * model;
+};
 
 class SceneYangTest : public Scene
 {
@@ -11,8 +23,8 @@ public:
 	void Uninit(void) override;
 
 private:
-	Object * test;
+	SeasonTestObject * test;
 	Player * player;
 	Camera * camera;
-	SeasonType season_state;
+	DebugMenu * debug;
 };

@@ -27,11 +27,17 @@ SeasonType SeasonManager::GetSeason(void)
 
 void SeasonManager::AddObject(SeasonObject * obj)
 {
+	if (!m_pInstance)
+		return;
+
 	m_pInstance->object_list.emplace_back(obj);
 }
 
 void SeasonManager::RemoveObject(SeasonObject * obj)
 {
+	if (!m_pInstance)
+		return;
+
 	auto& list = m_pInstance->object_list;
 	for (auto it = list.begin(); it != list.end(); it++)
 	{

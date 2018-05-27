@@ -15,5 +15,5 @@ public:
 private:
 	SeasonType current_season;
 	std::vector<SeasonObject*>object_list;
-	SeasonManager(void) {};
+	SeasonManager(void) : current_season(SeasonType::None) {};
 };

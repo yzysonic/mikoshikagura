@@ -20,37 +20,13 @@ void DebugMenu::Init(void)
 void DebugMenu::Update(void)
 {
 	ImGui::SetNextWindowSize(ImVec2(MenuWidth, 0.0f));
-	
-	// メニューの表示
 	if (ImGui::BeginPopupModal("DebugMenu", NULL, ImGuiWindowFlags_NoResize))
 	{
-		auto gameManager = GameManager::GetInstance();
-		
-		// シーンブロック
-		if (gameManager->GetScene() != nullptr)
-		{
-			ImGui::Text("Scene");
-			OnPress(ImGui::Button("TakeSnapshot", buttonSize), [&]{
-				auto fileName = gameManager->Var<std::string>("SnapshotName").c_str();
-				DebugManager::TakeSnapshot(fileName, 0.3f);
-			});
-			OnPress(ImGui::Button("Reload", buttonSize), [&] {
-				gameManager->ReloadScene();
-			});
-		}
+		// リスト表示
+		GuiContent();
 
-		// システムブロック
-		ImGui::Text("System");
-		OnPress(ImGui::Button("SceneExplorer", buttonSize), [&]
-		{
-			gameManager->SetScene(new SceneExplorer);
-		});
-		OnPress(ImGui::Button("ExitGame", buttonSize), [&]
-		{
-			Game::Stop();
-		});
-
-		// クロス
+		// クロスボタン
+		ImGui::Spacing();
 		ImGui::Separator();
 		ImGui::Spacing();
 		OnPress(ImGui::Button("Close", buttonSize));
@@ -62,6 +38,36 @@ void DebugMenu::Update(void)
 void DebugMenu::Uninit(void)
 {
 	ImGui::CloseCurrentPopup();
+}
+
+void DebugMenu::GuiContent(void)
+{
+	auto gameManager = GameManager::GetInstance();
+
+	// シーンブロック
+	if (gameManager->GetScene() != nullptr)
+	{
+		ImGui::Text("Scene");
+		OnPress(ImGui::Button("TakeSnapshot", buttonSize), [&] {
+			auto fileName = gameManager->Var<std::string>("SnapshotName").c_str();
+			DebugManager::TakeSnapshot(fileName, 0.3f);
+		});
+		OnPress(ImGui::Button("Reload", buttonSize), [&] {
+			gameManager->ReloadScene();
+		});
+	}
+
+	// システムブロック
+	ImGui::Text("System");
+	OnPress(ImGui::Button("SceneExplorer", buttonSize), [&]
+	{
+		gameManager->SetScene(new SceneExplorer);
+	});
+	OnPress(ImGui::Button("ExitGame", buttonSize), [&]
+	{
+		Game::Stop();
+	});
+
 }
 
 void DebugMenu::OnPress(bool trigger, std::function<void(void)> callBack)

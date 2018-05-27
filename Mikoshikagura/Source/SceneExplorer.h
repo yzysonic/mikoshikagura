@@ -39,7 +39,6 @@ private:
 	// ƒƒ“ƒo[ŠÖ”
 	template<class T>
 	void AddScene(void);
-
 };
 
 template<class T>
@@ -53,7 +52,8 @@ inline void SceneExplorer::AddScene(void)
 template<class T>
 inline SceneExplorer::SceneData<T>::SceneData(void)
 {
-	std::string texName = "Snapshot_" + TypeName<T>();
+	name = TypeName<T>();
+	std::string texName = "Snapshot_" + name;
 	if (Texture::Load(texName))
 		texture = Texture::Get(texName);
 	else

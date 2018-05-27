@@ -6,13 +6,15 @@
 class DebugMenu : public Script
 {
 public:
+	static constexpr float MenuWidth = 300.0f;
+
 	DebugMenu(void);
 	void Init(void) override;
 	void Update(void) override;
 	void Uninit(void) override;
+	void GuiContent(void);
 
 private:
-	static constexpr float MenuWidth = 300.0f;
 	ImVec2 buttonSize;
 	void OnPress(bool trigger, std::function<void(void)> callBack = [] {});
 };
