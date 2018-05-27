@@ -1,7 +1,12 @@
+#ifdef IMGUI
+
 #include "SceneExplorer.h"
+#include "DebugManager.h"
+#include "FadeScreen.h"
+
 #include "SceneImGuiTest.h"
 #include "SceneTest.h"
-#include "DebugManager.h"
+#include "SceneYangTest.h"
 
 void SceneExplorer::Init(void)
 {
@@ -22,6 +27,9 @@ void SceneExplorer::Init(void)
 	//ÉVÅ[ÉìÇÃìoò^
 	AddScene<SceneImGuiTest>();
 	AddScene<SceneTest>();
+	AddScene<SceneYangTest>();
+
+	FadeScreen::FadeIn(Color::black, 0.0f);
 }
 
 void SceneExplorer::Update(void)
@@ -69,7 +77,10 @@ void SceneExplorer::Uninit(void)
 {
 	for (auto& scene : sceneList)
 	{
-		scene->texture->Release();
+		if (scene->texture != Texture::none)
+			scene->texture->Release();
 	}
 	sceneList.clear();
 }
+
+#endif

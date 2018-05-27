@@ -24,7 +24,6 @@ void Game::Init(void)
 	Renderer::Create();
 	Physics::Create();
 	InitRandom();
-	Texture::Init();
 	run_game = true;
 }
 
@@ -55,7 +54,6 @@ void Game::Uninit(void)
 {
 	GameManager::Destroy();
 	ObjectManager::Destroy();
-	Texture::Uninit();
 	Physics::Destroy();
 	Renderer::Destroy();
 	Time::Uninit();
@@ -68,5 +66,8 @@ bool Game::End(void)
 
 void Game::Stop(void)
 {
-	run_game = false;
+	if(Window::GetHWnd())
+		Window::Destroy();
+	else
+		run_game = false;
 }

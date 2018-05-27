@@ -1,3 +1,5 @@
+#ifdef IMGUI
+
 #include "SceneImGuiTest.h"
 #include "FadeScreen.h"
 
@@ -57,3 +59,5 @@ void SceneImGuiTest::Uninit(void)
 {
 	Renderer::GetInstance()->setCamera(nullptr);
 }
+
+#endif

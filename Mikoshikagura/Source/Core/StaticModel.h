@@ -8,21 +8,15 @@
 
 #include "Common.h"
 #include "Drawable.h"
-#include "Transform.h"
-#include "Texture.h"
+#include "ModelData.h"
 
 class StaticModel : public Drawable
 {
 public:
-	Texture				**pTextures;	// テクスチャへのポインタ
-	LPD3DXMESH			pMesh;			// ID3DXMeshインターフェイスへのポインタ
-	LPD3DXBUFFER		pBuffMaterial;	// マテリアルバッファーへのポインタ
-	LPD3DXMATERIAL		pMaterials;		// マテリアル情報へのポインタ
-	DWORD				numMaterial;	// マテリアル情報の数
+	ModelData*			pData;
 	bool				alphaTestEnable;
 
 	StaticModel(std::string model_name, Layer layer = Layer::DEFAULT);
-	~StaticModel(void);
 	void Draw(void) override;
 	//void DrawModelWireFrame(StaticModel* _this);
 

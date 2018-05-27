@@ -13,7 +13,7 @@ void SceneGlobal::Init(void)
 	FadeScreen::Create();
 	FadeScreen::FadeOut(Color::black, 0.0f);
 
-	Texture::LoadTexture("magic_square");
+	Texture::Load("magic_square");
 
 #ifdef _DEBUG
 	DebugManager::Create();
@@ -23,8 +23,6 @@ void SceneGlobal::Init(void)
 
 void SceneGlobal::Update(void)
 {
-	if (GetKeyboardPress(DIK_RETURN))
-		Game::Stop();
 }
 
 void SceneGlobal::Uninit(void)

@@ -8,10 +8,11 @@ class RenderTarget : public Texture, public ILostAndReset
 {
 public:
 	static RenderTarget* BackBuffer(void);
+	static RenderTarget* Make(std::string name, int width, int height);
 
 private:
-	static RenderTarget back_buffer;
-	static std::vector<RenderTarget*> render_target_list;
+	static RenderTarget *const back_buffer;
+	//static std::vector<RenderTarget*> render_target_list;
 
 public:
 	LPDIRECT3DSURFACE9 pSurface;
@@ -20,11 +21,10 @@ public:
 	HRESULT OnLostDevice(void) override;
 	HRESULT OnResetDevice(void) override;
 
-	RenderTarget(int width = SystemParameters::ResolutionX, int height = SystemParameters::ResolutionY, bool create = true);
-	RenderTarget(bool create);
+	RenderTarget(std::string name);
 	~RenderTarget(void);
 
 private:
-	HRESULT Create(void);
 	int index;
+	HRESULT Create(void);
 };

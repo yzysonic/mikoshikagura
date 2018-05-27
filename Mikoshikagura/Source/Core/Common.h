@@ -32,14 +32,22 @@ void SafeDelete(T *&ptr)
 }
 
 template<class T>
+void SafeRelease(T *&ptr)
+{
+	if (ptr == nullptr) return;
+	ptr->Release();
+	ptr = nullptr;
+}
+
+template<class T>
 void SafeFree(T *&ptr)
 {
 	free(ptr);
 	ptr = nullptr;
 }
 
-#define SafeRelease(ptr)	if(ptr != NULL) {ptr->Release(); ptr = NULL; }
 #define ColorRGBA(r,g,b,a)		D3DCOLOR_RGBA(r,g,b,a)
+
 
 template<class T>
 using smart_ptr = std::unique_ptr<T>;
