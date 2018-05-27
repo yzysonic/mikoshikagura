@@ -25,7 +25,7 @@ public:
 	int divideY;				// テクスチャ内Y分割数
 
 	Texture(std::string name);
-	~Texture(void);
+	virtual ~Texture(void);
 	void SetDivision(int x, int y);
 
 private:

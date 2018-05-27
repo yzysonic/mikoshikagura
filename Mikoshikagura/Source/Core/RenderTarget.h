@@ -26,5 +26,6 @@ public:
 
 private:
 	int index;
+	RenderTarget(std::string name, bool insertToMap);
 	HRESULT Create(void);
 };

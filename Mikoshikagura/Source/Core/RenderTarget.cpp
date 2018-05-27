@@ -1,7 +1,7 @@
 #include "RenderTarget.h"
 #include "Common.h"
 
-RenderTarget *const RenderTarget::back_buffer = new RenderTarget("BackBuffer");
+RenderTarget *const RenderTarget::back_buffer = new RenderTarget("BackBuffer", true);
 //std::vector<RenderTarget*> RenderTarget::render_target_list;
 
 RenderTarget::RenderTarget(std::string name) : Texture(name)
@@ -19,9 +19,13 @@ RenderTarget::~RenderTarget(void)
 	//	render_target_list[this->index]->index = this->index;
 	//	render_target_list.pop_back();
 	//}
-	SafeRelease(pDXTex);
 	SafeRelease(pSurface);
 	SafeRelease(pDepthSurface);
+}
+
+RenderTarget::RenderTarget(std::string name, bool insertToMap) : RenderTarget(name)
+{
+	InsertToMap(this);
 }
 
 HRESULT RenderTarget::Create(void)
