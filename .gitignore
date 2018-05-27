@@ -215,3 +215,5 @@ ModelManifest.xml
 *.db
 *.iobj
 *.ipdb
+Mikoshikagura/imgui.ini
+Mikoshikagura/Mikoshikagura_Debug.exe
