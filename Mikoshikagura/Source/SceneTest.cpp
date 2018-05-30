@@ -2,6 +2,9 @@
 #include "FadeScreen.h"
 #include "Core/Game.h"
 #include "Light.h"
+#include "ImGuiPlayer.h"
+#include "DebugManager.h"
+
 
 void SceneTest::Init(void)
 {
@@ -40,6 +43,7 @@ void SceneTest::Init(void)
 	camera = new MainCamera;
 	player = new Player;
 
+	player->transform.position = Vector3(0, 500, 0);
 	camera->SetTarget(&player->transform);
 
 	camera->AddSnapper(&target1->transform);
@@ -53,14 +57,17 @@ void SceneTest::Init(void)
 
 
 	//0522nagai mapdata作成
-	mapdata = new Mapdata("Data/Map/プロトステージ2.tmx");
+	mapdata = new Mapdata("Data/Map/load_test.tmx");
 	mapdata->CreateMapObject();
+	player->mapdataptr = (Mapdata *)mapdata;
+	player->AddComponent<imGuiPlayer>();
 }
 
 void SceneTest::Update(void)
 {
 	//test->transform.position.x += 0.3f;
 	//test->transform.rotate(0.05f,0,0);
+
 }
 
 void SceneTest::Uninit(void)

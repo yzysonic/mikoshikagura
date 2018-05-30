@@ -1,5 +1,7 @@
 #pragma once
 #include "Core/Core.h"
+#include "XMLPerser.h"
+
 
 #define KeyAtkShort	DIK_J
 #define KeyAtkLong	DIK_K
@@ -107,6 +109,10 @@ public:
 	Event event_move;
 	Event event_get_element;
 
+	//20180530永井 map通信用テスト変数
+	Mapdata *mapdataptr;
+	Vector2 size;
+
 	// メンバー関数定義
 
 	Player(void);
@@ -117,12 +123,11 @@ public:
 	void AtkUp(void);
 	int GetElementNum(void);
 
-
 private:
 	// メンバー変数定義
 
 	SkinnedModel* model;
-	SphereCollider* collider;
+	BoxCollider2D* collider;
 	Vector3 control;
 	FrameTimer anime_timer;
 	FrameTimer bullet_timer;

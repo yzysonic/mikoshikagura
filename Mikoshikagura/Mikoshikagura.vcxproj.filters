@@ -265,6 +265,9 @@
     <ClInclude Include="Source\ImGuiObject.h">
       <Filter>Script\Debug</Filter>
     </ClInclude>
+    <ClInclude Include="Source\imGuiPlayer.h">
+      <Filter>Script\Debug</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Core\AllocateHirerachy.cpp">
@@ -457,6 +460,9 @@
       <Filter>Script\Debug</Filter>
     </ClCompile>
     <ClCompile Include="Source\ImGuiObject.cpp">
+      <Filter>Script\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\imGuiPlayer.cpp">
       <Filter>Script\Debug</Filter>
     </ClCompile>
   </ItemGroup>

@@ -6,17 +6,20 @@
 #include <string>
 #include <sstream>      // std::ostringstream
 #include "Core\Core.h"
-
 class maplayer {
 
 public:
+
+	std::vector<Object*> mapobj;
 	std::vector<std::vector<int>> maptip;
 
 public:
 	void Load() {};
 	int Gettip() {};
 	void Settip(int x,int y ,int value) {};
+
 };
+
 
 
 class Mapdata :public Object {
@@ -25,31 +28,38 @@ class Mapdata :public Object {
 	int layermax;
 	int width;
 	int height;
+	Vector3 objscale;
 
 	std::vector<maplayer> layer;
-
-	std::vector<Object*> mapobj;
 
 public:
 	Mapdata();								//コンストラクタ
 	Mapdata(std::string str);
 	~Mapdata() {};								//デストラクタ
 
+	virtual void Update();
+
 	void Load(std::string);					//マップロード
 	void SetMaptip(int x, int y, int value) {};//マップ変更
 
-	bool IsCollison(int x, int y){};//マップ変更			//当たり判定
+	Vector3 Mapdata::IsCollison(Vector3 position, Vector3 control, Vector2 size);
 
 	void MapView();
 	void CreateMapObject();
+
+
+
 private:
 
 	void Mapdata::Perse(std::ifstream ifs, std::string str);
 	std::pair<int, int> WorldtoCell(Vector3 worldpos);			//ワールドとセルの変換
 	std::pair<float, float> CelltoWorld(int valuex, int valuey) {};			//ワールドとセルの変換
 
-	bool IsCollison(Vector3 pos);
+
+
+	void SetLayerActive(int layer ,bool active);
 };
+
 
 //
 //
