@@ -1,4 +1,5 @@
 #include "SceneYangTest.h"
+#include "Core/Physics.h"
 #include "Light.h"
 #include "CameraPlay.h"
 #include "CameraSmooth.h"
@@ -20,7 +21,19 @@ void SceneYangTest::Init(void)
 
 	// オブジェクト初期化
 	player	= new Player;
-	test	= new SeasonTestObject;
+	player->AddComponent<ImGuiObject>();
+	player->SetPosition(Vector3(0.0f, 30.0f, 0.0f));
+	
+	{
+		int i = 0;
+		for (auto t : test)
+		{
+			t = new SeasonTestObject;
+			t->transform.position.x =
+			t->transform.position.y = (float)(i++ - 1) * 10;
+		}
+	}
+	
 	debug	= DebugManager::GetInstance()->GetComponent<DebugMenu>();
 
 	// カメラ初期化
@@ -34,6 +47,9 @@ void SceneYangTest::Init(void)
 	// レンダリング設定
 	Renderer::GetInstance()->setCamera(camera);
 	Light::Init();
+
+	// 重力設定
+	Physics::GetInstance()->setGravity(Vector3(0.0f, -98.0f, 0.0f));
 }
 
 void SceneYangTest::Update(void)
@@ -78,6 +94,8 @@ void SceneYangTest::Uninit(void)
 SeasonTestObject::SeasonTestObject(void)
 {
 	model = AddComponent<StaticModel>("field_summer");
+	collider = AddComponent<BoxCollider2D>();
+	collider->size = Vector2::one*10.0f;
 }
 
 void SeasonTestObject::SetSummer(void)
@@ -88,4 +106,23 @@ void SeasonTestObject::SetSummer(void)
 void SeasonTestObject::SetWinter(void)
 {
 	model->pData = ModelData::Get("field_winter");
+}
+
+void SeasonTestObject::Update(void)
+{
+	ImGui::Begin("BoxCollision");
+
+	if (collide)
+		ImGui::Text("atari!");
+	else
+		ImGui::Text("none");
+
+	ImGui::End();
+
+	collide = false;
+}
+
+void SeasonTestObject::OnCollision(Object * object)
+{
+	collide = true;
 }

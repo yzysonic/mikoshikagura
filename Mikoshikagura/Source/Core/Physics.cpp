@@ -10,7 +10,7 @@ void Physics::Create(void)
 {
 	Singleton::Create();
 
-	m_pInstance->gravaty = Vector3(0, 10, 0);
+	m_pInstance->gravaty = Vector3(0, -9.8f, 0);
 	m_pInstance->colliderList.reserve(SystemParameters::ObjectMax);
 	m_pInstance->rigidbodyList.reserve(SystemParameters::ObjectMax);
 

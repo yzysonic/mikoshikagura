@@ -13,4 +13,5 @@ protected:
 private:
 	std::vector<Component*> script_list;
 	ImGuiWindowFlags flags;
+	int script_count;
 };

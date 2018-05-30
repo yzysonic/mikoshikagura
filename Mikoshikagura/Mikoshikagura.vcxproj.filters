@@ -452,12 +452,14 @@
     <ClCompile Include="Source\SeasonManager.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="Source\SeasonObject.cpp" />
     <ClCompile Include="Source\ImGuiCamera.cpp">
       <Filter>Script\Debug</Filter>
     </ClCompile>
     <ClCompile Include="Source\ImGuiObject.cpp">
       <Filter>Script\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SeasonObject.cpp">
+      <Filter>GameObject</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

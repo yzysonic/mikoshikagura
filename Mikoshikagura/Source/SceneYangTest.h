@@ -10,9 +10,13 @@ public:
 	SeasonTestObject(void);
 	void SetSummer(void) override;
 	void SetWinter(void) override;
+	void Update(void) override;
+	void OnCollision(Object* object) override;
 
 private:
 	StaticModel * model;
+	BoxCollider2D * collider;
+	bool collide;
 };
 
 class SceneYangTest : public Scene
@@ -23,7 +27,7 @@ public:
 	void Uninit(void) override;
 
 private:
-	SeasonTestObject * test;
+	SeasonTestObject * test[3];
 	Player * player;
 	Camera * camera;
 	DebugMenu * debug;
