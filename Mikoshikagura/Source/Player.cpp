@@ -21,9 +21,8 @@ Player::Player(void)
 	this->model->SetAnime((int)this->anime);
 
 	// コライダー初期化
-	this->collider = AddComponent<BoxCollider2D>();
-	this->collider->size = Vector2(4.0f, 16.0f);
-	this->collider->offset.y += 0.5f*this->collider->size.y;
+	this->collider = AddComponent<SphereCollider>();
+	this->collider->radius = Radius;
 
 	this->rigidbody = AddComponent<Rigidbody>();
 	this->rigidbody->useGravity = false;
@@ -37,11 +36,25 @@ Player::Player(void)
 	this->state[(int)StateName::Attack	].reset(new StateAttack(this));
 	this->state[(int)StateName::Damage	].reset(new StateDamage(this));
 	this->current_state = this->state[(int)StateName::Idle].get();
+
+	//永井mapdataptr用の初期化
+	mapdataptr = nullptr;
+	//永井プレイヤーの大きさ
+	size.x = 10.0f;
+	size.y = 5.0f;
+
+
 }
 
 void Player::Update(void)
 {
+	AttackControl();
 	MoveControl();
+
+
+	if (mapdataptr != nullptr) {
+		this->control = mapdataptr->IsCollison(this->transform.position,this->control,this->size);
+	}
 
 	this->current_state->Update();
 	this->is_collision_block = false;
@@ -53,8 +66,7 @@ void Player::Uninit(void)
 
 void Player::OnCollision(Object * other)
 {
-	if (other->type == ObjectType::Element)
-	{
+	if (other->type == ObjectType::Element) {
 		this->element_num++;
 		this->event_get_element();
 	}
@@ -101,9 +113,9 @@ void Player::MoveControl(void)
 
 	// キーボード入力
 	if (GetKeyboardPress(DIK_W))
-		control += Vector3(0.0f, 0.0f, 1.0f);
+		control += Vector3(0.0f, 1.0f, 0.0f);
 	if (GetKeyboardPress(DIK_S))
-		control += Vector3(0.0f, 0.0f, -1.0f);
+		control += Vector3(0.0f, -1.0f, 0.0f);
 	if (GetKeyboardPress(DIK_A))
 		control += Vector3(-1.0f, 0.0f, 0.0f);
 	if (GetKeyboardPress(DIK_D))
@@ -112,11 +124,14 @@ void Player::MoveControl(void)
 	if (GetKeyboardPress(DIK_W) || GetKeyboardPress(DIK_A) || GetKeyboardPress(DIK_S) || GetKeyboardPress(DIK_D))
 		control = control.normalized();
 
+
+
+
 	// パッド入力
 	control += Vector3(GetPadLX(), 0, -GetPadLY());
 
 	// ムーブイベント
-	if (this->control.sqrLength() > 0.0f)
+	if (this->control.sqrLength() >= 0.01f)
 	{
 		this->current_state->SetState(StateName::Move);
 		this->event_move();
@@ -149,8 +164,8 @@ void Player::Move(void)
 
 	Vector3 move;
 	move.x = control.x*cosf(phi) - control.z*sinf(phi);
-	move.z = control.x*sinf(phi) + control.z*cosf(phi);
-
+	//move.z = control.x*sinf(phi) + control.z*cosf(phi);
+	move.y = control.y;
 	// 移動量を反応
 	this->rigidbody->velocity.x = move.x*PlayerSpeed;
 
@@ -160,8 +175,7 @@ void Player::Move(void)
 
 void Player::AttackControl(void)
 {
-	if (GetKeyboardTrigger(KeyAtkShort) || IsButtonTriggered(0, BtnAtkShort))
-	{
+	if (GetKeyboardTrigger(KeyAtkShort) || IsButtonTriggered(0, BtnAtkShort)) {
 		this->init_attack = [&] {
 			this->SetAnime(AnimeSet::ShootBulletShort, false);
 			this->bullet_timer.Reset(0.03f);
@@ -169,8 +183,7 @@ void Player::AttackControl(void)
 				if (this->anime_timer.Elapsed() > 0.3f)
 					return;
 
-				if (this->bullet_timer.TimeUp())
-				{
+				if (this->bullet_timer.TimeUp()) {
 					ShootBulletShort();
 					this->bullet_timer.Reset();
 				}
@@ -179,8 +192,7 @@ void Player::AttackControl(void)
 		};
 	}
 
-	else if (GetKeyboardTrigger(KeyAtkLong) || IsButtonTriggered(0, BtnAtkLong))
-	{
+	else if (GetKeyboardTrigger(KeyAtkLong) || IsButtonTriggered(0, BtnAtkLong)) {
 		this->init_attack = [&] {
 			this->SetAnime(AnimeSet::AttackLong, false);
 			this->bullet_timer.Reset(0.04f);
@@ -189,8 +201,7 @@ void Player::AttackControl(void)
 				if (this->anime_timer.Elapsed() < 0.3f || this->anime_timer.Elapsed() > 0.7f)
 					return;
 
-				if (this->bullet_timer.TimeUp())
-				{
+				if (this->bullet_timer.TimeUp()) {
 					ShootBulletLong();
 					this->bullet_timer.Reset();
 				}
@@ -198,8 +209,7 @@ void Player::AttackControl(void)
 
 				// 回転処理
 				float control_len = this->control.length();
-				if (control_len > 0.01f)
-				{
+				if (control_len > 0.01f) {
 					auto camera = Renderer::GetInstance()->getCamera();
 					Vector3 offset = this->transform.position - camera->transform.position;
 					float phi = atan2f(offset.z, offset.x) - 0.5f*PI;
@@ -217,8 +227,7 @@ void Player::AttackControl(void)
 		};
 	}
 
-	else if (GetKeyboardTrigger(KeyAtkArea) || IsButtonTriggered(0, BtnAtkArea))
-	{
+	else if (GetKeyboardTrigger(KeyAtkArea) || IsButtonTriggered(0, BtnAtkArea)) {
 		this->init_attack = [&] {
 			this->SetAnime(AnimeSet::AttackArea, false);
 			this->bullet_timer.Reset(0.005f);
@@ -227,8 +236,7 @@ void Player::AttackControl(void)
 				if (this->anime_timer.Elapsed() > 0.2f)
 					return;
 
-				if (this->bullet_timer.TimeUp())
-				{
+				if (this->bullet_timer.TimeUp()) {
 					ShootBulletArea();
 					this->bullet_timer.Reset();
 				}
@@ -236,8 +244,7 @@ void Player::AttackControl(void)
 			};
 
 		};
-	}
-	else return;
+	} else return;
 
 	this->current_state->SetState(StateName::Attack);
 }
@@ -312,8 +319,7 @@ void Player::StateIdle::Update(void)
 
 void Player::StateIdle::SetState(StateName state)
 {
-	switch (state)
-	{
+	switch (state) {
 	case StateName::Move:
 	case StateName::Air:
 	case StateName::Attack:
@@ -336,26 +342,14 @@ void Player::StateMove::OnEnter(void)
 
 void Player::StateMove::Update(void)
 {
-	if (this->player->CheckGrounded())
+	float control_len = this->player->control.length();
+	if (control_len > 0.01f)
 	{
-		if (!this->player->JumpControl())
-		{
-			float control_len = this->player->control.length();
-			if (control_len > 0.0f)
-			{
-				this->player->Move();
-				this->player->model->SetAnimeSpeedScale(control_len);
-			}
-			else
-			{
-				this->SetState(StateName::Idle);
-			}
-		}
+		this->player->Move();
+		this->player->model->SetAnimeSpeedScale(control_len);
 	}
 	else
-	{
-		SetState(StateName::Air);
-	}
+		this->SetState(StateName::Idle);
 }
 
 void Player::StateMove::OnExit(void)
@@ -365,8 +359,7 @@ void Player::StateMove::OnExit(void)
 
 void Player::StateMove::SetState(StateName state)
 {
-	switch (state)
-	{
+	switch (state) {
 	case StateName::Idle:
 	case StateName::Air:
 	case StateName::Attack:
@@ -400,8 +393,7 @@ void Player::StateAttack::Update(void)
 
 void Player::StateAttack::SetState(StateName state)
 {
-	switch (state)
-	{
+	switch (state) {
 	case StateName::Idle:
 		State::SetState(state);
 		break;
