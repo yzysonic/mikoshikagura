@@ -1,16 +1,16 @@
 #pragma once
 #include "Core/Core.h"
-#include "XMLPerser.h"
-
 
 #define KeyAtkShort	DIK_J
 #define KeyAtkLong	DIK_K
 #define KeyAtkArea	DIK_L
+#define KeyJump		DIK_SPACE
 #define BtnAtkShort	BUTTON_SQ
 #define BtnAtkLong	BUTTON_TR
 #define BtnAtkArea	BUTTON_CI
 
 #define PlayerSpeed (20.0f)
+#define PlayerJumpSpeed (45.0f)
 
 class Player : public Object
 {
@@ -26,6 +26,7 @@ public:
 	{
 		Idle,
 		Move,
+		Air,
 		Attack,
 		Damage,
 		Max
@@ -42,6 +43,8 @@ public:
 		Idle
 	} anime;
 
+	
+#pragma region State
 	// 状態クラス
 	class State
 	{
@@ -53,7 +56,7 @@ public:
 		virtual void SetState(StateName state);
 
 	protected:
-		Player* player;
+		Player * player;
 
 	} *current_state;
 
@@ -72,6 +75,17 @@ public:
 	{
 	public:
 		StateMove(Player* player) : State(player) {}
+		void OnEnter(void) override;
+		void Update(void) override;
+		void OnExit(void) override;
+		void SetState(StateName state) override;
+	};
+
+	// 空中状態
+	class StateAir : public State
+	{
+	public:
+		StateAir(Player* player) : State(player) {}
 		void OnEnter(void) override;
 		void Update(void) override;
 		void OnExit(void) override;
@@ -100,6 +114,9 @@ public:
 		void SetState(StateName state) override;
 	};
 
+#pragma endregion
+
+
 	// 状態インスタンスリスト
 	std::vector<smart_ptr<State>> state;
 
@@ -109,30 +126,31 @@ public:
 	Event event_move;
 	Event event_get_element;
 
-	//20180530永井 map通信用テスト変数
-	Mapdata *mapdataptr;
-	Vector2 size;
-
 	// メンバー関数定義
 
 	Player(void);
 	void Update(void) override;
 	void Uninit(void) override;
 	void OnCollision(Object* other) override;
+	void SetPosition(Vector3 pos);
 	// プレイヤーのATK値を1単位上げる、MAXになるとそれ以上増えない。
 	void AtkUp(void);
 	int GetElementNum(void);
+
 
 private:
 	// メンバー変数定義
 
 	SkinnedModel* model;
 	BoxCollider2D* collider;
+	Rigidbody* rigidbody;
 	Vector3 control;
 	FrameTimer anime_timer;
 	FrameTimer bullet_timer;
 	float speed;
 	int element_num;
+	bool is_grounded;
+	bool is_collision_block;
 	std::function<void(void)> init_attack;
 	std::function<void(void)> update_attack;
 
@@ -141,9 +159,11 @@ private:
 
 	void SetAnime(AnimeSet anime, bool loop = true);
 	void MoveControl(void);
+	bool JumpControl(void);
 	void Move(void);
 	void AttackControl(void);
 	void ShootBulletShort(void);
 	void ShootBulletLong(void);
 	void ShootBulletArea(void);
+	bool CheckGrounded(void);
 };

@@ -36,9 +36,15 @@ bool Rigidbody::SetActive(bool value)
 		return false;
 
 	if (value)
+	{
 		Physics::GetInstance()->addRigidbody(this);
+		this->position = this->object->transform.position;
+		this->rotation = this->object->transform.getRotation();
+	}
 	else
+	{
 		Physics::GetInstance()->removeRigidbody(this);
+	}
 
 	return true;
 }
