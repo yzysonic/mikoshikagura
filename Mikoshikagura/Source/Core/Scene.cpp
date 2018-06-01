@@ -53,6 +53,9 @@ void Scene::PauseObjects(void)
 
 	for (auto &obj : this->obj_list)
 	{
+		if (obj->dontStopWhenPause)
+			continue;
+
 		this->active_shot.emplace_back(obj->GetActive());
 		obj->SetActive(false);
 	}

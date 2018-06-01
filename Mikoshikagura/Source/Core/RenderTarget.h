@@ -8,7 +8,8 @@ class RenderTarget : public Texture, public ILostAndReset
 {
 public:
 	static RenderTarget* BackBuffer(void);
-	static RenderTarget* Make(std::string name, int width, int height);
+	static RenderTarget* Make(std::string name, int width = (float)SystemParameters::ResolutionX, int height = (float)SystemParameters::ResolutionY);
+	static RenderTarget* Get(std::string name);
 
 private:
 	static RenderTarget *const back_buffer;

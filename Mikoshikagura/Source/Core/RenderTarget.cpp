@@ -110,6 +110,11 @@ RenderTarget * RenderTarget::Make(std::string name, int width, int height)
 	return renderTarget;
 }
 
+RenderTarget * RenderTarget::Get(std::string name)
+{
+	return static_cast<RenderTarget*>(Texture::Get(name));
+}
+
 HRESULT RenderTarget::OnLostDevice(void)
 {
 
