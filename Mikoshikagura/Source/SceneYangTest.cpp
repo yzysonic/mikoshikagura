@@ -22,7 +22,7 @@ void SceneYangTest::Init(void)
 	// オブジェクト初期化
 	player	= new Player;
 	player->AddComponent<ImGuiObject>();
-	player->SetPosition(Vector3(0.0f, 30.0f, 0.0f));
+	//player->SetPosition(Vector3(0.0f, 30.0f, 0.0f));
 	
 	{
 		int i = 0;

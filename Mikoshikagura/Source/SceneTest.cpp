@@ -50,8 +50,8 @@ void SceneTest::Init(void)
 
 	Renderer::GetInstance()->setCamera(camera);
 
-
-	player->SetPosition(Vector3(0, 500, 0));
+	player->transform.position.y = 500;
+	//player->SetPosition(Vector3(0, 500, 0));
 
 
 
