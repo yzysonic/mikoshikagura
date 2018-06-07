@@ -203,6 +203,7 @@
     <ClInclude Include="Source\FadeScreen.h" />
     <ClInclude Include="Source\ImGuiCamera.h" />
     <ClInclude Include="Source\ImGuiObject.h" />
+    <ClInclude Include="Source\imGuiPlayer.h" />
     <ClInclude Include="Source\SceneExplorer.h" />
     <ClInclude Include="Source\SceneImGuiTest.h" />
     <ClInclude Include="Source\Imgui\imconfig.h" />
@@ -270,6 +271,7 @@
     <ClCompile Include="Source\FadeScreen.cpp" />
     <ClCompile Include="Source\ImGuiCamera.cpp" />
     <ClCompile Include="Source\ImGuiObject.cpp" />
+    <ClCompile Include="Source\imGuiPlayer.cpp" />
     <ClCompile Include="Source\Imgui\imgui.cpp" />
     <ClCompile Include="Source\Imgui\ImGuiImpl.cpp" />
     <ClCompile Include="Source\Imgui\imgui_demo.cpp" />

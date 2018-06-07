@@ -6,7 +6,6 @@ Collider::Collider(void)
 {
 	this->Component::type = ComponentType::Collider;
 	this->isTrigger = false;
-	//Physics::GetInstance()->addCollider(this);
 }
 
 
