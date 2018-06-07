@@ -1,13 +1,9 @@
 #pragma once
 #include "Core/Core.h"
 
-#define KeyAtkShort	DIK_J
-#define KeyAtkLong	DIK_K
-#define KeyAtkArea	DIK_L
 #define KeyJump		DIK_SPACE
-#define BtnAtkShort	BUTTON_SQ
-#define BtnAtkLong	BUTTON_TR
-#define BtnAtkArea	BUTTON_CI
+#define KeyAction	DIK_RETURN
+#define KeyWhistle	DIK_TAB
 
 #define PlayerSpeed (20.0f)
 #define PlayerJumpSpeed (45.0f)
@@ -27,8 +23,7 @@ public:
 		Idle,
 		Move,
 		Air,
-		Attack,
-		Damage,
+		Action,
 		Max
 	};
 
@@ -36,10 +31,6 @@ public:
 	enum class AnimeSet
 	{
 		Running,
-		Injure,
-		ShootBulletShort,
-		AttackLong,
-		AttackArea,
 		Idle
 	} anime;
 
@@ -93,25 +84,15 @@ public:
 	};
 
 	// 攻撃状態
-	class StateAttack : public State
+	class StateAction : public State
 	{
 	public:
-		StateAttack(Player* player) : State(player) {}
+		StateAction(Player* player) : State(player) {}
 		void OnEnter(void) override;
 		void Update(void) override;
 		void SetState(StateName state) override;
 	private:
 		FrameTimer timer;
-	};
-
-	// 負傷状態
-	class StateDamage : public State
-	{
-	public:
-		StateDamage(Player* player) : State(player) {}
-		void OnEnter(void) override;
-		void Update(void) override;
-		void SetState(StateName state) override;
 	};
 
 #pragma endregion
@@ -120,12 +101,6 @@ public:
 	// 状態インスタンスリスト
 	std::vector<smart_ptr<State>> state;
 
-	// メンバー変数定義
-
-	int atk;
-	Event event_move;
-	Event event_get_element;
-
 	// メンバー関数定義
 
 	Player(void);
@@ -133,9 +108,6 @@ public:
 	void Uninit(void) override;
 	void OnCollision(Object* other) override;
 	void SetPosition(Vector3 pos);
-	// プレイヤーのATK値を1単位上げる、MAXになるとそれ以上増えない。
-	void AtkUp(void);
-	int GetElementNum(void);
 
 
 private:
@@ -147,22 +119,16 @@ private:
 	Vector3 control;
 	Vector3 last_position;
 	FrameTimer anime_timer;
-	FrameTimer bullet_timer;
 	float speed;
-	int element_num;
 	bool is_grounded;
-	std::function<void(void)> init_attack;
-	std::function<void(void)> update_attack;
+	std::function<void(void)> action;
 
 
 	// メンバー関数定義
 
 	void SetAnime(AnimeSet anime, bool loop = true);
 	void MoveControl(void);
+	void ActionControl(void);
 	bool JumpControl(void);
 	void Move(void);
-	void AttackControl(void);
-	void ShootBulletShort(void);
-	void ShootBulletLong(void);
-	void ShootBulletArea(void);
 };
