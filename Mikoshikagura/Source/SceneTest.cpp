@@ -26,6 +26,7 @@ void SceneTest::Init(void)
 
 
 	Texture::Load("target");
+	Texture::Load("hukidashi");
 	ModelData::Load("field");
 
 	target1 = new Object;
@@ -55,6 +56,15 @@ void SceneTest::Init(void)
 	//0522nagai mapdata作成
 	mapdata = new Mapdata("Data/Map/プロトステージ2.tmx");
 	mapdata->CreateMapObject();
+
+	//0601umeda hukidashi作成
+	hukidashi = new Hukidashi;
+
+	kanban = new Sign("これはテストメッセージです", hukidashi);
+	kanban->AddComponent<RectPolygon>("target");
+	kanban->transform.scale = Vector3::one*10.f;
+	kanban->transform.position = Vector3(-50, 00, 7);
+	kanban->AddComponent<BoxCollider2D>()->size = Vector2(10,10);
 }
 
 void SceneTest::Update(void)

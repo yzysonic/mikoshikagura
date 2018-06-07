@@ -3,6 +3,9 @@
 #include "MainCamera.h"
 #include "Player.h"
 #include "XMLPerser.h"
+#include "Hukidashi.h"
+#include "Sign.h"
+
 class SceneTest : public Scene
 {
 public:
@@ -15,8 +18,10 @@ private:
 	Object *testBG;
 	Object *target1;
 	Object *target2;
+	Sign *kanban;
 	MainCamera *camera;
 	Player *player;
+	Hukidashi *hukidashi;
 
 	Mapdata *mapdata;
 
