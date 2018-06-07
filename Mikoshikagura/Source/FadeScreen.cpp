@@ -2,10 +2,9 @@
 
 FadeScreen::FadeScreen(void)
 {
-	this->AddComponent<RectPolygon2D>("none", Layer::TOP);
-
-	this->GetComponent<RectPolygon2D>()->SetSize((float)SystemParameters::ResolutionX, (float)SystemParameters::ResolutionY);
-	this->GetComponent<RectPolygon2D>()->SetOpacity(0.0f);
+	this->polygon = AddComponent<RectPolygon2D>("none", Layer::TOP, "global");
+	this->polygon->SetSize((float)SystemParameters::ResolutionX, (float)SystemParameters::ResolutionY);
+	this->polygon->SetOpacity(0.0f);
 
 	state = Stop;
 
@@ -20,8 +19,8 @@ void FadeScreen::Update()
 	case Run:
 		if (timer < fadeTime + 0.1f)
 		{
-			float t = this->GetComponent<RectPolygon2D>()->GetOpacity();
-			this->GetComponent<RectPolygon2D>()->SetOpacity(Lerpf(oldOpacity, targetOpacity, timer / fadeTime));
+			float t = this->polygon->GetOpacity();
+			this->polygon->SetOpacity(Lerpf(oldOpacity, targetOpacity, timer / fadeTime));
 		}
 		else
 		{
@@ -29,6 +28,7 @@ void FadeScreen::Update()
 		}
 		timer += Time::DeltaTime();
 		break;
+
 	case Stop:
 		SetActive(false);
 		break;
@@ -85,6 +85,16 @@ void FadeScreen::FadeIn(Color color, float interval)
 void FadeScreen::FadeOut(Color color, float interval)
 {
 	Fade(FADE_OUT, color, interval);
+}
+
+void FadeScreen::SetTexture(const char * texture_name)
+{
+	m_pInstance->polygon->pTexture = Texture::Get(texture_name);
+}
+
+void FadeScreen::SetTexture(Texture * texture)
+{
+	m_pInstance->polygon->pTexture = texture;
 }
 
 bool FadeScreen::Finished(void)

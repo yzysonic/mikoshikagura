@@ -214,6 +214,9 @@
     <ClInclude Include="Source\MainCamera.h" />
     <ClInclude Include="Source\Player.h" />
     <ClInclude Include="Source\SceneGlobal.h" />
+    <ClInclude Include="Source\SceneStackSample.h" />
+    <ClInclude Include="Source\SceneStackSampleGame.h" />
+    <ClInclude Include="Source\SceneStackSampleOp.h" />
     <ClInclude Include="Source\SceneTest.h" />
     <ClInclude Include="Source\SceneYangTest.h" />
     <ClInclude Include="Source\SeasonManager.h" />
@@ -283,6 +286,9 @@
     <ClCompile Include="Source\SceneExplorer.cpp" />
     <ClCompile Include="Source\SceneGlobal.cpp" />
     <ClCompile Include="Source\SceneImGuiTest.cpp" />
+    <ClCompile Include="Source\SceneStackSample.cpp" />
+    <ClCompile Include="Source\SceneStackSampleGame.cpp" />
+    <ClCompile Include="Source\SceneStackSampleOp.cpp" />
     <ClCompile Include="Source\SceneTest.cpp" />
     <ClCompile Include="Source\SceneYangTest.cpp" />
     <ClCompile Include="Source\SeasonManager.cpp" />

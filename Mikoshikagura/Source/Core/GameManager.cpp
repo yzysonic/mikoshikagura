@@ -30,6 +30,8 @@ void GameManager::Update(void)
 
 void GameManager::Destroy(void)
 {
+	ClearSceneStack();
+
 	for (auto& scene : m_pInstance->scene)
 	{
 		if (scene != nullptr)

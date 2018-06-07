@@ -4,6 +4,7 @@
 #include "Light.h"
 #include "ImGuiPlayer.h"
 #include "DebugManager.h"
+#include "Core\Physics.h"
 
 
 void SceneTest::Init(void)
@@ -50,18 +51,17 @@ void SceneTest::Init(void)
 
 	Renderer::GetInstance()->setCamera(camera);
 
-	player->transform.position.y = 500;
-	//player->SetPosition(Vector3(0, 500, 0));
+	player->SetPosition(Vector3(0, 500, 0));
 
 
 
 	//0522nagai mapdataì¬
-	mapdata = new Mapdata("Data/Map/load_test.tmx");
+	mapdata = new Mapdata("Data/Map/prototype_map1.tmx");
 	mapdata->CreateMapObject();
 	player->AddComponent<imGuiPlayer>();
 	mapdata->SetPlayerpointer(player);
 
-
+	Physics::GetInstance()->setGravity(Vector3(0.0f, -98.0f, 0.0f));
 }
 
 void SceneTest::Update(void)

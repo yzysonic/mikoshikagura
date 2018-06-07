@@ -5,8 +5,6 @@ Mapdata::Mapdata() {
 
 	this->name = "mapdata";
 
-	transform.scale = Vector3(0.2f, 0.2f, 0.2f);
-
 }
 
 Mapdata::Mapdata(std::string str)
