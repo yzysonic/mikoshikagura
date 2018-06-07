@@ -12,7 +12,7 @@ Player::Player(void)
 	this->speed = PlayerSpeed;
 	this->anime = AnimeSet::Idle;
 	this->element_num = 0;
-	this->is_grounded = true;
+	this->is_grounded = false;
 	this->init_attack = [] {};
 	this->update_attack = [] {};
 
@@ -44,7 +44,8 @@ void Player::Update(void)
 	MoveControl();
 
 	this->current_state->Update();
-	this->is_collision_block = false;
+	this->is_grounded = false;
+	this->last_position = this->transform.position;
 }
 
 void Player::Uninit(void)
@@ -61,8 +62,72 @@ void Player::OnCollision(Object * other)
 
 	if (other->type == ObjectType::Object)
 	{
-		this->is_collision_block = true;
-		this->is_grounded = true;
+		auto otherCollider = other->GetComponent<BoxCollider2D>();
+
+		// ’…’n”»’è
+		if (this->last_position.y + this->collider->offset.y - 0.5f*this->collider->size.y >=
+			other->transform.position.y + otherCollider->offset.y + 0.5f*otherCollider->size.y)
+		{
+			this->is_grounded = true;
+		}
+
+		// Õ“Ë‰“š‚Ìˆ—
+		auto x = 0.0f;
+		auto y = 0.0f;
+
+		// ‚ß‚è‚İ‚Ì—Ê‚ğŒvZ‚·‚é
+		if (this->rigidbody->velocity.x > 0.0f)
+		{
+			x = (this->rigidbody->position.x + this->collider->offset.x + 0.5f*this->collider->size.x) -
+				(other->transform.position.x + otherCollider->offset.x - 0.5f*otherCollider->size.x);
+		}
+		else if(this->rigidbody->velocity.x < 0.0f)
+		{
+			x = (this->rigidbody->position.x + this->collider->offset.x - 0.5f*this->collider->size.x) -
+				(other->transform.position.x + otherCollider->offset.x + 0.5f*otherCollider->size.x);
+		}
+		else
+		{
+			auto x1 = (this->rigidbody->position.x + this->collider->offset.x + 0.5f*this->collider->size.x) -
+				(other->transform.position.x + otherCollider->offset.x - 0.5f*otherCollider->size.x);
+			auto x2 = (this->rigidbody->position.x + this->collider->offset.x - 0.5f*this->collider->size.x) -
+				(other->transform.position.x + otherCollider->offset.x + 0.5f*otherCollider->size.x);
+			x = fminf(fabsf(x1), fabsf(x2));
+		}
+
+		if (this->rigidbody->velocity.y > 0.0f)
+		{
+			y = (this->rigidbody->position.y + this->collider->offset.y + 0.5f*this->collider->size.y) -
+				(other->transform.position.y + otherCollider->offset.y - 0.5f*otherCollider->size.y);
+		}
+		else if(this->rigidbody->velocity.y < 0.0f)
+		{
+			y = (this->rigidbody->position.y + this->collider->offset.y - 0.5f*this->collider->size.y) -
+				(other->transform.position.y + otherCollider->offset.y + 0.5f*otherCollider->size.y);
+		}
+		else
+		{
+			auto y1 = (this->rigidbody->position.y + this->collider->offset.y + 0.5f*this->collider->size.y) -
+				(other->transform.position.y + otherCollider->offset.y - 0.5f*otherCollider->size.y);
+			auto y2 = (this->rigidbody->position.y + this->collider->offset.y - 0.5f*this->collider->size.y) -
+				(other->transform.position.y + otherCollider->offset.y + 0.5f*otherCollider->size.y);
+			y = fminf(fabsf(y1), fabsf(y2));
+		}
+
+		// ‚ß‚è‚ñ‚¾—Ê‚¾‚¯‰Ÿ‚µ•Ô‚·
+		if (fabsf(x) <= fabsf(y))
+		{
+			this->rigidbody->position.x -= x;
+			this->rigidbody->velocity.x = 0.0f;
+			this->transform.position.x = this->rigidbody->position.x;
+		}
+		else
+		{
+			this->rigidbody->position.y -= y;
+			this->rigidbody->velocity.y = 0.0f;
+			this->transform.position.y = this->rigidbody->position.y;
+		}
+
 	}
 }
 
@@ -269,10 +334,6 @@ void Player::ShootBulletArea(void)
 	t.setRotation(0.0f, theta, 0.0f);
 }
 
-bool Player::CheckGrounded(void)
-{
-	return this->is_collision_block;
-}
 
 #pragma endregion
 
@@ -300,7 +361,7 @@ void Player::StateIdle::OnEnter(void)
 
 void Player::StateIdle::Update(void)
 {
-	if (this->player->CheckGrounded())
+	if (this->player->is_grounded)
 	{
 		this->player->JumpControl();
 	}
@@ -336,7 +397,7 @@ void Player::StateMove::OnEnter(void)
 
 void Player::StateMove::Update(void)
 {
-	if (this->player->CheckGrounded())
+	if (this->player->is_grounded)
 	{
 		if (!this->player->JumpControl())
 		{

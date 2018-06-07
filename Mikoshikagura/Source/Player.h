@@ -145,12 +145,12 @@ private:
 	BoxCollider2D* collider;
 	Rigidbody* rigidbody;
 	Vector3 control;
+	Vector3 last_position;
 	FrameTimer anime_timer;
 	FrameTimer bullet_timer;
 	float speed;
 	int element_num;
 	bool is_grounded;
-	bool is_collision_block;
 	std::function<void(void)> init_attack;
 	std::function<void(void)> update_attack;
 
@@ -165,5 +165,4 @@ private:
 	void ShootBulletShort(void);
 	void ShootBulletLong(void);
 	void ShootBulletArea(void);
-	bool CheckGrounded(void);
 };

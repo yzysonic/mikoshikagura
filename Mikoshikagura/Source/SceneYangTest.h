@@ -27,8 +27,9 @@ public:
 	void Uninit(void) override;
 
 private:
-	SeasonTestObject * test[3];
+	SeasonTestObject * test[10];
 	Player * player;
 	Camera * camera;
 	DebugMenu * debug;
+	FrameTimer timer;
 };
