@@ -193,6 +193,7 @@
     <ClInclude Include="Source\Core\Sound.h" />
     <ClInclude Include="Source\Core\StaticModel.h" />
     <ClInclude Include="Source\Core\System.h" />
+    <ClInclude Include="Source\Core\Text.h" />
     <ClInclude Include="Source\Core\Texture.h" />
     <ClInclude Include="Source\Core\Time.h" />
     <ClInclude Include="Source\Core\Transform.h" />
@@ -201,6 +202,7 @@
     <ClInclude Include="Source\DebugManager.h" />
     <ClInclude Include="Source\DebugMenu.h" />
     <ClInclude Include="Source\FadeScreen.h" />
+    <ClInclude Include="Source\Hukidashi.h" />
     <ClInclude Include="Source\ImGuiCamera.h" />
     <ClInclude Include="Source\ImGuiObject.h" />
     <ClInclude Include="Source\SceneExplorer.h" />
@@ -217,6 +219,7 @@
     <ClInclude Include="Source\SceneYangTest.h" />
     <ClInclude Include="Source\SeasonManager.h" />
     <ClInclude Include="Source\SeasonObject.h" />
+    <ClInclude Include="Source\Sign.h" />
     <ClInclude Include="Source\Snapshot.h" />
     <ClInclude Include="Source\XMLPerser.h" />
   </ItemGroup>
@@ -260,6 +263,7 @@
     <ClCompile Include="Source\Core\Sound.cpp" />
     <ClCompile Include="Source\Core\StaticModel.cpp" />
     <ClCompile Include="Source\Core\System.cpp" />
+    <ClCompile Include="Source\Core\Text.cpp" />
     <ClCompile Include="Source\Core\Texture.cpp" />
     <ClCompile Include="Source\Core\Time.cpp" />
     <ClCompile Include="Source\Core\Transform.cpp" />
@@ -268,6 +272,7 @@
     <ClCompile Include="Source\DebugManager.cpp" />
     <ClCompile Include="Source\DebugMenu.cpp" />
     <ClCompile Include="Source\FadeScreen.cpp" />
+    <ClCompile Include="Source\Hukidashi.cpp" />
     <ClCompile Include="Source\ImGuiCamera.cpp" />
     <ClCompile Include="Source\ImGuiObject.cpp" />
     <ClCompile Include="Source\Imgui\imgui.cpp" />
@@ -285,6 +290,7 @@
     <ClCompile Include="Source\SceneYangTest.cpp" />
     <ClCompile Include="Source\SeasonManager.cpp" />
     <ClCompile Include="Source\SeasonObject.cpp" />
+    <ClCompile Include="Source\Sign.cpp" />
     <ClCompile Include="Source\Snapshot.cpp" />
     <ClCompile Include="Source\XMLPerser.cpp" />
   </ItemGroup>

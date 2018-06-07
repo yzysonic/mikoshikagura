@@ -207,9 +207,6 @@
     <ClInclude Include="Source\CameraSmooth.h">
       <Filter>Script</Filter>
     </ClInclude>
-    <ClInclude Include="Source\CameraSnap.h">
-      <Filter>GameObject</Filter>
-    </ClInclude>
     <ClInclude Include="Source\DebugManager.h">
       <Filter>GameObject\Debug</Filter>
     </ClInclude>
@@ -264,6 +261,18 @@
     </ClInclude>
     <ClInclude Include="Source\ImGuiObject.h">
       <Filter>Script\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Hukidashi.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CameraSnap.h">
+      <Filter>Script</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Core\Text.h">
+      <Filter>Core\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Sign.h">
+      <Filter>GameObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -405,9 +414,6 @@
     <ClCompile Include="Source\CameraSmooth.cpp">
       <Filter>Script</Filter>
     </ClCompile>
-    <ClCompile Include="Source\CameraSnap.cpp">
-      <Filter>GameObject</Filter>
-    </ClCompile>
     <ClCompile Include="Source\DebugManager.cpp">
       <Filter>GameObject\Debug</Filter>
     </ClCompile>
@@ -458,6 +464,18 @@
     </ClCompile>
     <ClCompile Include="Source\ImGuiObject.cpp">
       <Filter>Script\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CameraSnap.cpp">
+      <Filter>Script</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Hukidashi.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Core\Text.cpp">
+      <Filter>Core\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Sign.cpp">
+      <Filter>GameObject</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
