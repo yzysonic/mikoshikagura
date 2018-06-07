@@ -58,13 +58,12 @@ void Text::LoadFont(std::string filename)
 	{
 		RemoveFontResource(path.c_str());
 	}
-
-	if (AddFontResource(filename.c_str()) != 0)
+	std::string tmp = BasePath + filename + DefaultExtension;
+	if (AddFontResource(tmp.c_str()) != 0)
 	{
-		path = filename;
-
+		path = tmp;
 		D3DXCreateFont(pDevice, 36, 0, 0, 0, FALSE, SHIFTJIS_CHARSET,
-			OUT_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH, "APJapanesefont", &Font);
+			OUT_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH, filename.c_str(), &Font);
 	}
 	else
 	{

@@ -277,6 +277,11 @@
     <ClInclude Include="Source\SceneStackSampleOp.h">
       <Filter>Scene\SceneStackSample</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Hukidashi.h" />
+    <ClInclude Include="Source\Sign.h" />
+    <ClInclude Include="Source\Core\Text.h">
+      <Filter>Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Core\AllocateHirerachy.cpp">
@@ -481,6 +486,11 @@
     </ClCompile>
     <ClCompile Include="Source\SceneStackSampleOp.cpp">
       <Filter>Scene\SceneStackSample</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Hukidashi.cpp" />
+    <ClCompile Include="Source\Sign.cpp" />
+    <ClCompile Include="Source\Core\Text.cpp">
+      <Filter>Core</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

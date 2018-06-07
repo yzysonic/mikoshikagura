@@ -6,7 +6,7 @@
 Hukidashi::Hukidashi(void)
 {
 	this->AddComponent<RectPolygon2D>("hukidashi")->SetSize(1080, 360);
-	this->AddComponent<Text>()->LoadFont("Data/Font/APJapanesefont.ttf");
+	this->AddComponent<Text>()->LoadFont("APJapanesefont");
 	hukidashi_pos = Vector2(0, 175);
 	text_pos = Vector2(200, 80);
 	text_size = Vector2(880, 210);
@@ -16,6 +16,7 @@ Hukidashi::Hukidashi(void)
 	pop_count = 0;
 	read_count = 0;
 	str_head = 0;
+	radian = 0.0f;
 	this->state = none;
 	this->SetActive(false);
 }
@@ -40,7 +41,7 @@ void Hukidashi::Update(void)
 		break;
 	case popping:
 		pop_count++;
-		this->GetComponent<RectPolygon2D>()->SetSize(1080 * pop_count / POPCOUNT, 360 * pop_count / POPCOUNT);
+		this->GetComponent<RectPolygon2D>()->SetSize(1080.0f * pop_count / POPCOUNT, 360.0f * pop_count / POPCOUNT);
 		if (pop_count == POPCOUNT)
 		{
 			this->state = popped;
@@ -51,16 +52,19 @@ void Hukidashi::Update(void)
 		if (read_count == READCOUNT)
 		{
 			read_count = 0;
-			if (str_head < message.length())
+			if (str_head < (float)(message.length()))
 			{
 				this->GetComponent<Text>()->AddText(message[str_head]);
 				str_head++;
 			}
 		}
+		radian += 0.0314f;
+		this->transform.position = Vector3(hukidashi_pos.x + 4 * cosf(radian * 0.5f), hukidashi_pos.y + 4 * sinf(radian * 0.33f), 0.0f);
+		if (radian > 12 * PI) radian = 0.0f;
 		break;
 	case unpopping:
 		pop_count--;
-		this->GetComponent<RectPolygon2D>()->SetSize(1080 * pop_count / POPCOUNT, 360 * pop_count / POPCOUNT);
+		this->GetComponent<RectPolygon2D>()->SetSize(1080.0f * pop_count / POPCOUNT, 360.0f * pop_count / POPCOUNT);
 		if (pop_count == 0)
 		{
 			this->state = none;

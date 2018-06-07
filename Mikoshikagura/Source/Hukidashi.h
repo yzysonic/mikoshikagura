@@ -24,4 +24,5 @@ private:
 	RECT *area;
 	Vector2 text_pos, text_size;
 	STATE state;
+	float radian;
 };

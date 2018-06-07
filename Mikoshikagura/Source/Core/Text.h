@@ -6,6 +6,10 @@
 class Text : public Drawable
 {
 public:
+	static constexpr char* BasePath = "Data/Font/";
+	static constexpr char* DefaultExtension = ".ttf";
+
+public:
 	Text(void);
 	~Text(void);
 	void Draw(void) override;
