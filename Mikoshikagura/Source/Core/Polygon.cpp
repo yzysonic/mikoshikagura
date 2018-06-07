@@ -82,7 +82,7 @@ void RectPolygon2D::SetTexture(std::string texture_name)
 void RectPolygon2D::SetTexture(Texture * texture)
 {
 	if (texture == nullptr)
-		return;
+		texture = Texture::none;
 
 	this->pTexture = texture;
 	this->size = this->pTexture->size;
@@ -176,17 +176,19 @@ void RectPolygon2D::transformVertex(void)
 
 }
 
+RectPolygon::RectPolygon(std::string texture_name, Layer layer, std::string render_space_name) : RectPolygon(Texture::Get(texture_name), layer, render_space_name) {}
 
-RectPolygon::RectPolygon(std::string texture_name, Layer layer, std::string render_space_name) : Drawable(layer, render_space_name)
+RectPolygon::RectPolygon(Texture * texture, Layer layer, std::string render_space_name) : Drawable(layer, render_space_name)
 {
 	this->Component::type = ComponentType::RectPolygon;
 	this->layer = layer;
 	this->rendType = RendererType::Default;
 
 	InitBuffer();
-	SetTexture(Texture::Get(texture_name));
+	SetTexture(texture);
 	SetSize(Vector2::one);
 }
+
 
 RectPolygon::~RectPolygon(void)
 {

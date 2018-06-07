@@ -49,6 +49,9 @@
     <Filter Include="Script\Debug">
       <UniqueIdentifier>{2ec880c9-6d27-40de-9bb2-ad631bf27309}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scene\SceneStackSample">
+      <UniqueIdentifier>{da11bf66-4972-4116-97a1-1b3d0ffebb98}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Core\AllocateHirerachy.h">
@@ -207,6 +210,9 @@
     <ClInclude Include="Source\CameraSmooth.h">
       <Filter>Script</Filter>
     </ClInclude>
+    <ClInclude Include="Source\CameraSnap.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
     <ClInclude Include="Source\DebugManager.h">
       <Filter>GameObject\Debug</Filter>
     </ClInclude>
@@ -262,17 +268,14 @@
     <ClInclude Include="Source\ImGuiObject.h">
       <Filter>Script\Debug</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Hukidashi.h">
-      <Filter>GameObject</Filter>
+    <ClInclude Include="Source\SceneStackSample.h">
+      <Filter>Scene\SceneStackSample</Filter>
     </ClInclude>
-    <ClInclude Include="Source\CameraSnap.h">
-      <Filter>Script</Filter>
+    <ClInclude Include="Source\SceneStackSampleGame.h">
+      <Filter>Scene\SceneStackSample</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Core\Text.h">
-      <Filter>Core\Graphic</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Sign.h">
-      <Filter>GameObject</Filter>
+    <ClInclude Include="Source\SceneStackSampleOp.h">
+      <Filter>Scene\SceneStackSample</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -414,6 +417,9 @@
     <ClCompile Include="Source\CameraSmooth.cpp">
       <Filter>Script</Filter>
     </ClCompile>
+    <ClCompile Include="Source\CameraSnap.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
     <ClCompile Include="Source\DebugManager.cpp">
       <Filter>GameObject\Debug</Filter>
     </ClCompile>
@@ -458,24 +464,23 @@
     <ClCompile Include="Source\SeasonManager.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="Source\SeasonObject.cpp" />
     <ClCompile Include="Source\ImGuiCamera.cpp">
       <Filter>Script\Debug</Filter>
     </ClCompile>
     <ClCompile Include="Source\ImGuiObject.cpp">
       <Filter>Script\Debug</Filter>
     </ClCompile>
-    <ClCompile Include="Source\CameraSnap.cpp">
-      <Filter>Script</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Hukidashi.cpp">
+    <ClCompile Include="Source\SeasonObject.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Core\Text.cpp">
-      <Filter>Core\Graphic</Filter>
+    <ClCompile Include="Source\SceneStackSample.cpp">
+      <Filter>Scene\SceneStackSample</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Sign.cpp">
-      <Filter>GameObject</Filter>
+    <ClCompile Include="Source\SceneStackSampleGame.cpp">
+      <Filter>Scene\SceneStackSample</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneStackSampleOp.cpp">
+      <Filter>Scene\SceneStackSample</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -34,9 +34,9 @@ void Text::SetText(std::string string)
 	text = string;
 }
 
-void Text::AddText(std::string string)
+void Text::AddText(char c)
 {
-	text += string;
+	text += c;
 }
 
 void Text::ClearText(void)

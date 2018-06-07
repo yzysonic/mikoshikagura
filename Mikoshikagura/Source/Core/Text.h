@@ -10,7 +10,7 @@ public:
 	~Text(void);
 	void Draw(void) override;
 	void SetText(std::string string);
-	void AddText(std::string string);
+	void AddText(char c);
 	void ClearText(void);
 	void LoadFont(std::string filename);
 	RECT area;

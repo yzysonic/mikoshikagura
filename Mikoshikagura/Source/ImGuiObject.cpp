@@ -3,6 +3,7 @@
 void ImGuiObject::Init(void)
 {
 	object->GetComponents().swap(script_list);
+	script_count = object->GetScripts().size();
 	flags = 0;
 	flags |= ImGuiWindowFlags_NoSavedSettings;
 
@@ -33,7 +34,7 @@ void ImGuiObject::GuiContent(void)
 	}
 
 	// Scripts
-	if (script_list.size() > 0)
+	if (script_count > 0)
 	{
 		if (ImGui::TreeNodeEx("Script", ImGuiTreeNodeFlags_DefaultOpen))
 		{

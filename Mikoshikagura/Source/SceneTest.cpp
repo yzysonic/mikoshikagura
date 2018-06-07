@@ -60,10 +60,10 @@ void SceneTest::Init(void)
 	//0601umeda hukidashi作成
 	hukidashi = new Hukidashi;
 
-	kanban = new Sign("これはテストメッセージです", hukidashi);
+	kanban = new Sign("これはテストメッセージです。\nThis is test message.", hukidashi);
 	kanban->AddComponent<RectPolygon>("target");
 	kanban->transform.scale = Vector3::one*10.f;
-	kanban->transform.position = Vector3(-50, 00, 7);
+	kanban->transform.position = Vector3(00, 00, 7);
 	kanban->AddComponent<BoxCollider2D>()->size = Vector2(10,10);
 }
 
