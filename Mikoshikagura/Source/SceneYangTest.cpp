@@ -22,7 +22,7 @@ void SceneYangTest::Init(void)
 	// オブジェクト初期化
 	player	= new Player;
 	player->AddComponent<ImGuiObject>();
-	player->SetPosition(Vector3(0.0f, 30.0f, 0.0f));
+	//player->SetPosition(Vector3(0.0f, 30.0f, 0.0f));
 	
 	{
 		int i = 0;
@@ -55,6 +55,11 @@ void SceneYangTest::Init(void)
 
 void SceneYangTest::Update(void)
 {
+	timer++;
+
+	test[4]->transform.position.y = 10.0f*sinf(timer.Elapsed());
+	test[5]->transform.position.y = 10.0f*cosf(timer.Elapsed());
+
 	// テストメニュー
 	ImGui::SetNextWindowSize(ImVec2(150.0f, 0), ImGuiCond_Once);
 	ImGui::Begin("TestMenu", NULL,  ImGuiWindowFlags_NoResize);
@@ -77,11 +82,6 @@ void SceneYangTest::Update(void)
 	ImGui::Begin("DebugMenu ", NULL, ImGuiWindowFlags_NoResize);
 	debug->GuiContent();
 	ImGui::End();
-	
-	test[4]->transform.position.y = 10.0f*sinf(timer.Elapsed());
-	test[5]->transform.position.y = 10.0f*cosf(timer.Elapsed());
-
-	timer++;
 }
 
 void SceneYangTest::Uninit(void)
