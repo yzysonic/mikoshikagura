@@ -1,6 +1,6 @@
 #include "Hukidashi.h"
 
-#define READCOUNT 3
+#define READCOUNT 2
 #define POPCOUNT 15
 
 Hukidashi::Hukidashi(void)
@@ -13,7 +13,9 @@ Hukidashi::Hukidashi(void)
 	this->transform.position = Vector3(hukidashi_pos.x, hukidashi_pos.y, 0.0f);
 	area = &this->GetComponent<Text>()->area;
 	*area = { (int)text_pos.x, (int)text_pos.y, (int)(text_pos.x + text_size.x), (int)(text_pos.y + text_size.y) };
-	count = 0;
+	pop_count = 0;
+	read_count = 0;
+	str_head = 0;
 	this->state = none;
 	this->SetActive(false);
 }
@@ -37,22 +39,30 @@ void Hukidashi::Update(void)
 	case none:
 		break;
 	case popping:
-		count++;
-		this->GetComponent<RectPolygon2D>()->SetSize(1080 * count / POPCOUNT, 360 * count / POPCOUNT);
-		if (count == POPCOUNT)
+		pop_count++;
+		this->GetComponent<RectPolygon2D>()->SetSize(1080 * pop_count / POPCOUNT, 360 * pop_count / POPCOUNT);
+		if (pop_count == POPCOUNT)
 		{
-			this->GetComponent<Text>()->SetText(this->message);
 			this->state = popped;
 		}
 		break;
 	case popped:
+		read_count++;
+		if (read_count == READCOUNT)
+		{
+			read_count = 0;
+			if (str_head < message.length())
+			{
+				this->GetComponent<Text>()->AddText(message[str_head]);
+				str_head++;
+			}
+		}
 		break;
 	case unpopping:
-		count--;
-		this->GetComponent<RectPolygon2D>()->SetSize(1080 * count / POPCOUNT, 360 * count / POPCOUNT);
-		if (count == 0)
+		pop_count--;
+		this->GetComponent<RectPolygon2D>()->SetSize(1080 * pop_count / POPCOUNT, 360 * pop_count / POPCOUNT);
+		if (pop_count == 0)
 		{
-			this->GetComponent<Text>()->ClearText();
 			this->state = none;
 			this->SetActive(false);
 		}
@@ -62,14 +72,18 @@ void Hukidashi::Update(void)
 
 void Hukidashi::Pop(std::string message)
 {
-	this->message = message;
-	this->state = popping;
-	this->SetActive(true);
+	if (this->state != popped)
+	{
+		this->message = message;
+		this->state = popping;
+		this->SetActive(true);
+		str_head = 0;
+	}
 }
 
 void Hukidashi::Unpop(void)
 {
 	this->message.clear();
+	this->GetComponent<Text>()->ClearText();
 	this->state = unpopping;
-	count = POPCOUNT;
 }

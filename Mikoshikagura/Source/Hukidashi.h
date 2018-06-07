@@ -18,7 +18,7 @@ private:
 		popped,
 		unpopping
 	};
-	int count;
+	int pop_count, read_count, str_head;
 	std::string message;
 	Vector2 hukidashi_pos;
 	RECT *area;
