@@ -5,15 +5,13 @@ Mapdata::Mapdata() {
 
 	this->name = "mapdata";
 
-	transform.scale = Vector3(0.2f, 0.2f, 0.2f);
-
 }
 
 Mapdata::Mapdata(std::string str)
 {
 	std::ifstream ifs(str);
 	maplayer mapbaff;
-	transform.scale = Vector3(0.2f, 0.2f, 0.2f);
+	//transform.scale = Vector3(0.2f, 0.2f, 0.2f);
 
 
 	bool flag = false;
@@ -164,15 +162,15 @@ void Mapdata::CreateMapObject() {
 
 					Vector3 objscale;
 					Object  *objtemp = new Object;
-					objtemp->AddComponent<StaticModel>("field");
+					objtemp->AddComponent<StaticModel>("field_summer");
 					objtemp->transform.scale = transform.scale;
 					objscale = objtemp->transform.scale;
 
-					objtemp->transform.position = Vector3((float)(k * 100 * objscale.x), (float)(-j * 100 * objscale.y), float(i* objscale.z * 100));
-					objtemp->transform.position.y += 2500 * objscale.x;
+					objtemp->transform.position = Vector3((float)(k * BlockSize * objscale.x), (float)((height-j) * BlockSize * objscale.y), float(i* objscale.z * BlockSize));
+					//objtemp->transform.position.y += 2500 * objscale.x;
 
 					objtemp->AddComponent<BoxCollider2D>();
-					objtemp->GetComponent<BoxCollider2D>()->size = Vector2(100 * objscale.x, 100 * objscale.y);
+					objtemp->GetComponent<BoxCollider2D>()->size = Vector2(BlockSize * objscale.x, BlockSize * objscale.y);
 					objtemp->GetComponent<BoxCollider2D>()->SetActive(false);
 
 					layer[i].mapobj[std::pair<int,int>(k,j)]= objtemp;
@@ -275,8 +273,8 @@ void Mapdata::Perse(std::ifstream ifs, std::string str)
 std::pair<int, int> Mapdata::WorldtoCell(Vector3 worldpos)
 {
 	int x, y;
-	x = (int)(worldpos.x / (transform.scale.x * 100));
-	y = (int)((500 - worldpos.y) / (transform.scale.y * 100));
+	x = (int)(worldpos.x / (transform.scale.x * BlockSize));
+	y = (int)((500 - worldpos.y) / (transform.scale.y * BlockSize));
 
 	return std::pair<int, int>(x, y);
 }

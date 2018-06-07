@@ -25,6 +25,7 @@ public:
 
 
 class Mapdata :public Object {
+	static constexpr int BlockSize = 10;
 
 	int layermax;
 	int width;
