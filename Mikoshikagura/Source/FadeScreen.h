@@ -20,6 +20,8 @@ public:
 	static void Fade(FadeType type, Color color = Color::none, float interval = DefaultFadeTime);
 	static void FadeIn(Color color, float interval = DefaultFadeTime);
 	static void FadeOut(Color color, float interval = DefaultFadeTime);
+	static void SetTexture(const char* texture_name);
+	static void SetTexture(Texture* texture);
 	static bool Finished(void);
 
 private:
@@ -29,6 +31,7 @@ private:
 	float targetOpacity;
 	float oldOpacity;
 	Color fadeColor;
+	RectPolygon2D* polygon;
 
 	enum AnimeSet
 	{

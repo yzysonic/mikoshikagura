@@ -113,6 +113,11 @@ void RenderSpace::Draw(void)
 		// ƒJƒƒ‰‚²‚Æ‚É
 		for (Camera* camera: render_space->camera_list)
 		{
+			if (!camera->GetActive())
+			{
+				continue;
+			}
+
 			Renderer::GetInstance()->drawing_camera = camera;
 
 			pDevice->SetRenderTarget(0, camera->render_target->pSurface);

@@ -21,6 +21,7 @@ Object::Object()
 	this->scene			= nullptr;
 	this->sceneIndex	= -1;
 	this->objectIndex	= -1;
+	this->dontStopWhenPause = false;
 
 	ObjectManager::GetInstance()->InitObject(this);
 

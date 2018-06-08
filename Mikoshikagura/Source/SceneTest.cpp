@@ -4,6 +4,7 @@
 #include "Light.h"
 #include "ImGuiPlayer.h"
 #include "DebugManager.h"
+#include "Core\Physics.h"
 
 
 void SceneTest::Init(void)
@@ -15,8 +16,6 @@ void SceneTest::Init(void)
 	Texture::Load("body_sum.tga");
 	Texture::Load("misaki_head.tga");
 
-
-	ModelData::Load("field_summer");
 	//test = new Object;
 	//test->AddComponent<RectPolygon>("magic_square")->SetSize(Vector2(100, 100));
 	//test->transform.scale = Vector3::one*10.f;
@@ -52,18 +51,17 @@ void SceneTest::Init(void)
 
 	Renderer::GetInstance()->setCamera(camera);
 
-	player->transform.position.y = 500;
-	//player->SetPosition(Vector3(0, 500, 0));
+	player->SetPosition(Vector3(0, 500, 0));
 
 
 
 	//0522nagai mapdataì¬
-	mapdata = new MapManager("Data/Map/prototype_map1.tmx");
+	mapdata = new Mapdata("Data/Map/prototype_map1.tmx");
 	mapdata->CreateMapObject();
 	player->AddComponent<imGuiPlayer>();
 	mapdata->SetPlayerpointer(player);
 
-
+	Physics::GetInstance()->setGravity(Vector3(0.0f, -98.0f, 0.0f));
 }
 
 void SceneTest::Update(void)

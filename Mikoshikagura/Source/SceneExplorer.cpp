@@ -7,6 +7,7 @@
 #include "SceneImGuiTest.h"
 #include "SceneTest.h"
 #include "SceneYangTest.h"
+#include "SceneStackSample.h"
 
 void SceneExplorer::Init(void)
 {
@@ -28,6 +29,7 @@ void SceneExplorer::Init(void)
 	AddScene<SceneImGuiTest>();
 	AddScene<SceneTest>();
 	AddScene<SceneYangTest>();
+	AddScene<SceneStackSample>();
 
 	FadeScreen::FadeIn(Color::black, 0.0f);
 }

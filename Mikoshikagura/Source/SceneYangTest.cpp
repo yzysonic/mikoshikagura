@@ -26,11 +26,12 @@ void SceneYangTest::Init(void)
 	
 	{
 		int i = 0;
-		for (auto t : test)
+		for (auto& t : test)
 		{
 			t = new SeasonTestObject;
-			t->transform.position.x =
-			t->transform.position.y = (float)(i++ - 1) * 10;
+			t->transform.position.x = (float)(i*10);
+			t->transform.position.y = (float)(((i/2)%2)*10);
+			i++;
 		}
 	}
 	
@@ -77,6 +78,10 @@ void SceneYangTest::Update(void)
 	debug->GuiContent();
 	ImGui::End();
 	
+	test[4]->transform.position.y = 10.0f*sinf(timer.Elapsed());
+	test[5]->transform.position.y = 10.0f*cosf(timer.Elapsed());
+
+	timer++;
 }
 
 void SceneYangTest::Uninit(void)

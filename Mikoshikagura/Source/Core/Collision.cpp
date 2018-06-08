@@ -16,10 +16,10 @@ bool CollisionTestAABB2D(Collider * collider_a, Collider * collider_b, Collision
 	const Vector2 &posa = bca->object->transform.position.toVector2()+bca->offset;
 	const Vector2 &posb = bcb->object->transform.position.toVector2()+bcb->offset;
 
-	return	((posa.x - bca->size.x / 2) < (posb.x + bcb->size.x / 2)) &&
-			((posa.x + bca->size.x / 2) > (posb.x - bcb->size.x / 2)) &&
-			((posa.y - bca->size.y / 2) < (posb.y + bcb->size.y / 2)) &&
-			((posa.y + bca->size.y / 2) > (posb.y - bcb->size.y / 2));
+	return	((posa.x - bca->size.x * 0.5f) <= (posb.x + bcb->size.x * 0.5f)) &&
+			((posa.x + bca->size.x * 0.5f) >= (posb.x - bcb->size.x * 0.5f)) &&
+			((posa.y - bca->size.y * 0.5f) <= (posb.y + bcb->size.y * 0.5f)) &&
+			((posa.y + bca->size.y * 0.5f) >= (posb.y - bcb->size.y * 0.5f));
 }
 
 bool CollisionTestSphere(Collider* collider_a, Collider* collider_b, Collision * pOutCollision)

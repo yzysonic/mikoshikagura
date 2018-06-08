@@ -49,6 +49,9 @@
     <Filter Include="Script\Debug">
       <UniqueIdentifier>{2ec880c9-6d27-40de-9bb2-ad631bf27309}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scene\SceneStackSample">
+      <UniqueIdentifier>{da11bf66-4972-4116-97a1-1b3d0ffebb98}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Core\AllocateHirerachy.h">
@@ -265,11 +268,14 @@
     <ClInclude Include="Source\ImGuiObject.h">
       <Filter>Script\Debug</Filter>
     </ClInclude>
-    <ClInclude Include="Source\imGuiPlayer.h">
-      <Filter>Script\Debug</Filter>
+    <ClInclude Include="Source\SceneStackSample.h">
+      <Filter>Scene\SceneStackSample</Filter>
     </ClInclude>
-    <ClInclude Include="Source\NagaiSceneTest.h">
-      <Filter>Scene</Filter>
+    <ClInclude Include="Source\SceneStackSampleGame.h">
+      <Filter>Scene\SceneStackSample</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneStackSampleOp.h">
+      <Filter>Scene\SceneStackSample</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -458,18 +464,23 @@
     <ClCompile Include="Source\SeasonManager.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="Source\SeasonObject.cpp" />
     <ClCompile Include="Source\ImGuiCamera.cpp">
       <Filter>Script\Debug</Filter>
     </ClCompile>
     <ClCompile Include="Source\ImGuiObject.cpp">
       <Filter>Script\Debug</Filter>
     </ClCompile>
-    <ClCompile Include="Source\imGuiPlayer.cpp">
-      <Filter>Script\Debug</Filter>
+    <ClCompile Include="Source\SeasonObject.cpp">
+      <Filter>GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="Source\NagaiSceneTest.cpp">
-      <Filter>Scene</Filter>
+    <ClCompile Include="Source\SceneStackSample.cpp">
+      <Filter>Scene\SceneStackSample</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneStackSampleGame.cpp">
+      <Filter>Scene\SceneStackSample</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneStackSampleOp.cpp">
+      <Filter>Scene\SceneStackSample</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

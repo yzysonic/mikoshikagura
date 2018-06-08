@@ -69,6 +69,7 @@ class RectPolygon : public Drawable, public ILostAndReset
 public:
 	Texture *pTexture;
 
+	RectPolygon(Texture* texture, Layer layer = Layer::DEFAULT, std::string render_space_name = "default");
 	RectPolygon(std::string texture_name = "none", Layer layer = Layer::DEFAULT, std::string render_space_name = "default");
 	~RectPolygon(void);
 	HRESULT OnLostDevice(void);
