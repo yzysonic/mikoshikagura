@@ -220,10 +220,11 @@
     <ClInclude Include="Source\SceneStackSampleOp.h" />
     <ClInclude Include="Source\SceneTest.h" />
     <ClInclude Include="Source\SceneYangTest.h" />
+    <ClInclude Include="Source\Scene_Stage1.h" />
     <ClInclude Include="Source\SeasonManager.h" />
     <ClInclude Include="Source\SeasonObject.h" />
     <ClInclude Include="Source\Snapshot.h" />
-    <ClInclude Include="Source\XMLPerser.h" />
+    <ClInclude Include="Source\MapManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\CameraPlay.cpp" />
@@ -293,10 +294,11 @@
     <ClCompile Include="Source\SceneStackSampleOp.cpp" />
     <ClCompile Include="Source\SceneTest.cpp" />
     <ClCompile Include="Source\SceneYangTest.cpp" />
+    <ClCompile Include="Source\Scene_Stage1.cpp" />
     <ClCompile Include="Source\SeasonManager.cpp" />
     <ClCompile Include="Source\SeasonObject.cpp" />
     <ClCompile Include="Source\Snapshot.cpp" />
-    <ClCompile Include="Source\XMLPerser.cpp" />
+    <ClCompile Include="Source\MapManager.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

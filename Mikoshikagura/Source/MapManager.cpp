@@ -1,8 +1,8 @@
-#include "XMLPerser.h"
+#include "MapManager.h"
 
 MapManager::MapManager() {
 
-	this->name = "mapdata";
+	this->name = "mapmanager";
 }
 
 MapManager::MapManager(std::string str)
@@ -106,8 +106,6 @@ void MapManager::MapView()
 		i++;
 
 	}
-
-
 }
 
 void MapManager::CreateMapObject() {
@@ -133,6 +131,11 @@ void MapManager::CreateMapObject() {
 				}
 			}
 		}
+	}
+
+	for (int i = 0; i < layer.size(); i++)
+	{
+		SetLayerActive(i, false);
 	}
 }
 
@@ -227,6 +230,7 @@ void MapManager::Perse(std::ifstream ifs, std::string str)
 std::pair<int, int> MapManager::WorldtoCell(Vector3 worldpos)
 {
 	int x, y;
+	worldpos.x += BlockSize / 2;
 	x = (int)(worldpos.x / (transform.scale.x * BlockSize));
 	y = (int)((height *  BlockSize - worldpos.y) / (transform.scale.y * BlockSize));
 

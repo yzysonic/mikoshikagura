@@ -57,6 +57,8 @@ public:
 	void SetActiveCollider(std::pair<int, int> cell, bool state);	//コライダーの更新
 	void SetPlayerpointer(Player *player);			//プレイヤーポインタの設定
 
+	void SetLayerActive(int layer, bool active);
+
 
 private:
 
@@ -65,7 +67,5 @@ private:
 	std::pair<float, float> CelltoWorld(int valuex, int valuey) {};		//セルとワールドの変換(未実装)
 
 
-
-	void SetLayerActive(int layer ,bool active);
 };
 
