@@ -8,106 +8,64 @@
 #include <map>
 #include "Core\Core.h"
 #include "player.h"
+
+/*マップレイヤークラス*/
 class maplayer {
 
 public:
 
-	std::map<std::pair<int,int>, Object*> mapobj;
-	std::vector<std::vector<int>> maptip;
+	std::string name;
+	std::map<std::pair<int,int>, Object*> mapobj;	//マップオブジェクトのマップ
+	std::vector<std::vector<int>> maptip;			//マップデータの二重配列
 
 public:
-	void Load() {};
-	int Gettip() {};
-	void Settip(int x,int y ,int value) {};
+	void Load() {};									//未実装
+	int Gettip() {};								//未実装
+	void Settip(int x,int y ,int value) {};			//未実装
 
 };
 
 
 
-class Mapdata :public Object {
-	static constexpr int BlockSize = 10;
+/*マップ管理クラス*/
+class MapManager :public Object {
 
-	int layermax;
-	int width;
-	int height;
-	Vector3 objscale;
-	Player *playerobj;
-	std::pair<int, int> playercell;
+	static constexpr int BlockSize = 10;			//ブロックサイズ
 
-	std::vector<maplayer> layer;
+	int layermax;									//レイヤー数
+	int width;										//幅
+	int height;										//高さ
+	Vector3 objscale;								//マップオブジェクトスケール
+	Player *playerobj;								//プレイヤーのポインタ
+	std::pair<int, int> playercell;					//プレイヤーのいるセル
+
+	std::vector<maplayer> layer;					//マップデータ
 
 public:
-	Mapdata();								//コンストラクタ
-	Mapdata(std::string str);
-	~Mapdata() {};							//デストラクタ
+	MapManager();									//コンストラクタ
+	MapManager(std::string str);
+	~MapManager() {};								//デストラクタ
 
 	virtual void Update();
 
-	void Load(std::string);					//マップロード
-	void SetMaptip(int x, int y, int value) {};//マップ変更
+	void Load(std::string);							//マップロード
+	void SetMaptip(int x, int y, int value) {};		//マップ変更（未実装）
 
-	Vector3 Mapdata::IsCollison(Vector3 position, Vector3 control, Vector2 size);
-
-	void MapView();
-	void CreateMapObject();
-	void UpdatePlayerCell();
-	void SetActiveCollider(std::pair<int, int> cell, bool state);
-	void SetPlayerpointer(Player *player);
+	void MapView();									//未実装
+	void CreateMapObject();							//オブジェクト生成
+	void UpdatePlayerCell();						//プレイヤーがいるセルの更新
+	void SetActiveCollider(std::pair<int, int> cell, bool state);	//コライダーの更新
+	void SetPlayerpointer(Player *player);			//プレイヤーポインタの設定
 
 
 private:
 
-	void Mapdata::Perse(std::ifstream ifs, std::string str);
-	std::pair<int, int> WorldtoCell(Vector3 worldpos);			//ワールドとセルの変換
-	std::pair<float, float> CelltoWorld(int valuex, int valuey) {};			//ワールドとセルの変換
+	void MapManager::Perse(std::ifstream ifs, std::string str);			
+	std::pair<int, int> WorldtoCell(Vector3 worldpos);					//ワールドとセルの変換
+	std::pair<float, float> CelltoWorld(int valuex, int valuey) {};		//セルとワールドの変換(未実装)
 
 
 
 	void SetLayerActive(int layer ,bool active);
 };
 
-
-//
-//
-//class  XMLelement
-//{
-//private:
-//	XMLelement *parent;
-//	std::vector<*(XMLelement)> child;
-//
-//	template <typename T>
-//	std::pair < std::string, T >;
-//	
-//public:
-//	XMLelement();
-//	~ XMLelement();
-//
-//private:
-//
-//
-//
-//
-//};
-//
-//
-//
-//class XMLPerser {
-//
-//
-//private:
-//	XMLelement *root;
-//
-//	//xmlの読み込み関数
-//	void Load();
-//	void Perse();
-//
-//
-//public:
-//	template <typename T>
-//	T find(std::string tag);
-//
-//
-//
-//
-//
-//};

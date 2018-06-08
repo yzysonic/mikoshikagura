@@ -15,6 +15,8 @@ void SceneTest::Init(void)
 	Texture::Load("body_sum.tga");
 	Texture::Load("misaki_head.tga");
 
+
+	ModelData::Load("field_summer");
 	//test = new Object;
 	//test->AddComponent<RectPolygon>("magic_square")->SetSize(Vector2(100, 100));
 	//test->transform.scale = Vector3::one*10.f;
@@ -56,7 +58,7 @@ void SceneTest::Init(void)
 
 
 	//0522nagai mapdataì¬
-	mapdata = new Mapdata("Data/Map/load_test.tmx");
+	mapdata = new MapManager("Data/Map/prototype_map1.tmx");
 	mapdata->CreateMapObject();
 	player->AddComponent<imGuiPlayer>();
 	mapdata->SetPlayerpointer(player);

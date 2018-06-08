@@ -265,6 +265,12 @@
     <ClInclude Include="Source\ImGuiObject.h">
       <Filter>Script\Debug</Filter>
     </ClInclude>
+    <ClInclude Include="Source\imGuiPlayer.h">
+      <Filter>Script\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\NagaiSceneTest.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Core\AllocateHirerachy.cpp">
@@ -452,11 +458,18 @@
     <ClCompile Include="Source\SeasonManager.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
+    <ClCompile Include="Source\SeasonObject.cpp" />
     <ClCompile Include="Source\ImGuiCamera.cpp">
       <Filter>Script\Debug</Filter>
     </ClCompile>
     <ClCompile Include="Source\ImGuiObject.cpp">
       <Filter>Script\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\imGuiPlayer.cpp">
+      <Filter>Script\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\NagaiSceneTest.cpp">
+      <Filter>Scene</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

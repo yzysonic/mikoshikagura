@@ -18,7 +18,7 @@ private:
 	MainCamera *camera;
 	Player *player;
 
-	Mapdata *mapdata;
+	MapManager *mapdata;
 
 	std::vector<Object> mapobj;
 };

@@ -204,6 +204,7 @@
     <ClInclude Include="Source\ImGuiCamera.h" />
     <ClInclude Include="Source\ImGuiObject.h" />
     <ClInclude Include="Source\imGuiPlayer.h" />
+    <ClInclude Include="Source\NagaiSceneTest.h" />
     <ClInclude Include="Source\SceneExplorer.h" />
     <ClInclude Include="Source\SceneImGuiTest.h" />
     <ClInclude Include="Source\Imgui\imconfig.h" />
@@ -279,6 +280,7 @@
     <ClCompile Include="Source\Light.cpp" />
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\MainCamera.cpp" />
+    <ClCompile Include="Source\NagaiSceneTest.cpp" />
     <ClCompile Include="Source\Player.cpp" />
     <ClCompile Include="Source\SceneExplorer.cpp" />
     <ClCompile Include="Source\SceneGlobal.cpp" />

@@ -1,19 +1,16 @@
 #include "XMLPerser.h"
 
-Mapdata::Mapdata() {
-
+MapManager::MapManager() {
 
 	this->name = "mapdata";
-
 }
 
-Mapdata::Mapdata(std::string str)
+MapManager::MapManager(std::string str)
 {
 	std::ifstream ifs(str);
-	maplayer mapbaff;
-	//transform.scale = Vector3(0.2f, 0.2f, 0.2f);
+	maplayer mapbuff;
 
-
+	std::string layername;
 	bool flag = false;
 
 	if (ifs.fail()) {
@@ -22,13 +19,23 @@ Mapdata::Mapdata(std::string str)
 	}
 
 
+	//読み込み部
 	while (std::getline(ifs, str)) {
+
+
+		if(str.find("<layer") != -1){
+			std::stringstream ss(str);
+
+			std::getline(ss, layername, '"');
+			std::getline(ss, layername, '"');
+			mapbuff.name = layername;
+		}				
 		if (str.find("data") != -1) {
 			if (flag) {
 				flag = false;
 
-				layer.push_back(mapbaff);
-				mapbaff.maptip.clear();
+				layer.push_back(mapbuff);
+				mapbuff.maptip.clear();
 			} else {
 				flag = true;
 			}
@@ -43,7 +50,7 @@ Mapdata::Mapdata(std::string str)
 					xbuff.push_back(std::stoi(tipbuff));
 				}
 
-				mapbaff.maptip.push_back(xbuff);
+				mapbuff.maptip.push_back(xbuff);
 
 			}
 
@@ -62,7 +69,7 @@ Mapdata::Mapdata(std::string str)
 
 }
 
-void Mapdata::Load(std::string str)
+void MapManager::Load(std::string str)
 {
 	std::ifstream ifs(str);
 
@@ -81,57 +88,7 @@ void Mapdata::Load(std::string str)
 }
 
 
-
-Vector3 Mapdata::IsCollison(Vector3 position, Vector3 control,Vector2 size)
-{
-	position.x += 10;
-
-
-	std::pair<int, int> cell = WorldtoCell(position);
-
-
-
-	if (cell.first < 0 ) {
-		control.x = 1.0f;
-		return control;
-	} else if (cell.first > layer[0].maptip[0].size()) {
-		control.x = -1.0f;
-		return control;
-	}
-	if (cell.second < 0) {
-		control.y = -1.0f;
-		return control;
-	} else if (cell.second > layer[0].maptip.size()) {
-		control.y = 1.0f;
-		return control;
-	}
-	if ((cell.first + 1) < layer[0].maptip[0].size() && cell.first >= 0) {
-		if (layer[0].maptip[cell.second][cell.first + 1] > 0 && control.x > 0.0f) {
-			control.x = 0.0f;
-		}
-	}
-	if ((cell.first - 1) > 0 && cell.first < layer[0].maptip[0].size()) {
-		if (layer[0].maptip[cell.second][cell.first - 1] > 0 && control.x < 0.0f) {
-			control.x = 0.0f;
-		}
-	}
-
-	if ((cell.second + 1) < layer[0].maptip.size() && cell.second >= 0) {
-		if (layer[0].maptip[cell.second + 1][cell.first] > 0 && control.y < 0.0f) {
-			control.y = 0.0f;
-		}
-	}
-	if ((cell.second - 1) > 0 &&  cell.second <  layer[0].maptip.size()) {
-		if (layer[0].maptip[cell.second - 1][cell.first] > 0 && control.y > 0.0f) {
-			control.y = 0.0f;
-		}
-	}
-
-
-	return control;
-}
-
-void Mapdata::MapView()
+void MapManager::MapView()
 {
 	int i = 0;
 	for (auto itr = layer.begin(); itr != layer.end(); ++itr) {
@@ -153,7 +110,7 @@ void Mapdata::MapView()
 
 }
 
-void Mapdata::CreateMapObject() {
+void MapManager::CreateMapObject() {
 
 	for (int i = 0; i < layermax; i++) {
 		for (int j = 0; j < height; j++) {
@@ -167,7 +124,6 @@ void Mapdata::CreateMapObject() {
 					objscale = objtemp->transform.scale;
 
 					objtemp->transform.position = Vector3((float)(k * BlockSize * objscale.x), (float)((height-j) * BlockSize * objscale.y), float(i* objscale.z * BlockSize));
-					//objtemp->transform.position.y += 2500 * objscale.x;
 
 					objtemp->AddComponent<BoxCollider2D>();
 					objtemp->GetComponent<BoxCollider2D>()->size = Vector2(BlockSize * objscale.x, BlockSize * objscale.y);
@@ -180,7 +136,7 @@ void Mapdata::CreateMapObject() {
 	}
 }
 
-void Mapdata::UpdatePlayerCell()
+void MapManager::UpdatePlayerCell()
 {
 
 	Vector3  playerpos = playerobj->transform.position;
@@ -197,7 +153,7 @@ void Mapdata::UpdatePlayerCell()
 
 }
 
-void Mapdata::SetActiveCollider(std::pair<int ,int> cell,bool state)
+void MapManager::SetActiveCollider(std::pair<int ,int> cell,bool state)
 {
 
 	std::pair<int, int> targetcell[5];
@@ -213,9 +169,10 @@ void Mapdata::SetActiveCollider(std::pair<int ,int> cell,bool state)
 	targetcell[4] = cell;
 	targetcell[4].second += 1;
 	targetcell[4].first += 1;
-	//エラー回避
+
 
 	for (int i = 0; i < 5; i++) {
+		//エラー回避
 		if (targetcell[i].first < 0  || targetcell[i].first >= layer[0].maptip[0].size() ||
 			targetcell[i].second < 0 || targetcell[i].second >= layer[0].maptip.size()) {
 			continue;
@@ -228,18 +185,15 @@ void Mapdata::SetActiveCollider(std::pair<int ,int> cell,bool state)
 
 	}
 
-	//オブジェクト検索
-
-
 
 }
 
-void Mapdata::SetPlayerpointer(Player *player)
+void MapManager::SetPlayerpointer(Player *player)
 {
 	playerobj = player;
 }
 
-void Mapdata::Update()
+void MapManager::Update()
 {
 
 	if (GetKeyboardPress(DIK_1)) {
@@ -263,25 +217,25 @@ void Mapdata::Update()
 
 
 
-void Mapdata::Perse(std::ifstream ifs, std::string str)
+void MapManager::Perse(std::ifstream ifs, std::string str)
 {
 
 
 
 }
 
-std::pair<int, int> Mapdata::WorldtoCell(Vector3 worldpos)
+std::pair<int, int> MapManager::WorldtoCell(Vector3 worldpos)
 {
 	int x, y;
 	x = (int)(worldpos.x / (transform.scale.x * BlockSize));
-	y = (int)((500 - worldpos.y) / (transform.scale.y * BlockSize));
+	y = (int)((height *  BlockSize - worldpos.y) / (transform.scale.y * BlockSize));
 
 	return std::pair<int, int>(x, y);
 }
 
 
 
-void Mapdata::SetLayerActive(int layernum, bool active) {
+void MapManager::SetLayerActive(int layernum, bool active) {
 
 	if (layernum >= layer.size()) {
 		return;
