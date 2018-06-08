@@ -282,6 +282,9 @@
     <ClInclude Include="Source\Core\Text.h">
       <Filter>Core</Filter>
     </ClInclude>
+    <ClInclude Include="Source\SceneTitle.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Core\AllocateHirerachy.cpp">
@@ -491,6 +494,9 @@
     <ClCompile Include="Source\Sign.cpp" />
     <ClCompile Include="Source\Core\Text.cpp">
       <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneTitle.cpp">
+      <Filter>Scene</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

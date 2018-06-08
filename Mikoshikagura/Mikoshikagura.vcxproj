@@ -219,6 +219,7 @@
     <ClInclude Include="Source\SceneStackSampleGame.h" />
     <ClInclude Include="Source\SceneStackSampleOp.h" />
     <ClInclude Include="Source\SceneTest.h" />
+    <ClInclude Include="Source\SceneTitle.h" />
     <ClInclude Include="Source\SceneYangTest.h" />
     <ClInclude Include="Source\SeasonManager.h" />
     <ClInclude Include="Source\SeasonObject.h" />
@@ -293,6 +294,7 @@
     <ClCompile Include="Source\SceneStackSampleGame.cpp" />
     <ClCompile Include="Source\SceneStackSampleOp.cpp" />
     <ClCompile Include="Source\SceneTest.cpp" />
+    <ClCompile Include="Source\SceneTitle.cpp" />
     <ClCompile Include="Source\SceneYangTest.cpp" />
     <ClCompile Include="Source\SeasonManager.cpp" />
     <ClCompile Include="Source\SeasonObject.cpp" />

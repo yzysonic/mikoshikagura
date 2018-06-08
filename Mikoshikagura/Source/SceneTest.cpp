@@ -1,12 +1,11 @@
 #include "SceneTest.h"
 #include "FadeScreen.h"
-#include "Core/Game.h"
 #include "Light.h"
 
 void SceneTest::Init(void)
 {
 
-	FadeScreen::FadeIn(Color::black, 0.0f);
+	FadeScreen::FadeIn(Color::white, 1.0f);
 	Light::Init();
 
 	Texture::Load("body_sum.tga");
