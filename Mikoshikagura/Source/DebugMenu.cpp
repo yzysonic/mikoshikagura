@@ -55,6 +55,9 @@ void DebugMenu::GuiContent(void)
 		OnPress(ImGui::Button("Reload", buttonSize), [&] {
 			gameManager->ReloadScene();
 		});
+		OnPress(ImGui::Button("ObjectExplorer", buttonSize), [&] {
+			DebugManager::OpenObjectExplorer();
+		});
 	}
 
 	// システムブロック

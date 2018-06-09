@@ -4,7 +4,8 @@
 #include "CameraPlay.h"
 #include "CameraSmooth.h"
 #include "FadeScreen.h"
-#include "ImGuiCamera.h"
+#include "InspectorContentCamera.h"
+#include "Inspector.h"
 #include "DebugManager.h"
 
 void SceneYangTest::Init(void)
@@ -21,9 +22,23 @@ void SceneYangTest::Init(void)
 
 	// オブジェクト初期化
 	player	= new Player;
-	player->AddComponent<ImGuiObject>();
-	//player->SetPosition(Vector3(0.0f, 30.0f, 0.0f));
-	
+	player->SetPosition(Vector3(0.0f, 30.0f, 0.0f));
+
+	// カメラ初期化
+	camera = new Camera;
+	camera->transform.position = Vector3(0.0f, 20.0f, -60.0f);
+	camera->setBackColor(Color(250, 250, 250, 255));
+	camera->AddComponent<CameraPlay>();
+	camera->AddComponent<CameraSmooth>(player);
+
+	// レンダリング設定
+	Renderer::GetInstance()->setCamera(camera);
+	Light::Init();
+
+	// 重力設定
+	Physics::GetInstance()->setGravity(Vector3(0.0f, -98.0f, 0.0f));
+
+	// 地面ブロックの生成
 	{
 		int i = 0;
 		for (auto& t : test)
@@ -36,25 +51,16 @@ void SceneYangTest::Init(void)
 	}
 	
 	debug	= DebugManager::GetInstance()->GetComponent<DebugMenu>();
-
-	// カメラ初期化
-	camera = new Camera;
-	camera->transform.position = Vector3(0.0f, 20.0f, -60.0f);
-	camera->setBackColor(Color(250, 250, 250, 255));
-	camera->AddComponent<CameraPlay>();
-	camera->AddComponent<CameraSmooth>(player);
-	camera->AddComponent<ImGuiCamera>();
-	
-	// レンダリング設定
-	Renderer::GetInstance()->setCamera(camera);
-	Light::Init();
-
-	// 重力設定
-	Physics::GetInstance()->setGravity(Vector3(0.0f, -98.0f, 0.0f));
+	DebugManager::OpenInspector(player);
 }
 
 void SceneYangTest::Update(void)
 {
+	timer++;
+
+	test[4]->transform.position.y = 10.0f*sinf(timer.Elapsed());
+	test[5]->transform.position.y = 10.0f*cosf(timer.Elapsed());
+
 	// テストメニュー
 	ImGui::SetNextWindowSize(ImVec2(150.0f, 0), ImGuiCond_Once);
 	ImGui::Begin("TestMenu", NULL,  ImGuiWindowFlags_NoResize);
@@ -77,11 +83,6 @@ void SceneYangTest::Update(void)
 	ImGui::Begin("DebugMenu ", NULL, ImGuiWindowFlags_NoResize);
 	debug->GuiContent();
 	ImGui::End();
-	
-	test[4]->transform.position.y = 10.0f*sinf(timer.Elapsed());
-	test[5]->transform.position.y = 10.0f*cosf(timer.Elapsed());
-
-	timer++;
 }
 
 void SceneYangTest::Uninit(void)
@@ -98,19 +99,22 @@ void SceneYangTest::Uninit(void)
 
 SeasonTestObject::SeasonTestObject(void)
 {
+	type = ObjectType::Field;
 	model = AddComponent<StaticModel>("field_summer");
 	collider = AddComponent<BoxCollider2D>();
 	collider->size = Vector2::one*10.0f;
+	summer_model = ModelData::Get("field_summer");
+	winter_model = ModelData::Get("field_winter");
 }
 
 void SeasonTestObject::SetSummer(void)
 {
-	model->pData = ModelData::Get("field_summer");
+	model->pData = summer_model;
 }
 
 void SeasonTestObject::SetWinter(void)
 {
-	model->pData = ModelData::Get("field_winter");
+	model->pData = winter_model;
 }
 
 void SeasonTestObject::Update(void)
@@ -127,7 +131,25 @@ void SeasonTestObject::Update(void)
 	collide = false;
 }
 
-void SeasonTestObject::OnCollision(Object * object)
+void SeasonTestObject::OnCollisionEnter(Object * other)
+{
+	SwitchModel();
+}
+
+void SeasonTestObject::OnCollisionStay(Object * object)
 {
 	collide = true;
+}
+
+void SeasonTestObject::OnCollisionExit(Object * other)
+{
+	SwitchModel();
+}
+
+void SeasonTestObject::SwitchModel(void)
+{
+	if (model->pData == summer_model)
+		model->pData = winter_model;
+	else
+		model->pData = summer_model;
 }

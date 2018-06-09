@@ -30,6 +30,7 @@ public:
 	void UpdateObjects(void);
 	void PauseObjects(void);
 	void ResumeObjects(void);
+	const std::vector<Object*>& GetObjectList(void);
 
 private:
 	std::vector<Object*> obj_list;

@@ -117,6 +117,7 @@ void MapManager::CreateMapObject() {
 
 					Vector3 objscale;
 					Object  *objtemp = new Object;
+					objtemp->type = ObjectType::Field;
 					objtemp->AddComponent<StaticModel>("field_summer");
 					objtemp->transform.scale = transform.scale;
 					objscale = objtemp->transform.scale;

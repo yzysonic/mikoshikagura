@@ -2,7 +2,6 @@
 #include "FadeScreen.h"
 #include "Core/Game.h"
 #include "Light.h"
-#include "ImGuiPlayer.h"
 #include "DebugManager.h"
 #include "Core\Physics.h"
 
@@ -59,7 +58,6 @@ void SceneTest::Init(void)
 	mapdata = new MapManager("Data/Map/prototype_map1.tmx");
 	mapdata->CreateMapObject();
 	mapdata->SetLayerActive(0, true);
-	player->AddComponent<imGuiPlayer>();
 	mapdata->SetPlayerpointer(player);
 
 	Physics::GetInstance()->setGravity(Vector3(0.0f, -98.0f, 0.0f));

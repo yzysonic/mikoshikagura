@@ -44,7 +44,9 @@ public:
 	virtual void Update(void) {};
 	virtual void Uninit(void) {};
 	virtual void OnDraw(void) {};
-	virtual void OnCollision(Object* other) {};
+	virtual void OnCollisionEnter(Object* otehr) {};
+	virtual void OnCollisionStay(Object* other) {};
+	virtual void OnCollisionExit(Object* other) {};
 	virtual void AfterDraw(void) {};
 
 	template<class T, class... Args>
