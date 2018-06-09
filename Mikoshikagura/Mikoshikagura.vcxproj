@@ -204,6 +204,7 @@
     <ClInclude Include="Source\ImGuiCamera.h" />
     <ClInclude Include="Source\ImGuiObject.h" />
     <ClInclude Include="Source\imGuiPlayer.h" />
+    <ClInclude Include="Source\NagaiSceneTest.h" />
     <ClInclude Include="Source\SceneExplorer.h" />
     <ClInclude Include="Source\SceneImGuiTest.h" />
     <ClInclude Include="Source\Imgui\imconfig.h" />
@@ -219,10 +220,11 @@
     <ClInclude Include="Source\SceneStackSampleOp.h" />
     <ClInclude Include="Source\SceneTest.h" />
     <ClInclude Include="Source\SceneYangTest.h" />
+    <ClInclude Include="Source\Scene_Stage1.h" />
     <ClInclude Include="Source\SeasonManager.h" />
     <ClInclude Include="Source\SeasonObject.h" />
     <ClInclude Include="Source\Snapshot.h" />
-    <ClInclude Include="Source\XMLPerser.h" />
+    <ClInclude Include="Source\MapManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\CameraPlay.cpp" />
@@ -282,6 +284,7 @@
     <ClCompile Include="Source\Light.cpp" />
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\MainCamera.cpp" />
+    <ClCompile Include="Source\NagaiSceneTest.cpp" />
     <ClCompile Include="Source\Player.cpp" />
     <ClCompile Include="Source\SceneExplorer.cpp" />
     <ClCompile Include="Source\SceneGlobal.cpp" />
@@ -291,10 +294,11 @@
     <ClCompile Include="Source\SceneStackSampleOp.cpp" />
     <ClCompile Include="Source\SceneTest.cpp" />
     <ClCompile Include="Source\SceneYangTest.cpp" />
+    <ClCompile Include="Source\Scene_Stage1.cpp" />
     <ClCompile Include="Source\SeasonManager.cpp" />
     <ClCompile Include="Source\SeasonObject.cpp" />
     <ClCompile Include="Source\Snapshot.cpp" />
-    <ClCompile Include="Source\XMLPerser.cpp" />
+    <ClCompile Include="Source\MapManager.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

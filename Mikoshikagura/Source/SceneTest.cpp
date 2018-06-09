@@ -12,7 +12,7 @@ void SceneTest::Init(void)
 
 	FadeScreen::FadeIn(Color::black, 0.0f);
 	Light::Init();
-
+	ModelData::Load("field_summer");
 	Texture::Load("body_sum.tga");
 	Texture::Load("misaki_head.tga");
 
@@ -51,13 +51,14 @@ void SceneTest::Init(void)
 
 	Renderer::GetInstance()->setCamera(camera);
 
-	player->SetPosition(Vector3(0, 500, 0));
+	player->SetPosition(Vector3(0, 70, 0));
 
 
 
 	//0522nagai mapdataì¬
-	mapdata = new Mapdata("Data/Map/prototype_map1.tmx");
+	mapdata = new MapManager("Data/Map/prototype_map1.tmx");
 	mapdata->CreateMapObject();
+	mapdata->SetLayerActive(0, true);
 	player->AddComponent<imGuiPlayer>();
 	mapdata->SetPlayerpointer(player);
 

@@ -49,9 +49,6 @@
     <Filter Include="Script\Debug">
       <UniqueIdentifier>{2ec880c9-6d27-40de-9bb2-ad631bf27309}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scene\SceneStackSample">
-      <UniqueIdentifier>{da11bf66-4972-4116-97a1-1b3d0ffebb98}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Core\AllocateHirerachy.h">
@@ -244,9 +241,6 @@
     <ClInclude Include="Source\Snapshot.h">
       <Filter>GameObject\Debug</Filter>
     </ClInclude>
-    <ClInclude Include="Source\XMLPerser.h">
-      <Filter>GameObject</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Core\Resource.h">
       <Filter>Core\Resource</Filter>
     </ClInclude>
@@ -268,14 +262,20 @@
     <ClInclude Include="Source\ImGuiObject.h">
       <Filter>Script\Debug</Filter>
     </ClInclude>
-    <ClInclude Include="Source\SceneStackSample.h">
-      <Filter>Scene\SceneStackSample</Filter>
+    <ClInclude Include="Source\imGuiPlayer.h">
+      <Filter>Script\Debug</Filter>
     </ClInclude>
-    <ClInclude Include="Source\SceneStackSampleGame.h">
-      <Filter>Scene\SceneStackSample</Filter>
+    <ClInclude Include="Source\NagaiSceneTest.h">
+      <Filter>Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Source\SceneStackSampleOp.h">
-      <Filter>Scene\SceneStackSample</Filter>
+    <ClInclude Include="Source\SceneStackSample.h" />
+    <ClInclude Include="Source\SceneStackSampleGame.h" />
+    <ClInclude Include="Source\SceneStackSampleOp.h" />
+    <ClInclude Include="Source\MapManager.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene_Stage1.h">
+      <Filter>Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -452,9 +452,6 @@
     <ClCompile Include="Source\Snapshot.cpp">
       <Filter>GameObject\Debug</Filter>
     </ClCompile>
-    <ClCompile Include="Source\XMLPerser.cpp">
-      <Filter>GameObject</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Core\ModelData.cpp">
       <Filter>Core\Resource</Filter>
     </ClCompile>
@@ -464,23 +461,27 @@
     <ClCompile Include="Source\SeasonManager.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
+    <ClCompile Include="Source\SeasonObject.cpp" />
     <ClCompile Include="Source\ImGuiCamera.cpp">
       <Filter>Script\Debug</Filter>
     </ClCompile>
     <ClCompile Include="Source\ImGuiObject.cpp">
       <Filter>Script\Debug</Filter>
     </ClCompile>
-    <ClCompile Include="Source\SeasonObject.cpp">
+    <ClCompile Include="Source\imGuiPlayer.cpp">
+      <Filter>Script\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\NagaiSceneTest.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneStackSample.cpp" />
+    <ClCompile Include="Source\SceneStackSampleGame.cpp" />
+    <ClCompile Include="Source\SceneStackSampleOp.cpp" />
+    <ClCompile Include="Source\MapManager.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="Source\SceneStackSample.cpp">
-      <Filter>Scene\SceneStackSample</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\SceneStackSampleGame.cpp">
-      <Filter>Scene\SceneStackSample</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\SceneStackSampleOp.cpp">
-      <Filter>Scene\SceneStackSample</Filter>
+    <ClCompile Include="Source\Scene_Stage1.cpp">
+      <Filter>Scene</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

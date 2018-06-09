@@ -8,7 +8,7 @@
 #include "SceneTest.h"
 #include "SceneYangTest.h"
 #include "SceneStackSample.h"
-
+#include "Scene_Stage1.h"
 void SceneExplorer::Init(void)
 {
 	columns = 3;
@@ -30,7 +30,7 @@ void SceneExplorer::Init(void)
 	AddScene<SceneTest>();
 	AddScene<SceneYangTest>();
 	AddScene<SceneStackSample>();
-
+	AddScene<Scene_Stage1>();
 	FadeScreen::FadeIn(Color::black, 0.0f);
 }
 

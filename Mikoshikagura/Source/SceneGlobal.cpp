@@ -2,6 +2,7 @@
 #include "SceneTest.h"
 #include "FadeScreen.h"
 #include "Core\Game.h"
+#include "Core/Physics.h"
 
 #ifdef _DEBUG
 #include "DebugManager.h"
@@ -16,7 +17,7 @@ void SceneGlobal::Init(void)
 	RenderSpace::Add("global");
 	RenderSpace::Get("global")->AddCamera(camera);
 
-	//// レンダーターゲットの作成
+	// レンダーターゲットの作成
 	render_target = RenderTarget::Make("rt_main");
 	RenderSpace::Get("default")->GetCamera(0)->render_target = render_target;
 	(new Object)->AddComponent<RectPolygon2D>(render_target, Layer::DEFAULT, "global");
@@ -25,6 +26,9 @@ void SceneGlobal::Init(void)
 
 	// フェイドエフェクトの初期化
 	FadeScreen::Create();
+
+	//重力設定
+	Physics::GetInstance()->setGravity(Vector3(0.0f, -98.0f, 0.0f));
 
 
 #ifdef _DEBUG
