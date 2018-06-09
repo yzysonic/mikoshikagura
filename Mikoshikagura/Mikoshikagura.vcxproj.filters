@@ -207,9 +207,6 @@
     <ClInclude Include="Source\CameraPlay.h">
       <Filter>Script</Filter>
     </ClInclude>
-    <ClInclude Include="Source\CameraSmooth.h">
-      <Filter>Script</Filter>
-    </ClInclude>
     <ClInclude Include="Source\CameraSnap.h">
       <Filter>GameObject</Filter>
     </ClInclude>
@@ -294,6 +291,15 @@
     </ClInclude>
     <ClInclude Include="Source\Snapshot.h">
       <Filter>Script\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CameraSphericalCoordinate.h">
+      <Filter>Script</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CameraSmoothFallow.h">
+      <Filter>Script</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\FreeCamera.h">
+      <Filter>GameObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -432,9 +438,6 @@
     <ClCompile Include="Source\CameraPlay.cpp">
       <Filter>Script</Filter>
     </ClCompile>
-    <ClCompile Include="Source\CameraSmooth.cpp">
-      <Filter>Script</Filter>
-    </ClCompile>
     <ClCompile Include="Source\CameraSnap.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
@@ -517,6 +520,15 @@
     </ClCompile>
     <ClCompile Include="Source\Snapshot.cpp">
       <Filter>Script\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CameraSmoothFallow.cpp">
+      <Filter>Script</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CameraSphericalCoordinate.cpp">
+      <Filter>Script</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\FreeCamera.cpp">
+      <Filter>GameObject</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

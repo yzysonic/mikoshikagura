@@ -2,43 +2,26 @@
 
 void CameraPlay::Init(void)
 {
-	camera = dynamic_cast<Camera*>(object);
-	Vector3 offset = camera->transform.position - camera->at;
+	camera		= dynamic_cast<Camera*>(object);
+	coordinate	= camera->GetComponent<CameraSphericalCoordinate>();
 
-	target_theta =
-	theta = atan2f(sqrtf(offset.x*offset.x + offset.z*offset.z), offset.y);
+	target_theta	= coordinate->theta;
+	target_phi		= coordinate->phi;
+	target_distance = coordinate->distance;
 
-	target_phi =
-	phi = atan2f(offset.z, offset.x);
-
-	move_theta = 0.0f;
-	move_phi = 0.0f;
-	dis = offset.length();
-	target_dis = dis;
+	move_theta	= 0.0f;
+	move_phi	= 0.0f;
 }
 
 void CameraPlay::Update(void)
 {
-	MoveCamera();
-
-	// 座標変換
-	camera->transform.position.y = dis * cosf(theta);
-	camera->transform.position.x = dis * sinf(theta) * cosf(phi);
-	camera->transform.position.z = dis * sinf(theta) * sinf(phi);
-	camera->transform.position += camera->at;
-
-}
-
-void CameraPlay::Uninit(void)
-{
-}
-
-
-void CameraPlay::MoveCamera(void)
-{
 	Vector3 move = Vector3(0.0f, 0.0f, 0.0f);
 
 	// マウス操作
+#ifdef IMGUI
+	if(!ImGui::GetIO().WantCaptureMouse){
+#endif
+
 	if (IsMouseLeftPressed())
 	{
 		// 移動
@@ -50,13 +33,17 @@ void CameraPlay::MoveCamera(void)
 		// 回転
 		else
 		{
-			move_phi = -GetMouseMoveX() / 500.0f;
-			move_theta = -GetMouseMoveY() / 500.0f;
+			move_phi	= -GetMouseMoveX() / 500.0f;
+			move_theta	= -GetMouseMoveY() / 500.0f;
 		}
 	}
 
 	// ズーム
-	target_dis += -GetMouseMoveZ() / 12.0f;
+	target_distance += -GetMouseMoveZ() / 12.0f;
+
+#ifdef IMGUI
+	}
+#endif
 
 
 	// キーボード操作
@@ -90,46 +77,38 @@ void CameraPlay::MoveCamera(void)
 	Vector2 pad_input_r(GetPadRX(), GetPadRY());
 	if (pad_input_r.sqrLength() >= 0.05f && !IsButtonPressed(0, BUTTON_L1))
 	{
-		move_phi = -pad_input_r.x*0.03f;
-		move_theta = -pad_input_r.y*0.03f;
+		move_phi	= -pad_input_r.x*0.03f;
+		move_theta	= -pad_input_r.y*0.03f;
 	}
 
 	// ズーム
-	if(IsButtonPressed(0, BUTTON_L1))
-		target_dis += GetPadRY()*10.0f;
+	if (IsButtonPressed(0, BUTTON_L1))
+		target_distance += GetPadRY()*10.0f;
 
-#ifndef _DEBUG
-	if (target_dis < 30.0f)
-		target_dis = 30.f;
-	if (target_dis > 100.0f)
-		target_dis = 100.0f;
-#endif
+	// 距離の計算
+	target_distance = fmaxf(1.0f, target_distance);
+	coordinate->distance = coordinate->distance + (target_distance - coordinate->distance)*0.15f;
 
-	dis = dis + (target_dis - dis)*0.15f;
-
-	if(Vector2(move_phi, move_theta).sqrLength() != 0.0f)
+	// 回転の計算
+	if (Vector2(move_phi, move_theta).sqrLength() != 0.0f)
 	{
-		target_phi += move_phi;
-		target_theta += move_theta;
+		target_phi		+= move_phi;
+		target_theta	+= move_theta;
 
-		move_phi = 0.0f;
-		move_theta = 0.0f;
+		move_phi	= 0.0f;
+		move_theta	= 0.0f;
 
-		if (target_theta < Deg2Rad(30.0f))
-			target_theta = Deg2Rad(30.0f);
-		if (target_theta > Deg2Rad(85.0f))
-			target_theta = Deg2Rad(85.0f);
-
+		//target_theta = clamp(target_theta, 5.0f, 95.0f);
 	}
 
-	phi = Lerpf(phi, target_phi, 0.065f);
-	theta = Lerpf(theta, target_theta, 0.065f);
+	coordinate->phi		= Lerpf(coordinate->phi, target_phi, 0.065f);
+	coordinate->theta	= Lerpf(coordinate->theta, target_theta, 0.065f);
 
+	// 移動の計算
 	if (move.x != 0.0f || move.y != 0.0f)
 	{
-
-		float x = -move.x*cosf(-phi + 0.5f*PI) - move.z*sinf(-phi + 0.5f*PI);
-		move.z = move.x*sinf(-phi + 0.5f*PI) - move.z*cosf(-phi + 0.5f*PI);
+		auto x = -move.x*cosf(-coordinate->phi + 0.5f*PI) - move.z*sinf(-coordinate->phi + 0.5f*PI);
+		move.z =  move.x*sinf(-coordinate->phi + 0.5f*PI) - move.z*cosf(-coordinate->phi + 0.5f*PI);
 		move.x = x;
 
 		camera->at += move;

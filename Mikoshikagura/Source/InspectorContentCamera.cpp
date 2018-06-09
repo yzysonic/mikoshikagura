@@ -1,4 +1,6 @@
 #include "InspectorContentCamera.h"
+#include "CameraSphericalCoordinate.h"
+#include "CameraSmoothFallow.h"
 
 void InspectorContentCamera::Init(void)
 {
@@ -17,6 +19,23 @@ void InspectorContentCamera::GuiContent(void)
 		if (ImGui::ColorEdit3("BackColor", (float*)&back_color)) { camera->setBackColor(back_color); }
 
 		ImGui::Spacing();
+		auto spherical = camera->GetComponent<CameraSphericalCoordinate>();
+		if (spherical)
+		{
+			ImGui::Text("SphericalCoordinate:");
+			ImGui::DragFloat("phi", &spherical->phi, 0.001f);
+			ImGui::DragFloat("theta", &spherical->theta, 0.001f);
+			ImGui::DragFloat("distance", &spherical->distance);
+		}
+
+		ImGui::Spacing();
+		auto smooth = camera->GetComponent<CameraSmoothFallow>();
+		if (smooth)
+		{
+			ImGui::Text("SmoothFallow:");
+			ImGui::DragFloat("speed", &smooth->speed);
+			ImGui::DragFloat("offset_y", &smooth->offset_y);
+		}
 		ImGui::TreePop();
 	}
 

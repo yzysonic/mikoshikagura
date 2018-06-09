@@ -147,10 +147,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Source\CameraSphericalCoordinate.h" />
     <ClInclude Include="Source\Core\ModelData.h" />
     <ClInclude Include="Source\Core\Resource.h" />
     <ClInclude Include="Source\CameraPlay.h" />
-    <ClInclude Include="Source\CameraSmooth.h" />
+    <ClInclude Include="Source\CameraSmoothFallow.h" />
     <ClInclude Include="Source\CameraSnap.h" />
     <ClInclude Include="Source\Core\AllocateHirerachy.h" />
     <ClInclude Include="Source\Core\Billboard.h" />
@@ -201,11 +202,12 @@
     <ClInclude Include="Source\DebugManager.h" />
     <ClInclude Include="Source\DebugMenu.h" />
     <ClInclude Include="Source\FadeScreen.h" />
+    <ClInclude Include="Source\FreeCamera.h" />
     <ClInclude Include="Source\InspectorContentCamera.h" />
     <ClInclude Include="Source\InspectorContentPlayer.h" />
     <ClInclude Include="Source\Inspector.h" />
     <ClInclude Include="Source\ObjectExplorer.h" />
-	<ClInclude Include="Source\NagaiSceneTest.h" />
+    <ClInclude Include="Source\NagaiSceneTest.h" />
     <ClInclude Include="Source\SceneExplorer.h" />
     <ClInclude Include="Source\SceneImGuiTest.h" />
     <ClInclude Include="Source\Imgui\imconfig.h" />
@@ -229,8 +231,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\CameraPlay.cpp" />
-    <ClCompile Include="Source\CameraSmooth.cpp" />
+    <ClCompile Include="Source\CameraSmoothFallow.cpp" />
     <ClCompile Include="Source\CameraSnap.cpp" />
+    <ClCompile Include="Source\CameraSphericalCoordinate.cpp" />
     <ClCompile Include="Source\Core\AllocateHirerachy.cpp" />
     <ClCompile Include="Source\Core\Billboard.cpp" />
     <ClCompile Include="Source\Core\BoneFrame.cpp" />
@@ -275,6 +278,7 @@
     <ClCompile Include="Source\DebugManager.cpp" />
     <ClCompile Include="Source\DebugMenu.cpp" />
     <ClCompile Include="Source\FadeScreen.cpp" />
+    <ClCompile Include="Source\FreeCamera.cpp" />
     <ClCompile Include="Source\InspectorContentCamera.cpp" />
     <ClCompile Include="Source\InspectorContentPlayer.cpp" />
     <ClCompile Include="Source\Imgui\imgui.cpp" />

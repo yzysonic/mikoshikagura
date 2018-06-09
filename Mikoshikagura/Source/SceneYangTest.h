@@ -1,6 +1,7 @@
 #pragma once
 #include "Core/Core.h"
 #include "Player.h"
+#include "MainCamera.h"
 #include "SeasonManager.h"
 #include "DebugMenu.h"
 
@@ -35,7 +36,7 @@ public:
 private:
 	SeasonTestObject * test[10];
 	Player * player;
-	Camera * camera;
+	MainCamera * camera;
 	DebugMenu * debug;
 	FrameTimer timer;
 };

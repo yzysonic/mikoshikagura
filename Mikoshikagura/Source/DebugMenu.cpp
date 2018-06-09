@@ -58,12 +58,26 @@ void DebugMenu::GuiContent(void)
 		OnPress(ImGui::Button("ObjectExplorer", buttonSize), [&] {
 			DebugManager::OpenObjectExplorer();
 		});
+		if (DebugManager::GetFreeCamera())
+		{
+			OnPress(ImGui::Button("DisableFreeCamera", buttonSize), [&] {
+				DebugManager::DisableFreeCamera();
+			});
+		}
+		else
+		{
+			OnPress(ImGui::Button("EnableFreeCamera", buttonSize), [&] {
+				DebugManager::EnableFreeCamera();
+			});
+		}
+		
 	}
 
 	// システムブロック
 	ImGui::Text("System");
 	OnPress(ImGui::Button("SceneExplorer", buttonSize), [&]
 	{
+		DebugManager::DisableFreeCamera();
 		gameManager->SetScene(new SceneExplorer);
 	});
 	OnPress(ImGui::Button("ExitGame", buttonSize), [&]

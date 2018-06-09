@@ -1,18 +1,17 @@
-#include "CameraSmooth.h"
+#include "CameraSmoothFallow.h"
+#include "CameraSphericalCoordinate.h"
 
-void CameraSmooth::Init(void)
+void CameraSmoothFallow::Init(void)
 {
 	camera = dynamic_cast<Camera*>(object);
-	speed = 5.0f;
-}
 
-void CameraSmooth::Update(void)
-{
-	if (target == nullptr)
+	if (!target)
 	{
 		SetActive(false);
-		return;
 	}
+}
 
+void CameraSmoothFallow::Update(void)
+{
 	camera->at = Vector3::Lerp(camera->at, target->position+Vector3(0.0f, offset_y, 0.0f), speed*Time::DeltaTime());
 }

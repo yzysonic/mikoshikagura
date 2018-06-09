@@ -14,8 +14,9 @@ public:
 
 class Inspector : public Script
 {
-public:
+	static constexpr float Width = 330;
 
+public:
 	Inspector(void);
 	void Init(void) override;
 	void Update(void) override;

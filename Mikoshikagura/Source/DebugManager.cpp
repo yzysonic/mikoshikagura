@@ -14,6 +14,7 @@ DebugManager::DebugManager(void)
 	AddComponent<Snapshot>();
 	AddComponent<ObjectExplorer>();
 	inspector = AddComponent<Inspector>();
+	free_camera = nullptr;
 }
 
 void DebugManager::Update(void)
@@ -54,6 +55,34 @@ void DebugManager::OpenInspector(Object * object)
 {
 	m_pInstance->inspector->SetObject(object);
 	m_pInstance->inspector->SetActive(true);
+}
+
+void DebugManager::EnableFreeCamera(void)
+{
+	if (m_pInstance->free_camera)
+		return;
+
+	m_pInstance->default_camera = RenderSpace::Get("default")->GetCamera(0);
+	m_pInstance->free_camera = new FreeCamera(m_pInstance->default_camera);
+	RenderSpace::Get("default")->SetCamera(0, m_pInstance->free_camera);
+	m_pInstance->default_camera->SetActive(false);
+}
+
+void DebugManager::DisableFreeCamera(void)
+{
+	if (!m_pInstance->free_camera)
+		return;
+
+	RenderSpace::Get("default")->SetCamera(0, m_pInstance->default_camera);
+	m_pInstance->default_camera->SetActive(true);
+
+	m_pInstance->free_camera->Destroy();
+	m_pInstance->free_camera = nullptr;
+}
+
+FreeCamera * DebugManager::GetFreeCamera(void)
+{
+	return m_pInstance->free_camera;
 }
 
 Inspector* DebugManager::GetInspector(void)

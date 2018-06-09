@@ -1,12 +1,12 @@
 #include "SceneYangTest.h"
 #include "Core/Physics.h"
 #include "Light.h"
-#include "CameraPlay.h"
-#include "CameraSmooth.h"
 #include "FadeScreen.h"
 #include "InspectorContentCamera.h"
 #include "Inspector.h"
 #include "DebugManager.h"
+
+#pragma region SceneYangTest
 
 void SceneYangTest::Init(void)
 {
@@ -25,11 +25,8 @@ void SceneYangTest::Init(void)
 	player->SetPosition(Vector3(0.0f, 30.0f, 0.0f));
 
 	// ƒJƒƒ‰‰Šú‰»
-	camera = new Camera;
-	camera->transform.position = Vector3(0.0f, 20.0f, -60.0f);
-	camera->setBackColor(Color(250, 250, 250, 255));
-	camera->AddComponent<CameraPlay>();
-	camera->AddComponent<CameraSmooth>(player);
+	camera = new MainCamera;
+	camera->SetTarget(&player->transform);
 
 	// ƒŒƒ“ƒ_ƒŠƒ“ƒOÝ’è
 	Renderer::GetInstance()->setCamera(camera);
@@ -97,6 +94,11 @@ void SceneYangTest::Uninit(void)
 	SeasonManager::Destroy();
 }
 
+#pragma endregion
+
+
+#pragma region SeasonTestObject
+
 SeasonTestObject::SeasonTestObject(void)
 {
 	type = ObjectType::Field;
@@ -153,3 +155,5 @@ void SeasonTestObject::SwitchModel(void)
 	else
 		model->pData = summer_model;
 }
+
+#pragma endregion

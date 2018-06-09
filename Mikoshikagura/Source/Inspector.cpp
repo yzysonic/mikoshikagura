@@ -15,8 +15,8 @@ void Inspector::Init(void)
 
 void Inspector::Update(void)
 {
-	ImGui::SetNextWindowPos(ImVec2(10.0f, 10.0f), ImGuiCond_Once);
-	ImGui::SetNextWindowSize(ImVec2(330.0f, 0.0f), ImGuiCond_Always);
+	ImGui::SetNextWindowPos(ImVec2((float)SystemParameters::ResolutionX-(Width+10.0f), 10.0f), ImGuiCond_Once);
+	ImGui::SetNextWindowSize(ImVec2(Width, 0.0f), ImGuiCond_Always);
 	ImGui::Begin("Inspector", &active, flags);
 	GuiContent();
 	if (extensionContent)

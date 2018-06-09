@@ -1,24 +1,20 @@
 #pragma once
 #include "Core/Core.h"
+#include "CameraSphericalCoordinate.h"
 
 class CameraPlay : public Script
 {
 public:
 	void Init(void) override;
 	void Update(void) override;
-	void Uninit(void) override;
 
 private:
 	Camera* camera;
+	CameraSphericalCoordinate* coordinate;
 	Transform last_transform;
-	float phi;				// ’‹“_‚Æ‚ÌƒÓ‰ñ“]ŠpiŒ»İj
-	float theta;			// ’‹“_‚Æ‚ÌƒÆ‰ñ“]ŠpiŒ»İj
-	float move_phi;			// ƒÓ‰ñ“]Šp‚ÌˆÚ“®—Ê
-	float move_theta;		// ƒÆ‰ñ“]Šp‚ÌˆÚ“®—Ê
+	float move_phi;
+	float move_theta;
 	float target_phi;
 	float target_theta;
-	float target_dis;		// –Ú•W‹——£
-	float dis;				// ’‹“_‚Æ‚Ì‹——£
-
-	void MoveCamera(void);
+	float target_distance;
 };
