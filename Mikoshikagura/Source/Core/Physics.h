@@ -4,6 +4,8 @@
 #include "Singleton.h"
 #include <vector>
 #include <memory>
+#include <set>
+#include <utility>
 
 #define Gravity (10.0f);
 
@@ -18,11 +20,13 @@ public:
 	void addRigidbody(Rigidbody* rigidbody);
 	void removeRigidbody(Rigidbody* rigidbody);
 	void setGravity(Vector3 value);
+	Vector3 getGravity(void);
 
 private:
 	Vector3 gravaty;
 	std::vector<Collider*> colliderList;
 	std::vector<Rigidbody*> rigidbodyList;
+	std::set<std::pair<Collider*, Collider*>> collisionSet;
 
 	void updateDynamics();
 	void testCollisions();

@@ -216,9 +216,6 @@
     <ClInclude Include="Source\DebugManager.h">
       <Filter>GameObject\Debug</Filter>
     </ClInclude>
-    <ClInclude Include="Source\DebugMenu.h">
-      <Filter>GameObject\Debug</Filter>
-    </ClInclude>
     <ClInclude Include="Source\FadeScreen.h">
       <Filter>GameObject</Filter>
     </ClInclude>
@@ -241,9 +238,6 @@
     <ClInclude Include="Source\SceneTest.h">
       <Filter>Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Snapshot.h">
-      <Filter>GameObject\Debug</Filter>
-    </ClInclude>
     <ClInclude Include="Source\XMLPerser.h">
       <Filter>GameObject</Filter>
     </ClInclude>
@@ -262,12 +256,6 @@
     <ClInclude Include="Source\SeasonManager.h">
       <Filter>GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ImGuiCamera.h">
-      <Filter>Script\Debug</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ImGuiObject.h">
-      <Filter>Script\Debug</Filter>
-    </ClInclude>
     <ClInclude Include="Source\SceneStackSample.h">
       <Filter>Scene\SceneStackSample</Filter>
     </ClInclude>
@@ -276,6 +264,24 @@
     </ClInclude>
     <ClInclude Include="Source\SceneStackSampleOp.h">
       <Filter>Scene\SceneStackSample</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Snapshot.h">
+      <Filter>Script\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DebugMenu.h">
+      <Filter>Script\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Inspector.h">
+      <Filter>Script\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ObjectExplorer.h">
+      <Filter>Script\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\InspectorContentCamera.h">
+      <Filter>Script\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\InspectorContentPlayer.h">
+      <Filter>Script\Debug</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -423,9 +429,6 @@
     <ClCompile Include="Source\DebugManager.cpp">
       <Filter>GameObject\Debug</Filter>
     </ClCompile>
-    <ClCompile Include="Source\DebugMenu.cpp">
-      <Filter>GameObject\Debug</Filter>
-    </ClCompile>
     <ClCompile Include="Source\FadeScreen.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
@@ -449,9 +452,6 @@
     <ClCompile Include="Source\SceneTest.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Snapshot.cpp">
-      <Filter>GameObject\Debug</Filter>
-    </ClCompile>
     <ClCompile Include="Source\XMLPerser.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
@@ -464,12 +464,6 @@
     <ClCompile Include="Source\SeasonManager.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ImGuiCamera.cpp">
-      <Filter>Script\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\ImGuiObject.cpp">
-      <Filter>Script\Debug</Filter>
-    </ClCompile>
     <ClCompile Include="Source\SeasonObject.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
@@ -481,6 +475,24 @@
     </ClCompile>
     <ClCompile Include="Source\SceneStackSampleOp.cpp">
       <Filter>Scene\SceneStackSample</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Snapshot.cpp">
+      <Filter>Script\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\DebugMenu.cpp">
+      <Filter>Script\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Inspector.cpp">
+      <Filter>Script\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ObjectExplorer.cpp">
+      <Filter>Script\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\InspectorContentCamera.cpp">
+      <Filter>Script\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\InspectorContentPlayer.cpp">
+      <Filter>Script\Debug</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

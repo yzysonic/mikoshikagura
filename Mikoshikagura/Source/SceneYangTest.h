@@ -11,7 +11,7 @@ public:
 	void SetSummer(void) override;
 	void SetWinter(void) override;
 	void Update(void) override;
-	void OnCollision(Object* object) override;
+	void OnCollisionStay(Object* object) override;
 
 private:
 	StaticModel * model;

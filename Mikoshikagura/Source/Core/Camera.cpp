@@ -2,6 +2,10 @@
 #include "Renderer.h"
 #include "Math.h"
 
+#ifdef _DEBUG
+#include "../InspectorContentCamera.h"
+#endif
+
 Camera::Camera(RenderTarget* render_target)
 {
 	if (render_target == nullptr)
@@ -16,6 +20,10 @@ Camera::Camera(RenderTarget* render_target)
 	this->near_z = 10.0f;
 	this->far_z = 1000.0f;
 	this->fov = Deg2Rad(60.0f);
+
+#ifdef _DEBUG
+	this->AddComponent<InspectorExtension>(new InspectorContentCamera);
+#endif
 }
 
 D3DXMATRIX Camera::getViewMatrix(bool update)

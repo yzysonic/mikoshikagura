@@ -41,6 +41,22 @@ void Physics::removeCollider(Collider * collider)
 {
 	size_t index = collider->listIndex;
 
+	// collisionSetから削除
+	for (auto pair = this->collisionSet.begin(); pair != this->collisionSet.end();)
+	{
+		if (pair->first == collider || pair->second == collider)
+		{
+			auto erase_pair = pair;
+			pair++;
+			this->collisionSet.erase(erase_pair);
+		}
+		else
+		{
+			pair++;
+		}
+	}
+
+	// colliderListから削除
 	if (index < this->colliderList.size() - 1)
 	{
 		this->colliderList[index] = this->colliderList.back();
@@ -78,6 +94,11 @@ void Physics::setGravity(Vector3 value)
 	this->gravaty = value;
 }
 
+Vector3 Physics::getGravity(void)
+{
+	return this->gravaty;
+}
+
 
 void Physics::updateDynamics()
 {
@@ -107,24 +128,46 @@ void Physics::updateDynamics()
 
 void Physics::testCollisions()
 {
+	Collision collision;
 
 	for (size_t i = 0; i < this->colliderList.size(); i++)
 	{
+		auto a = this->colliderList[i];
+
 		for (size_t j = i + 1; j < this->colliderList.size(); j++)
 		{
-			Collider *a, *b;
-			Collision collision;
-
-			a = this->colliderList[i];
-			b = this->colliderList[j];
+			auto b = this->colliderList[j];
 
 			if (a->object->type == b->object->type)
 				continue;
 
+			auto pair = std::pair<Collider*, Collider*>(a, b);
+
+			// 衝突した場合
 			if (CollisionTest(a, b, &collision))
 			{
-				a->object->OnCollision(b->object);
-				b->object->OnCollision(a->object);
+				// 衝突の開始検知
+				if (collisionSet.find(pair) == collisionSet.end())
+				{
+					collisionSet.insert(pair);
+					a->object->OnCollisionEnter(b->object);
+					b->object->OnCollisionEnter(a->object);
+				}
+
+				a->object->OnCollisionStay(b->object);
+				b->object->OnCollisionStay(a->object);
+			}
+
+			// 衝突しなかった場合
+			else
+			{
+				// 衝突の終了検知
+				if (collisionSet.find(pair) != collisionSet.end())
+				{
+					collisionSet.erase(pair);
+					a->object->OnCollisionExit(b->object);
+					b->object->OnCollisionExit(a->object);
+				}
 			}
 			
 		}

@@ -1,5 +1,6 @@
 #include "DebugManager.h"
 #include "Snapshot.h"
+#include "ObjectExplorer.h"
 
 #ifdef IMGUI
 #include "DebugMenu.h"
@@ -11,6 +12,8 @@ DebugManager::DebugManager(void)
 	AddComponent<DebugMenu>();
 #endif
 	AddComponent<Snapshot>();
+	AddComponent<ObjectExplorer>();
+	inspector = AddComponent<Inspector>();
 }
 
 void DebugManager::Update(void)
@@ -40,4 +43,20 @@ void DebugManager::TakeSnapshot(const char * fileName, float waitTime)
 	snapshot->fileName = fileName;
 	snapshot->SetActive(true);
 
+}
+
+void DebugManager::OpenObjectExplorer(void)
+{
+	m_pInstance->GetComponent<ObjectExplorer>()->SetActive(true);
+}
+
+void DebugManager::OpenInspector(Object * object)
+{
+	m_pInstance->inspector->SetObject(object);
+	m_pInstance->inspector->SetActive(true);
+}
+
+Inspector* DebugManager::GetInspector(void)
+{
+	return m_pInstance->inspector;
 }

@@ -1,8 +1,8 @@
 #pragma once
 #include "Core/Core.h"
-#include "ImGuiObject.h"
+#include "Inspector.h"
 
-class ImGuiCamera : public ImGuiObject
+class InspectorContentCamera : public InspectorContent
 {
 public :
 	void Init(void) override;

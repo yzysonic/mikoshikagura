@@ -1,5 +1,9 @@
 #include "Player.h"
+#include "Core/Physics.h"
 
+#ifdef _DEBUG
+#include "InspectorContentPlayer.h"
+#endif
 
 //=============================================================================
 // Player
@@ -8,6 +12,7 @@
 Player::Player(void)
 {
 	this->type = ObjectType::Player;
+	this->name = "Player";
 	this->speed = PlayerSpeed;
 	this->anime = AnimeSet::Idle;
 	this->is_grounded = false;
@@ -22,7 +27,7 @@ Player::Player(void)
 	this->collider->offset.y += 0.5f*this->collider->size.y;
 
 	this->rigidbody = AddComponent<Rigidbody>();
-	this->rigidbody->useGravity = false;
+	this->rigidbody->useGravity = true;
 
 	// ステート初期化
 	this->state.resize((int)StateName::Max);
@@ -31,6 +36,11 @@ Player::Player(void)
 	this->state[(int)StateName::Air		].reset(new StateAir(this));
 	this->state[(int)StateName::Action	].reset(new StateAction(this));
 	this->current_state = this->state[(int)StateName::Idle].get();
+
+#ifdef _DEBUG
+	this->AddComponent<InspectorExtension>(new InspectorContentPlayer);
+#endif
+
 }
 
 void Player::Update(void)
@@ -39,7 +49,6 @@ void Player::Update(void)
 	ActionControl();
 
 	this->current_state->Update();
-	this->is_grounded = false;
 	this->last_position = this->transform.position;
 }
 
@@ -47,7 +56,7 @@ void Player::Uninit(void)
 {
 }
 
-void Player::OnCollision(Object * other)
+void Player::OnCollisionEnter(Object * other)
 {
 	if (other->type == ObjectType::Object)
 	{
@@ -57,8 +66,17 @@ void Player::OnCollision(Object * other)
 		if (this->last_position.y + this->collider->offset.y - 0.5f*this->collider->size.y >=
 			other->transform.position.y + otherCollider->offset.y + 0.5f*otherCollider->size.y)
 		{
+			this->ground_colliders.insert(otherCollider);
 			this->is_grounded = true;
 		}
+	}
+}
+
+void Player::OnCollisionStay(Object * other)
+{
+	if (other->type == ObjectType::Object)
+	{
+		auto otherCollider = other->GetComponent<BoxCollider2D>();
 
 		// 衝突応答の処理
 		auto x = 0.0f;
@@ -81,7 +99,7 @@ void Player::OnCollision(Object * other)
 				(other->transform.position.x + otherCollider->offset.x - 0.5f*otherCollider->size.x);
 			auto x2 = (this->rigidbody->position.x + this->collider->offset.x - 0.5f*this->collider->size.x) -
 				(other->transform.position.x + otherCollider->offset.x + 0.5f*otherCollider->size.x);
-			x = fminf(fabsf(x1), fabsf(x2));
+			x = fabsf(x1) < fabsf(x2) ? x1 : x2;
 		}
 
 		if (this->rigidbody->velocity.y > 0.0f)
@@ -100,7 +118,7 @@ void Player::OnCollision(Object * other)
 				(other->transform.position.y + otherCollider->offset.y - 0.5f*otherCollider->size.y);
 			auto y2 = (this->rigidbody->position.y + this->collider->offset.y - 0.5f*this->collider->size.y) -
 				(other->transform.position.y + otherCollider->offset.y + 0.5f*otherCollider->size.y);
-			y = fminf(fabsf(y1), fabsf(y2));
+			y = fabsf(y1) < fabsf(y2) ? y1 : y2;
 		}
 
 		// めり込んだ量だけ押し返す
@@ -117,6 +135,18 @@ void Player::OnCollision(Object * other)
 			this->transform.position.y = this->rigidbody->position.y;
 		}
 
+	}
+}
+
+void Player::OnCollisionExit(Object * other)
+{
+	auto collider = other->GetComponent<BoxCollider2D>();
+	if (this->ground_colliders.find(collider) != this->ground_colliders.end())
+	{
+		this->ground_colliders.erase(collider);
+
+		if(this->ground_colliders.empty())
+			this->is_grounded = false;
 	}
 }
 
@@ -340,14 +370,10 @@ void Player::StateAction::SetState(StateName state)
 
 void Player::StateAir::OnEnter(void)
 {
-	//this->player->transform.position.y += 1.0f;
-	this->player->is_grounded = false;
 	this->player->rigidbody->useGravity = true;
 
 	//TODO: ジャンプ／落下のアニメーションにする
 	this->player->SetAnime(AnimeSet::Idle);
-
-	//this->player->rigidbody->SetActive(true);
 }
 
 void Player::StateAir::Update(void)
@@ -371,9 +397,7 @@ void Player::StateAir::Update(void)
 void Player::StateAir::OnExit(void)
 {
 	this->player->rigidbody->velocity.y = 0.0f;
-	this->player->rigidbody->acceleration.y = 0.0f;
 	this->player->rigidbody->useGravity = false;
-	//this->player->rigidbody->SetActive(false);
 }
 
 void Player::StateAir::SetState(StateName state)

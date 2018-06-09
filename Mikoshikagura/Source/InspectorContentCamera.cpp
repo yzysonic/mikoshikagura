@@ -1,15 +1,13 @@
-#include "ImGuiCamera.h"
+#include "InspectorContentCamera.h"
 
-void ImGuiCamera::Init(void)
+void InspectorContentCamera::Init(void)
 {
-	ImGuiObject::Init();
 	camera = dynamic_cast<Camera*>(object);
 	back_color = camera->backColor;
 }
 
-void ImGuiCamera::GuiContent(void)
+void InspectorContentCamera::GuiContent(void)
 {
-	ImGuiObject::GuiContent();
 	if (ImGui::TreeNodeEx("CameraSettings", ImGuiTreeNodeFlags_DefaultOpen))
 	{
 		ImGui::DragFloat("fov", &camera->fov, 0.01f, 0.0f, Deg2Rad(180.0f));

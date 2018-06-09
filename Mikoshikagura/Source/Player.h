@@ -1,5 +1,6 @@
 #pragma once
 #include "Core/Core.h"
+#include <set>
 
 #define KeyJump		DIK_SPACE
 #define KeyAction	DIK_RETURN
@@ -10,6 +11,9 @@
 
 class Player : public Object
 {
+#ifdef _DEBUG
+	friend class InspectorContentPlayer;
+#endif
 public:
 	// ’è”’è‹`
 
@@ -45,6 +49,7 @@ public:
 		virtual void Update(void) {}
 		virtual void OnExit(void) {}
 		virtual void SetState(StateName state);
+		virtual const char* ToString(void) = 0;
 
 	protected:
 		Player * player;
@@ -59,6 +64,7 @@ public:
 		void OnEnter(void) override;
 		void Update(void) override;
 		void SetState(StateName state) override;
+		inline const char* ToString(void) override { return "Idle"; }
 	};
 
 	// ˆÚ“®ó‘Ô
@@ -70,6 +76,7 @@ public:
 		void Update(void) override;
 		void OnExit(void) override;
 		void SetState(StateName state) override;
+		inline const char* ToString(void) override { return "Move"; }
 	};
 
 	// ‹ó’†ó‘Ô
@@ -81,6 +88,7 @@ public:
 		void Update(void) override;
 		void OnExit(void) override;
 		void SetState(StateName state) override;
+		inline const char* ToString(void) override { return "Air"; }
 	};
 
 	// UŒ‚ó‘Ô
@@ -91,6 +99,7 @@ public:
 		void OnEnter(void) override;
 		void Update(void) override;
 		void SetState(StateName state) override;
+		inline const char* ToString(void) override { return "Action"; }
 	private:
 		FrameTimer timer;
 	};
@@ -106,7 +115,9 @@ public:
 	Player(void);
 	void Update(void) override;
 	void Uninit(void) override;
-	void OnCollision(Object* other) override;
+	void OnCollisionEnter(Object* other) override;
+	void OnCollisionStay(Object* other) override;
+	void OnCollisionExit(Object* other) override;
 	void SetPosition(Vector3 pos);
 
 
@@ -115,6 +126,7 @@ private:
 
 	SkinnedModel* model;
 	BoxCollider2D* collider;
+	std::set<Collider*> ground_colliders;
 	Rigidbody* rigidbody;
 	Vector3 control;
 	Vector3 last_position;

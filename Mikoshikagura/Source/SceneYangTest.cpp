@@ -4,7 +4,8 @@
 #include "CameraPlay.h"
 #include "CameraSmooth.h"
 #include "FadeScreen.h"
-#include "ImGuiCamera.h"
+#include "InspectorContentCamera.h"
+#include "Inspector.h"
 #include "DebugManager.h"
 
 void SceneYangTest::Init(void)
@@ -21,9 +22,23 @@ void SceneYangTest::Init(void)
 
 	// オブジェクト初期化
 	player	= new Player;
-	player->AddComponent<ImGuiObject>();
-	//player->SetPosition(Vector3(0.0f, 30.0f, 0.0f));
-	
+	player->SetPosition(Vector3(0.0f, 30.0f, 0.0f));
+
+	// カメラ初期化
+	camera = new Camera;
+	camera->transform.position = Vector3(0.0f, 20.0f, -60.0f);
+	camera->setBackColor(Color(250, 250, 250, 255));
+	camera->AddComponent<CameraPlay>();
+	camera->AddComponent<CameraSmooth>(player);
+
+	// レンダリング設定
+	Renderer::GetInstance()->setCamera(camera);
+	Light::Init();
+
+	// 重力設定
+	Physics::GetInstance()->setGravity(Vector3(0.0f, -98.0f, 0.0f));
+
+	// 地面ブロックの生成
 	{
 		int i = 0;
 		for (auto& t : test)
@@ -36,21 +51,7 @@ void SceneYangTest::Init(void)
 	}
 	
 	debug	= DebugManager::GetInstance()->GetComponent<DebugMenu>();
-
-	// カメラ初期化
-	camera = new Camera;
-	camera->transform.position = Vector3(0.0f, 20.0f, -60.0f);
-	camera->setBackColor(Color(250, 250, 250, 255));
-	camera->AddComponent<CameraPlay>();
-	camera->AddComponent<CameraSmooth>(player);
-	camera->AddComponent<ImGuiCamera>();
-	
-	// レンダリング設定
-	Renderer::GetInstance()->setCamera(camera);
-	Light::Init();
-
-	// 重力設定
-	Physics::GetInstance()->setGravity(Vector3(0.0f, -98.0f, 0.0f));
+	DebugManager::OpenInspector(player);
 }
 
 void SceneYangTest::Update(void)
@@ -127,7 +128,7 @@ void SeasonTestObject::Update(void)
 	collide = false;
 }
 
-void SeasonTestObject::OnCollision(Object * object)
+void SeasonTestObject::OnCollisionStay(Object * object)
 {
 	collide = true;
 }
