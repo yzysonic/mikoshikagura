@@ -3,6 +3,7 @@
 #include "MainCamera.h"
 #include "Player.h"
 #include "MapManager.h"
+#include "Background.h"
 
 class Scene_Stage1 : public Scene
 {
@@ -12,8 +13,8 @@ public:
 	void Uninit(void) override;
 
 private:
-
 	MainCamera *camera;
 	Player *player;
 	MapManager *mapdata;
+	Background *background;
 };

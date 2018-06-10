@@ -301,6 +301,9 @@
     <ClInclude Include="Source\FreeCamera.h">
       <Filter>GameObject</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Background.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Core\AllocateHirerachy.cpp">
@@ -528,6 +531,9 @@
       <Filter>Script</Filter>
     </ClCompile>
     <ClCompile Include="Source\FreeCamera.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Background.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
   </ItemGroup>

@@ -113,12 +113,18 @@ void MapManager::CreateMapObject() {
 	for (int i = 0; i < layermax; i++) {
 		for (int j = 0; j < height; j++) {
 			for (int k = 0; k < width; k++) {
-				if (layer[i].maptip[j][k] > 0) {
+				auto id = layer[i].maptip[j][k];
+				if (id > 0) {
 
 					Vector3 objscale;
 					Object  *objtemp = new Object;
 					objtemp->type = ObjectType::Field;
-					objtemp->AddComponent<StaticModel>("field_summer");
+					
+					auto model_name = "field_block_" + std::to_string(id);
+					if (!ModelData::Get(model_name))
+						model_name = "field_summer";
+					objtemp->AddComponent<StaticModel>(model_name);
+					
 					objtemp->transform.scale = transform.scale;
 					objscale = objtemp->transform.scale;
 
