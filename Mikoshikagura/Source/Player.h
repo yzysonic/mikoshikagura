@@ -6,6 +6,10 @@
 #define KeyAction	DIK_RETURN
 #define KeyWhistle	DIK_TAB
 
+#define ButtonJump		BUTTON_CR
+#define ButtonAction	BUTTON_CI
+#define ButtonWhistle	BUTTON_TR
+
 #define PlayerSpeed (20.0f)
 #define PlayerJumpSpeed (45.0f)
 

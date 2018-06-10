@@ -153,20 +153,16 @@ void Player::MoveControl(void)
 	this->control = Vector3::zero;
 
 	// キーボード入力
-	if (GetKeyboardPress(DIK_W))
-		control += Vector3(0.0f, 0.0f, 1.0f);
-	if (GetKeyboardPress(DIK_S))
-		control += Vector3(0.0f, 0.0f, -1.0f);
-	if (GetKeyboardPress(DIK_A))
+	if (GetKeyboardPress(DIK_A) || IsButtonPressed(BUTTON_LEFT))
 		control += Vector3(-1.0f, 0.0f, 0.0f);
-	if (GetKeyboardPress(DIK_D))
+	if (GetKeyboardPress(DIK_D) || IsButtonPressed(BUTTON_RIGHT))
 		control += Vector3(1.0f, 0.0f, 0.0f);
 
-	if (GetKeyboardPress(DIK_W) || GetKeyboardPress(DIK_A) || GetKeyboardPress(DIK_S) || GetKeyboardPress(DIK_D))
+	if (GetKeyboardPress(DIK_A) || GetKeyboardPress(DIK_D))
 		control = control.normalized();
 
 	// パッド入力
-	control += Vector3(GetPadLX(), 0, -GetPadLY());
+	control += Vector3(GetPadLX(), 0.0f, 0.0f);
 
 	// ムーブイベント
 	if (this->control.sqrLength() > 0.0f)
@@ -181,7 +177,7 @@ void Player::MoveControl(void)
 
 void Player::ActionControl(void)
 {
-	if (GetKeyboardTrigger(KeyAction) && action)
+	if ((GetKeyboardTrigger(KeyAction) || IsButtonTriggered(ButtonJump)) && action)
 	{
 		action();
 	}
@@ -189,7 +185,7 @@ void Player::ActionControl(void)
 
 bool Player::JumpControl(void)
 {
-	if (GetKeyboardTrigger(KeyJump))
+	if (GetKeyboardTrigger(KeyJump) || IsButtonTriggered(ButtonJump))
 	{
 		this->rigidbody->position.y += 1.0f;
 		this->rigidbody->velocity.y = PlayerJumpSpeed;
