@@ -590,12 +590,12 @@ void UpdatePad(void)
 
 }
 //----------------------------------------------- åüç∏
-BOOL IsButtonPressed(int padNo,DWORD button)
+BOOL IsButtonPressed(DWORD button, int padNo)
 {
 	return (button & padState[padNo]);
 }
 
-BOOL IsButtonTriggered(int padNo,DWORD button)
+BOOL IsButtonTriggered(DWORD button, int padNo)
 {
 	return (button & padTrigger[padNo]);
 }

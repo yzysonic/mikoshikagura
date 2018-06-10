@@ -56,81 +56,60 @@ void Player::Uninit(void)
 {
 }
 
-void Player::OnCollisionEnter(Object * other)
+void Player::OnCollisionStay(Object * other)
 {
-	if (other->type == ObjectType::Object)
+	if (other->type == ObjectType::Field)
 	{
 		auto otherCollider = other->GetComponent<BoxCollider2D>();
+		auto otherColliderPos = other->transform.position.toVector2() + otherCollider->offset;
 
 		// 着地判定
 		if (this->last_position.y + this->collider->offset.y - 0.5f*this->collider->size.y >=
-			other->transform.position.y + otherCollider->offset.y + 0.5f*otherCollider->size.y)
+			otherColliderPos.y + 0.5f*otherCollider->size.y)
 		{
+
 			this->ground_colliders.insert(otherCollider);
 			this->is_grounded = true;
 		}
-	}
-}
-
-void Player::OnCollisionStay(Object * other)
-{
-	if (other->type == ObjectType::Object)
-	{
-		auto otherCollider = other->GetComponent<BoxCollider2D>();
 
 		// 衝突応答の処理
-		auto x = 0.0f;
-		auto y = 0.0f;
+		auto diff = Vector2(0.0f, 0.0f);
 
 		// めり込みの量を計算する
-		if (this->rigidbody->velocity.x > 0.0f)
+		if(this->rigidbody->position.x < otherColliderPos.x)
 		{
-			x = (this->rigidbody->position.x + this->collider->offset.x + 0.5f*this->collider->size.x) -
-				(other->transform.position.x + otherCollider->offset.x - 0.5f*otherCollider->size.x);
-		}
-		else if(this->rigidbody->velocity.x < 0.0f)
-		{
-			x = (this->rigidbody->position.x + this->collider->offset.x - 0.5f*this->collider->size.x) -
-				(other->transform.position.x + otherCollider->offset.x + 0.5f*otherCollider->size.x);
+			diff.x = (this->rigidbody->position.x + this->collider->offset.x + 0.5f*this->collider->size.x) -
+				(otherColliderPos.x - 0.5f*otherCollider->size.x);
+			diff.x += 0.0001f;
 		}
 		else
 		{
-			auto x1 = (this->rigidbody->position.x + this->collider->offset.x + 0.5f*this->collider->size.x) -
-				(other->transform.position.x + otherCollider->offset.x - 0.5f*otherCollider->size.x);
-			auto x2 = (this->rigidbody->position.x + this->collider->offset.x - 0.5f*this->collider->size.x) -
-				(other->transform.position.x + otherCollider->offset.x + 0.5f*otherCollider->size.x);
-			x = fabsf(x1) < fabsf(x2) ? x1 : x2;
+			diff.x = (this->rigidbody->position.x + this->collider->offset.x - 0.5f*this->collider->size.x) -
+				(otherColliderPos.x + 0.5f*otherCollider->size.x);
+			diff.x -= 0.0001f;
 		}
 
-		if (this->rigidbody->velocity.y > 0.0f)
+		if (this->rigidbody->position.y < otherColliderPos.y)
 		{
-			y = (this->rigidbody->position.y + this->collider->offset.y + 0.5f*this->collider->size.y) -
-				(other->transform.position.y + otherCollider->offset.y - 0.5f*otherCollider->size.y);
-		}
-		else if(this->rigidbody->velocity.y < 0.0f)
-		{
-			y = (this->rigidbody->position.y + this->collider->offset.y - 0.5f*this->collider->size.y) -
-				(other->transform.position.y + otherCollider->offset.y + 0.5f*otherCollider->size.y);
+			diff.y = (this->rigidbody->position.y + this->collider->offset.y + 0.5f*this->collider->size.y) -
+				(otherColliderPos.y - 0.5f*otherCollider->size.y);
 		}
 		else
 		{
-			auto y1 = (this->rigidbody->position.y + this->collider->offset.y + 0.5f*this->collider->size.y) -
-				(other->transform.position.y + otherCollider->offset.y - 0.5f*otherCollider->size.y);
-			auto y2 = (this->rigidbody->position.y + this->collider->offset.y - 0.5f*this->collider->size.y) -
-				(other->transform.position.y + otherCollider->offset.y + 0.5f*otherCollider->size.y);
-			y = fabsf(y1) < fabsf(y2) ? y1 : y2;
+			diff.y = (this->rigidbody->position.y + this->collider->offset.y - 0.5f*this->collider->size.y) -
+				(otherColliderPos.y + 0.5f*otherCollider->size.y);
 		}
 
 		// めり込んだ量だけ押し返す
-		if (fabsf(x) <= fabsf(y))
+		if (fabsf(diff.x) <= fabsf(diff.y))
 		{
-			this->rigidbody->position.x -= x;
+			this->rigidbody->position.x -= diff.x;
 			this->rigidbody->velocity.x = 0.0f;
 			this->transform.position.x = this->rigidbody->position.x;
 		}
 		else
 		{
-			this->rigidbody->position.y -= y;
+			this->rigidbody->position.y -= diff.y;
 			this->rigidbody->velocity.y = 0.0f;
 			this->transform.position.y = this->rigidbody->position.y;
 		}
@@ -174,20 +153,16 @@ void Player::MoveControl(void)
 	this->control = Vector3::zero;
 
 	// キーボード入力
-	if (GetKeyboardPress(DIK_W))
-		control += Vector3(0.0f, 0.0f, 1.0f);
-	if (GetKeyboardPress(DIK_S))
-		control += Vector3(0.0f, 0.0f, -1.0f);
-	if (GetKeyboardPress(DIK_A))
+	if (GetKeyboardPress(DIK_A) || IsButtonPressed(BUTTON_LEFT))
 		control += Vector3(-1.0f, 0.0f, 0.0f);
-	if (GetKeyboardPress(DIK_D))
+	if (GetKeyboardPress(DIK_D) || IsButtonPressed(BUTTON_RIGHT))
 		control += Vector3(1.0f, 0.0f, 0.0f);
 
-	if (GetKeyboardPress(DIK_W) || GetKeyboardPress(DIK_A) || GetKeyboardPress(DIK_S) || GetKeyboardPress(DIK_D))
+	if (GetKeyboardPress(DIK_A) || GetKeyboardPress(DIK_D))
 		control = control.normalized();
 
 	// パッド入力
-	control += Vector3(GetPadLX(), 0, -GetPadLY());
+	control += Vector3(GetPadLX(), 0.0f, 0.0f);
 
 	// ムーブイベント
 	if (this->control.sqrLength() > 0.0f)
@@ -202,7 +177,7 @@ void Player::MoveControl(void)
 
 void Player::ActionControl(void)
 {
-	if (GetKeyboardTrigger(KeyAction) && action)
+	if ((GetKeyboardTrigger(KeyAction) || IsButtonTriggered(ButtonJump)) && action)
 	{
 		action();
 	}
@@ -210,7 +185,7 @@ void Player::ActionControl(void)
 
 bool Player::JumpControl(void)
 {
-	if (GetKeyboardTrigger(KeyJump))
+	if (GetKeyboardTrigger(KeyJump) || IsButtonTriggered(ButtonJump))
 	{
 		this->rigidbody->position.y += 1.0f;
 		this->rigidbody->velocity.y = PlayerJumpSpeed;
@@ -396,7 +371,6 @@ void Player::StateAir::Update(void)
 
 void Player::StateAir::OnExit(void)
 {
-	this->player->rigidbody->velocity.y = 0.0f;
 	this->player->rigidbody->useGravity = false;
 }
 

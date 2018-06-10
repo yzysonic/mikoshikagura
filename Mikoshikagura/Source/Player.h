@@ -6,6 +6,10 @@
 #define KeyAction	DIK_RETURN
 #define KeyWhistle	DIK_TAB
 
+#define ButtonJump		BUTTON_CR
+#define ButtonAction	BUTTON_CI
+#define ButtonWhistle	BUTTON_TR
+
 #define PlayerSpeed (20.0f)
 #define PlayerJumpSpeed (45.0f)
 
@@ -115,7 +119,6 @@ public:
 	Player(void);
 	void Update(void) override;
 	void Uninit(void) override;
-	void OnCollisionEnter(Object* other) override;
 	void OnCollisionStay(Object* other) override;
 	void OnCollisionExit(Object* other) override;
 	void SetPosition(Vector3 pos);

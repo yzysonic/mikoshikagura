@@ -147,10 +147,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Background.h" />
+    <ClInclude Include="Source\CameraSphericalCoordinate.h" />
     <ClInclude Include="Source\Core\ModelData.h" />
     <ClInclude Include="Source\Core\Resource.h" />
     <ClInclude Include="Source\CameraPlay.h" />
-    <ClInclude Include="Source\CameraSmooth.h" />
+    <ClInclude Include="Source\CameraSmoothFallow.h" />
     <ClInclude Include="Source\CameraSnap.h" />
     <ClInclude Include="Source\Core\AllocateHirerachy.h" />
     <ClInclude Include="Source\Core\Billboard.h" />
@@ -201,10 +203,12 @@
     <ClInclude Include="Source\DebugManager.h" />
     <ClInclude Include="Source\DebugMenu.h" />
     <ClInclude Include="Source\FadeScreen.h" />
+    <ClInclude Include="Source\FreeCamera.h" />
     <ClInclude Include="Source\InspectorContentCamera.h" />
     <ClInclude Include="Source\InspectorContentPlayer.h" />
     <ClInclude Include="Source\Inspector.h" />
     <ClInclude Include="Source\ObjectExplorer.h" />
+    <ClInclude Include="Source\NagaiSceneTest.h" />
     <ClInclude Include="Source\SceneExplorer.h" />
     <ClInclude Include="Source\SceneImGuiTest.h" />
     <ClInclude Include="Source\Imgui\imconfig.h" />
@@ -220,15 +224,18 @@
     <ClInclude Include="Source\SceneStackSampleOp.h" />
     <ClInclude Include="Source\SceneTest.h" />
     <ClInclude Include="Source\SceneYangTest.h" />
+    <ClInclude Include="Source\Scene_Stage1.h" />
     <ClInclude Include="Source\SeasonManager.h" />
     <ClInclude Include="Source\SeasonObject.h" />
     <ClInclude Include="Source\Snapshot.h" />
-    <ClInclude Include="Source\XMLPerser.h" />
+    <ClInclude Include="Source\MapManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Background.cpp" />
     <ClCompile Include="Source\CameraPlay.cpp" />
-    <ClCompile Include="Source\CameraSmooth.cpp" />
+    <ClCompile Include="Source\CameraSmoothFallow.cpp" />
     <ClCompile Include="Source\CameraSnap.cpp" />
+    <ClCompile Include="Source\CameraSphericalCoordinate.cpp" />
     <ClCompile Include="Source\Core\AllocateHirerachy.cpp" />
     <ClCompile Include="Source\Core\Billboard.cpp" />
     <ClCompile Include="Source\Core\BoneFrame.cpp" />
@@ -273,6 +280,7 @@
     <ClCompile Include="Source\DebugManager.cpp" />
     <ClCompile Include="Source\DebugMenu.cpp" />
     <ClCompile Include="Source\FadeScreen.cpp" />
+    <ClCompile Include="Source\FreeCamera.cpp" />
     <ClCompile Include="Source\InspectorContentCamera.cpp" />
     <ClCompile Include="Source\InspectorContentPlayer.cpp" />
     <ClCompile Include="Source\Imgui\imgui.cpp" />
@@ -284,6 +292,7 @@
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\MainCamera.cpp" />
     <ClCompile Include="Source\ObjectExplorer.cpp" />
+    <ClCompile Include="Source\NagaiSceneTest.cpp" />
     <ClCompile Include="Source\Player.cpp" />
     <ClCompile Include="Source\SceneExplorer.cpp" />
     <ClCompile Include="Source\SceneGlobal.cpp" />
@@ -293,10 +302,11 @@
     <ClCompile Include="Source\SceneStackSampleOp.cpp" />
     <ClCompile Include="Source\SceneTest.cpp" />
     <ClCompile Include="Source\SceneYangTest.cpp" />
+    <ClCompile Include="Source\Scene_Stage1.cpp" />
     <ClCompile Include="Source\SeasonManager.cpp" />
     <ClCompile Include="Source\SeasonObject.cpp" />
     <ClCompile Include="Source\Snapshot.cpp" />
-    <ClCompile Include="Source\XMLPerser.cpp" />
+    <ClCompile Include="Source\MapManager.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

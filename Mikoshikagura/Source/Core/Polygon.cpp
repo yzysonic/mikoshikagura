@@ -25,6 +25,8 @@ void RectPolygon2D::Draw(void)
 	// 頂点座標の更新
 	transformVertex();
 
+	Direct3D::GetDevice()->SetRenderState(D3DRS_ZENABLE, FALSE);
+
 	// 頂点フォーマットの設定
 	Direct3D::GetDevice()->SetFVF(FVF_VERTEX_2D);
 
@@ -34,6 +36,7 @@ void RectPolygon2D::Draw(void)
 	// ポリゴンの描画
 	Direct3D::GetDevice()->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, RECT_NUM_POLYGON, this->vertex, sizeof(Vertex2D));
 
+	Direct3D::GetDevice()->SetRenderState(D3DRS_ZENABLE, TRUE);
 }
 
 

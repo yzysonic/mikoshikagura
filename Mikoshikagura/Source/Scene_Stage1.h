@@ -3,7 +3,9 @@
 #include "MainCamera.h"
 #include "Player.h"
 #include "MapManager.h"
-class SceneTest : public Scene
+#include "Background.h"
+
+class Scene_Stage1 : public Scene
 {
 public:
 	void Init(void) override;
@@ -11,14 +13,8 @@ public:
 	void Uninit(void) override;
 
 private:
-	Object *test;
-	Object *testBG;
-	Object *target1;
-	Object *target2;
 	MainCamera *camera;
 	Player *player;
-
 	MapManager *mapdata;
-
-	std::vector<Object> mapobj;
+	Background *background;
 };

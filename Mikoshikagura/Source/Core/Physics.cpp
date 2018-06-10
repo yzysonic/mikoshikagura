@@ -46,6 +46,9 @@ void Physics::removeCollider(Collider * collider)
 	{
 		if (pair->first == collider || pair->second == collider)
 		{
+			pair->first->object->OnCollisionExit(pair->second->object);
+			pair->second->object->OnCollisionExit(pair->first->object);
+
 			auto erase_pair = pair;
 			pair++;
 			this->collisionSet.erase(erase_pair);
