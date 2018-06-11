@@ -75,6 +75,8 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)\</OutDir>
     <TargetName>$(ProjectName)_Debug</TargetName>
+    <IncludePath>C:\Users\yang.tzui\Source\Repos\mikoshikagura\Mikoshikagura\Library\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\yang.tzui\Source\Repos\mikoshikagura\Mikoshikagura\Library\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -82,6 +84,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)\</OutDir>
+    <IncludePath>C:\Users\yang.tzui\Source\Repos\mikoshikagura\Mikoshikagura\Library\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\yang.tzui\Source\Repos\mikoshikagura\Mikoshikagura\Library\Release;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
