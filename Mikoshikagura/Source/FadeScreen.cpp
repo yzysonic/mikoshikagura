@@ -2,7 +2,7 @@
 
 FadeScreen::FadeScreen(void)
 {
-	this->polygon = AddComponent<RectPolygon2D>("none", Layer::TOP, "global");
+	this->polygon = AddComponent<RectPolygon2D>("none", Layer::TOP, "default");
 	this->polygon->SetSize((float)SystemParameters::ResolutionX, (float)SystemParameters::ResolutionY);
 	this->polygon->SetOpacity(0.0f);
 

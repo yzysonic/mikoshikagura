@@ -304,6 +304,18 @@
     <ClInclude Include="Source\Background.h">
       <Filter>GameObject</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Core\Text.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneTitle.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Hukidashi.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Sign.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Core\AllocateHirerachy.cpp">
@@ -534,6 +546,18 @@
       <Filter>GameObject</Filter>
     </ClCompile>
     <ClCompile Include="Source\Background.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Core\Text.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneTitle.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Hukidashi.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Sign.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
   </ItemGroup>

@@ -33,7 +33,7 @@ void Scene_Stage1::Init(void)
 	background = new Background;
 
 	Light::Init();
-	FadeScreen::FadeIn(Color::black, 0.0f);
+	FadeScreen::FadeIn(Color::white, 1.0f);
 }
 
 void Scene_Stage1::Update(void)

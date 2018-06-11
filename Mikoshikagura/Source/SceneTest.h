@@ -2,6 +2,8 @@
 #include "Core/Core.h"
 #include "MainCamera.h"
 #include "Player.h"
+#include "Hukidashi.h"
+#include "Sign.h"
 #include "MapManager.h"
 class SceneTest : public Scene
 {
@@ -15,8 +17,10 @@ private:
 	Object *testBG;
 	Object *target1;
 	Object *target2;
+	Sign *kanban;
 	MainCamera *camera;
 	Player *player;
+	Hukidashi *hukidashi;
 
 	MapManager *mapdata;
 
