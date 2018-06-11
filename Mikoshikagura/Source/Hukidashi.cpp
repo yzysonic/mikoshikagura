@@ -40,9 +40,12 @@ void Hukidashi::Update(void)
 	case none:
 		break;
 	case popping:
-		pop_count++;
-		this->GetComponent<RectPolygon2D>()->SetSize(1080.0f * pop_count / POPCOUNT, 360.0f * pop_count / POPCOUNT);
-		if (pop_count == POPCOUNT)
+		if (pop_count < POPCOUNT)
+		{
+			pop_count++;
+			this->GetComponent<RectPolygon2D>()->SetSize(1080.0f * pop_count / POPCOUNT, 360.0f * pop_count / POPCOUNT);
+		}
+		else
 		{
 			this->state = popped;
 		}
@@ -63,9 +66,12 @@ void Hukidashi::Update(void)
 		if (radian > 12 * PI) radian = 0.0f;
 		break;
 	case unpopping:
-		pop_count--;
-		this->GetComponent<RectPolygon2D>()->SetSize(1080.0f * pop_count / POPCOUNT, 360.0f * pop_count / POPCOUNT);
-		if (pop_count == 0)
+		if (pop_count > 0)
+		{
+			pop_count--;
+			this->GetComponent<RectPolygon2D>()->SetSize(1080.0f * pop_count / POPCOUNT, 360.0f * pop_count / POPCOUNT);
+		}
+		else
 		{
 			this->state = none;
 			this->SetActive(false);
