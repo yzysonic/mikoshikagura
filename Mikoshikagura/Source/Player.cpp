@@ -1,5 +1,9 @@
 #include "Player.h"
+#include "Core/Physics.h"
 
+#ifdef _DEBUG
+#include "InspectorContentPlayer.h"
+#endif
 
 //=============================================================================
 // Player
@@ -8,13 +12,10 @@
 Player::Player(void)
 {
 	this->type = ObjectType::Player;
-	this->atk = 1;
+	this->name = "Player";
 	this->speed = PlayerSpeed;
 	this->anime = AnimeSet::Idle;
-	this->element_num = 0;
 	this->is_grounded = false;
-	this->init_attack = [] {};
-	this->update_attack = [] {};
 
 	// モデル初期化
 	this->model = AddComponent<SkinnedModel>("player");
@@ -26,25 +27,28 @@ Player::Player(void)
 	this->collider->offset.y += 0.5f*this->collider->size.y;
 
 	this->rigidbody = AddComponent<Rigidbody>();
-	this->rigidbody->useGravity = false;
-	//this->rigidbody->SetActive(false);
+	this->rigidbody->useGravity = true;
 
 	// ステート初期化
 	this->state.resize((int)StateName::Max);
 	this->state[(int)StateName::Idle	].reset(new StateIdle(this));
 	this->state[(int)StateName::Move	].reset(new StateMove(this));
 	this->state[(int)StateName::Air		].reset(new StateAir(this));
-	this->state[(int)StateName::Attack	].reset(new StateAttack(this));
-	this->state[(int)StateName::Damage	].reset(new StateDamage(this));
+	this->state[(int)StateName::Action	].reset(new StateAction(this));
 	this->current_state = this->state[(int)StateName::Idle].get();
+
+#ifdef _DEBUG
+	this->AddComponent<InspectorExtension>(new InspectorContentPlayer);
+#endif
+
 }
 
 void Player::Update(void)
 {
 	MoveControl();
+	ActionControl();
 
 	this->current_state->Update();
-	this->is_grounded = false;
 	this->last_position = this->transform.position;
 }
 
@@ -52,78 +56,60 @@ void Player::Uninit(void)
 {
 }
 
-void Player::OnCollision(Object * other)
+void Player::OnCollisionStay(Object * other)
 {
-	if (other->type == ObjectType::Element)
-	{
-		this->element_num++;
-		this->event_get_element();
-	}
-
-	if (other->type == ObjectType::Object)
+	if (other->type == ObjectType::Field)
 	{
 		auto otherCollider = other->GetComponent<BoxCollider2D>();
+		auto otherColliderPos = other->transform.position.toVector2() + otherCollider->offset;
 
 		// 着地判定
 		if (this->last_position.y + this->collider->offset.y - 0.5f*this->collider->size.y >=
-			other->transform.position.y + otherCollider->offset.y + 0.5f*otherCollider->size.y)
+			otherColliderPos.y + 0.5f*otherCollider->size.y)
 		{
+
+			this->ground_colliders.insert(otherCollider);
 			this->is_grounded = true;
 		}
 
 		// 衝突応答の処理
-		auto x = 0.0f;
-		auto y = 0.0f;
+		auto diff = Vector2(0.0f, 0.0f);
 
 		// めり込みの量を計算する
-		if (this->rigidbody->velocity.x > 0.0f)
+		if(this->rigidbody->position.x < otherColliderPos.x)
 		{
-			x = (this->rigidbody->position.x + this->collider->offset.x + 0.5f*this->collider->size.x) -
-				(other->transform.position.x + otherCollider->offset.x - 0.5f*otherCollider->size.x);
-		}
-		else if(this->rigidbody->velocity.x < 0.0f)
-		{
-			x = (this->rigidbody->position.x + this->collider->offset.x - 0.5f*this->collider->size.x) -
-				(other->transform.position.x + otherCollider->offset.x + 0.5f*otherCollider->size.x);
+			diff.x = (this->rigidbody->position.x + this->collider->offset.x + 0.5f*this->collider->size.x) -
+				(otherColliderPos.x - 0.5f*otherCollider->size.x);
+			diff.x += 0.0001f;
 		}
 		else
 		{
-			auto x1 = (this->rigidbody->position.x + this->collider->offset.x + 0.5f*this->collider->size.x) -
-				(other->transform.position.x + otherCollider->offset.x - 0.5f*otherCollider->size.x);
-			auto x2 = (this->rigidbody->position.x + this->collider->offset.x - 0.5f*this->collider->size.x) -
-				(other->transform.position.x + otherCollider->offset.x + 0.5f*otherCollider->size.x);
-			x = fminf(fabsf(x1), fabsf(x2));
+			diff.x = (this->rigidbody->position.x + this->collider->offset.x - 0.5f*this->collider->size.x) -
+				(otherColliderPos.x + 0.5f*otherCollider->size.x);
+			diff.x -= 0.0001f;
 		}
 
-		if (this->rigidbody->velocity.y > 0.0f)
+		if (this->rigidbody->position.y < otherColliderPos.y)
 		{
-			y = (this->rigidbody->position.y + this->collider->offset.y + 0.5f*this->collider->size.y) -
-				(other->transform.position.y + otherCollider->offset.y - 0.5f*otherCollider->size.y);
-		}
-		else if(this->rigidbody->velocity.y < 0.0f)
-		{
-			y = (this->rigidbody->position.y + this->collider->offset.y - 0.5f*this->collider->size.y) -
-				(other->transform.position.y + otherCollider->offset.y + 0.5f*otherCollider->size.y);
+			diff.y = (this->rigidbody->position.y + this->collider->offset.y + 0.5f*this->collider->size.y) -
+				(otherColliderPos.y - 0.5f*otherCollider->size.y);
 		}
 		else
 		{
-			auto y1 = (this->rigidbody->position.y + this->collider->offset.y + 0.5f*this->collider->size.y) -
-				(other->transform.position.y + otherCollider->offset.y - 0.5f*otherCollider->size.y);
-			auto y2 = (this->rigidbody->position.y + this->collider->offset.y - 0.5f*this->collider->size.y) -
-				(other->transform.position.y + otherCollider->offset.y + 0.5f*otherCollider->size.y);
-			y = fminf(fabsf(y1), fabsf(y2));
+			diff.y = (this->rigidbody->position.y + this->collider->offset.y - 0.5f*this->collider->size.y) -
+				(otherColliderPos.y + 0.5f*otherCollider->size.y);
 		}
 
 		// めり込んだ量だけ押し返す
-		if (fabsf(x) <= fabsf(y))
+		if (fabsf(diff.x) <= fabsf(diff.y))
 		{
-			this->rigidbody->position.x -= x;
+			this->rigidbody->position.x -= diff.x;
 			this->rigidbody->velocity.x = 0.0f;
 			this->transform.position.x = this->rigidbody->position.x;
 		}
 		else
 		{
-			this->rigidbody->position.y -= y;
+			this->rigidbody->position.y -= diff.y;
 			this->rigidbody->velocity.y = 0.0f;
 			this->transform.position.y = this->rigidbody->position.y;
 		}
@@ -131,19 +117,21 @@ void Player::OnCollision(Object * other)
 	}
 }
 
+void Player::OnCollisionExit(Object * other)
+{
+	auto collider = other->GetComponent<BoxCollider2D>();
+	if (this->ground_colliders.find(collider) != this->ground_colliders.end())
+	{
+		this->ground_colliders.erase(collider);
+
+		if(this->ground_colliders.empty())
+			this->is_grounded = false;
+	}
+}
+
 void Player::SetPosition(Vector3 pos)
 {
 	this->rigidbody->position = pos;
-}
-
-void Player::AtkUp(void)
-{
-	this->atk = min(this->atk + 1, MaxAtk);
-}
-
-int Player::GetElementNum(void)
-{
-	return this->element_num;
 }
 
 void Player::SetAnime(AnimeSet anime, bool loop)
@@ -165,26 +153,21 @@ void Player::MoveControl(void)
 	this->control = Vector3::zero;
 
 	// キーボード入力
-	if (GetKeyboardPress(DIK_W))
-		control += Vector3(0.0f, 0.0f, 1.0f);
-	if (GetKeyboardPress(DIK_S))
-		control += Vector3(0.0f, 0.0f, -1.0f);
-	if (GetKeyboardPress(DIK_A))
+	if (GetKeyboardPress(DIK_A) || IsButtonPressed(BUTTON_LEFT))
 		control += Vector3(-1.0f, 0.0f, 0.0f);
-	if (GetKeyboardPress(DIK_D))
+	if (GetKeyboardPress(DIK_D) || IsButtonPressed(BUTTON_RIGHT))
 		control += Vector3(1.0f, 0.0f, 0.0f);
 
-	if (GetKeyboardPress(DIK_W) || GetKeyboardPress(DIK_A) || GetKeyboardPress(DIK_S) || GetKeyboardPress(DIK_D))
+	if (GetKeyboardPress(DIK_A) || GetKeyboardPress(DIK_D))
 		control = control.normalized();
 
 	// パッド入力
-	control += Vector3(GetPadLX(), 0, -GetPadLY());
+	control += Vector3(GetPadLX(), 0.0f, 0.0f);
 
 	// ムーブイベント
 	if (this->control.sqrLength() > 0.0f)
 	{
 		this->current_state->SetState(StateName::Move);
-		this->event_move();
 	}
 	else
 	{
@@ -192,9 +175,17 @@ void Player::MoveControl(void)
 	}
 }
 
+void Player::ActionControl(void)
+{
+	if ((GetKeyboardTrigger(KeyAction) || IsButtonTriggered(ButtonJump)) && action)
+	{
+		action();
+	}
+}
+
 bool Player::JumpControl(void)
 {
-	if (GetKeyboardTrigger(KeyJump))
+	if (GetKeyboardTrigger(KeyJump) || IsButtonTriggered(ButtonJump))
 	{
 		this->rigidbody->position.y += 1.0f;
 		this->rigidbody->velocity.y = PlayerJumpSpeed;
@@ -222,118 +213,6 @@ void Player::Move(void)
 	// 向きの設定
 	this->transform.setFront(move);
 }
-
-void Player::AttackControl(void)
-{
-	if (GetKeyboardTrigger(KeyAtkShort) || IsButtonTriggered(0, BtnAtkShort))
-	{
-		this->init_attack = [&] {
-			this->SetAnime(AnimeSet::ShootBulletShort, false);
-			this->bullet_timer.Reset(0.03f);
-			this->update_attack = [&] {
-				if (this->anime_timer.Elapsed() > 0.3f)
-					return;
-
-				if (this->bullet_timer.TimeUp())
-				{
-					ShootBulletShort();
-					this->bullet_timer.Reset();
-				}
-				this->bullet_timer++;
-			};
-		};
-	}
-
-	else if (GetKeyboardTrigger(KeyAtkLong) || IsButtonTriggered(0, BtnAtkLong))
-	{
-		this->init_attack = [&] {
-			this->SetAnime(AnimeSet::AttackLong, false);
-			this->bullet_timer.Reset(0.04f);
-			this->update_attack = [&] {
-				// 弾発射処理
-				if (this->anime_timer.Elapsed() < 0.3f || this->anime_timer.Elapsed() > 0.7f)
-					return;
-
-				if (this->bullet_timer.TimeUp())
-				{
-					ShootBulletLong();
-					this->bullet_timer.Reset();
-				}
-				this->bullet_timer++;
-
-				// 回転処理
-				float control_len = this->control.length();
-				if (control_len > 0.01f)
-				{
-					auto camera = Renderer::GetInstance()->getCamera();
-					Vector3 offset = this->transform.position - camera->transform.position;
-					float phi = atan2f(offset.z, offset.x) - 0.5f*PI;
-
-					Vector3 move;
-					move.x = control.x*cosf(phi) - control.z*sinf(phi);
-					move.z = control.x*sinf(phi) + control.z*cosf(phi);
-
-					// 向きの設定
-					this->transform.setFront(move);
-				}
-
-			};
-
-		};
-	}
-
-	else if (GetKeyboardTrigger(KeyAtkArea) || IsButtonTriggered(0, BtnAtkArea))
-	{
-		this->init_attack = [&] {
-			this->SetAnime(AnimeSet::AttackArea, false);
-			this->bullet_timer.Reset(0.005f);
-			this->update_attack = [&] {
-				// 弾発射処理
-				if (this->anime_timer.Elapsed() > 0.2f)
-					return;
-
-				if (this->bullet_timer.TimeUp())
-				{
-					ShootBulletArea();
-					this->bullet_timer.Reset();
-				}
-				this->bullet_timer++;
-			};
-
-		};
-	}
-	else return;
-
-	this->current_state->SetState(StateName::Attack);
-}
-
-void Player::ShootBulletShort(void)
-{
-	Transform t = this->transform;
-	t.rotate(0.0f, Deg2Rad(Lerpf(50.0f, -50.0f, this->anime_timer.Elapsed() / 0.3f)), 0.0f);
-	t.position += t.getFront()*5.0f;
-	t.position.y += 3.0f;
-}
-
-void Player::ShootBulletLong(void)
-{
-	Transform t = this->transform;
-	t.position += t.getFront()*5.0f;
-	t.position.y += 3.0f;
-}
-
-void Player::ShootBulletArea(void)
-{
-	Transform t = this->transform;
-	float theta = Lerpf(0.0f, 2.0f*PI, this->anime_timer.Elapsed() / 0.2f);
-	t.setRotation(0.0f, theta, 0.0f);
-	t.position.y += 10.0f;
-
-	t.setRotation(0.0f, theta, 0.0f);
-
-	t.setRotation(0.0f, theta, 0.0f);
-}
-
 
 #pragma endregion
 
@@ -377,8 +256,7 @@ void Player::StateIdle::SetState(StateName state)
 	{
 	case StateName::Move:
 	case StateName::Air:
-	case StateName::Attack:
-	case StateName::Damage:
+	case StateName::Action:
 		State::SetState(state);
 	}
 }
@@ -430,73 +308,34 @@ void Player::StateMove::SetState(StateName state)
 	{
 	case StateName::Idle:
 	case StateName::Air:
-	case StateName::Attack:
-	case StateName::Damage:
+	case StateName::Action:
 		State::SetState(state);
 	}
 }
 
 #pragma endregion
 
-#pragma region StateAttack
+#pragma region StateAction
 //=============================================================================
 // StateAttack
 //=============================================================================
-void Player::StateAttack::OnEnter(void)
+void Player::StateAction::OnEnter(void)
 {
-	this->player->init_attack();
-	this->timer.Reset(0.5f);
 }
 
-void Player::StateAttack::Update(void)
+void Player::StateAction::Update(void)
 {
-	this->player->update_attack();
-
-	if (this->player->anime_timer.TimeUp())
-		SetState(StateName::Idle);
-
-	this->player->anime_timer++;
-	this->timer++;
 }
 
-void Player::StateAttack::SetState(StateName state)
+void Player::StateAction::SetState(StateName state)
 {
 	switch (state)
 	{
 	case StateName::Idle:
 		State::SetState(state);
 		break;
-	case StateName::Attack:
-		if (this->timer.TimeUp())
-			State::SetState(state);
-		break;
 	}
 }
-#pragma endregion
-
-#pragma region StateDamage
-//=============================================================================
-// StateDamage
-//=============================================================================
-
-void Player::StateDamage::OnEnter(void)
-{
-	this->player->SetAnime(AnimeSet::Injure, false);
-}
-
-void Player::StateDamage::Update(void)
-{
-	if (this->player->anime_timer.TimeUp())
-		SetState(StateName::Idle);
-	this->player->anime_timer++;
-}
-
-void Player::StateDamage::SetState(StateName state)
-{
-	if (state == StateName::Idle)
-		State::SetState(state);
-}
-
 #pragma endregion
 
 #pragma region StateAir
@@ -506,14 +345,10 @@ void Player::StateDamage::SetState(StateName state)
 
 void Player::StateAir::OnEnter(void)
 {
-	//this->player->transform.position.y += 1.0f;
-	this->player->is_grounded = false;
 	this->player->rigidbody->useGravity = true;
 
 	//TODO: ジャンプ／落下のアニメーションにする
 	this->player->SetAnime(AnimeSet::Idle);
-
-	//this->player->rigidbody->SetActive(true);
 }
 
 void Player::StateAir::Update(void)
@@ -536,10 +371,7 @@ void Player::StateAir::Update(void)
 
 void Player::StateAir::OnExit(void)
 {
-	this->player->rigidbody->velocity.y = 0.0f;
-	this->player->rigidbody->acceleration.y = 0.0f;
 	this->player->rigidbody->useGravity = false;
-	//this->player->rigidbody->SetActive(false);
 }
 
 void Player::StateAir::SetState(StateName state)

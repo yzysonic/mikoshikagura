@@ -81,9 +81,9 @@ long GetMouseMoveZ(void);           // マウスホイールが動いた相対値
 Vector3 GetMousePos(void);          // マウスの座標
 
 //---------------------------- game pad
-BOOL IsButtonPressed(int padNo, DWORD button);
-BOOL IsButtonTriggered(int padNo, DWORD button);
-BOOL IsAnyButtonTriggered(int padNo);
+BOOL IsButtonPressed(DWORD button, int padNo = 0);
+BOOL IsButtonTriggered(DWORD button, int padNo = 0);
+BOOL IsAnyButtonTriggered(int padNo = 0);
 float GetPadLX(void);
 float GetPadLY(void);
 float GetPadRX(void);

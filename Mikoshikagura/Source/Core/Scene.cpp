@@ -75,3 +75,8 @@ void Scene::ResumeObjects(void)
 
 	this->active_shot.clear();
 }
+
+const std::vector<Object*>& Scene::GetObjectList(void)
+{
+	return this->obj_list;
+}
