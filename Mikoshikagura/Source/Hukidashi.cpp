@@ -47,6 +47,11 @@ void Hukidashi::Update(void)
 		}
 		else
 		{
+			if (str_head != 0)
+			{
+				std::string sub = message.substr(0, str_head);
+				this->GetComponent<Text>()->SetText(sub);
+			}
 			this->state = popped;
 		}
 		break;
@@ -74,7 +79,6 @@ void Hukidashi::Update(void)
 		else
 		{
 			this->message.clear();
-			this->GetComponent<Text>()->ClearText();
 			this->state = none;
 			this->SetActive(false);
 		}
@@ -98,5 +102,6 @@ void Hukidashi::Pop(std::string message)
 
 void Hukidashi::Unpop(void)
 {
+	this->GetComponent<Text>()->ClearText();
 	this->state = unpopping;
 }
