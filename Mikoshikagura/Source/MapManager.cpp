@@ -57,18 +57,33 @@ void MapManager::Load(std::string str)
 {
 	tinyxml2::XMLDocument xml;
 	xml.LoadFile("Data/Map/prototype_map1.tmx");
-	MapLayer layerbuff;
-	tinyxml2::XMLElement * elem = xml.FirstChildElement("map")->FirstChildElement("layer");
-	while (elem !=nullptr) {
 
-		layerbuff.maptip = Perse(elem->FirstChildElement("data")->GetText());	//csvパース
-		layerbuff.name = elem->Attribute("name");
+	tinyxml2::XMLElement *xml_group = xml.FirstChildElement("map")->FirstChildElement("group");
 
-		layer.push_back(layerbuff);
+	while (xml_group != nullptr)
+	{
+		MapLayer layerbuff;
+		layerbuff.group = xml_group->Attribute("name");
+		tinyxml2::XMLElement *xml_layer = xml_group->FirstChildElement("layer");
 
-		elem = elem->NextSiblingElement();
+		while (xml_layer != nullptr)
+		{
+			layerbuff.maptip = Perse(xml_layer->FirstChildElement("data")->GetText());	//csvパース
+			layerbuff.name = xml_layer->Attribute("name");
+
+			layer.push_back(layerbuff);
+			xml_layer = xml_layer->NextSiblingElement();
+
+		}
+
+		xml_group = xml_group->NextSiblingElement();
+
+
+
+
 
 	}
+
 
 	layermax = layer.size();
 	height = layer[0].maptip.size();
@@ -137,38 +152,70 @@ void MapManager::MapView()
 
 void MapManager::CreateMapObject() {
 
+
+
+	//フィールドオブジェクトの作成
 	for (int i = 0; i < layermax; i++) {
 		for (int j = 0; j < height; j++) {
 			for (int k = 0; k < width; k++) {
 				auto id = layer[i].maptip[j][k];
 				if (id > 0) {
 
-					Vector3 objscale;
-					Object  *objtemp = new Object;
-					objtemp->type = ObjectType::Field;
+					Vector3 objscale;										//スケール
+					Object  *objtemp = new Object;							//オブジェクト生成
+					objtemp->type = ObjectType::Field;						//タイプ設定
 
-					auto model_name = "field_block_" + std::to_string(id);
+					auto model_name = "field_block_" + std::to_string(id);	//名前設定
 					if (!ModelData::Get(model_name))
 						model_name = "field_summer";
 					objtemp->AddComponent<StaticModel>(model_name);
 
-					objtemp->transform.scale = transform.scale;
+					objtemp->transform.scale = transform.scale;				//スケール設定
 					objscale = objtemp->transform.scale;
 
-					objtemp->transform.position = Vector3((float)(k * BlockSize * objscale.x), (float)((height - j) * BlockSize * objscale.y), float(i* objscale.z * BlockSize));
+					//位置計算
+					//objtemp->transform.position = Vector3((float)(k * BlockSize * objscale.x), (float)((height - j) * BlockSize * objscale.y), float(i* objscale.z * BlockSize));
+					objtemp->transform.position = Vector3((float)(k * BlockSize * objscale.x), (float)((height - j) * BlockSize * objscale.y), 0.0f);
 
-					objtemp->AddComponent<BoxCollider2D>();
+					objtemp->AddComponent<BoxCollider2D>();					//コライダー追加
 					objtemp->GetComponent<BoxCollider2D>()->size = Vector2(BlockSize * objscale.x, BlockSize * objscale.y);
+					objtemp->GetComponent<BoxCollider2D>()->SetActive(false);
 
-					layer[i].mapobj[std::pair<int, int>(k, j)] = objtemp;
+					//フィールドレイヤーの場合mapに格納
+					if (layer[i].name == "Field") {
+						fieldobjectmap[std::pair<int, int>(k, j)] = objtemp;
+					}
+
+					//グループごとにリストにポインタを格納
+					 if (layer[i].group == "Season") {
+						 seasonobjectlist.push_back(objtemp);
+					}
+					 else if (layer[i].group == "Summer") {
+						 summerobjectlist.push_back(objtemp);
+
+					 }
+					 else if (layer[i].group == "Winter") {
+						 winterobjectlist.push_back(objtemp);
+					 }
+
 				}
 			}
 		}
+
 	}
 
-	for (int i = 0; i < layer.size(); i++) {
-		SetLayerActive(i, false);
+
+
+
+	for (auto itr = summerobjectlist.begin(); itr != summerobjectlist.end(); ++itr) 
+	{
+		(*itr)->SetActive(false);
 	}
+	for (auto itr = winterobjectlist.begin(); itr != winterobjectlist.end(); ++itr)
+	{
+		(*itr)->SetActive(false);
+	}
+
 }
 
 void MapManager::UpdatePlayerCell()
@@ -213,9 +260,11 @@ void MapManager::SetActiveCollider(std::pair<int, int> cell, bool state)
 			continue;
 		}
 
-		if (layer[0].maptip[targetcell[i].second][targetcell[i].first] != 0)
+		if (fieldobjectmap.find(targetcell[i]) != fieldobjectmap.end())
 		{
-			layer[0].mapobj[targetcell[i]]->GetComponent<BoxCollider2D>()->SetActive(state);
+			if (fieldobjectmap[targetcell[i]]->GetActive()) {
+				fieldobjectmap[targetcell[i]]->GetComponent<BoxCollider2D>()->SetActive(state);
+			}
 		}
 
 	}

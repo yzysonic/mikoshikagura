@@ -15,19 +15,6 @@ void SceneTest::Init(void)
 	Texture::Load("body_sum.tga");
 	Texture::Load("misaki_head.tga");
 
-	//test = new Object;
-	//test->AddComponent<RectPolygon>("magic_square")->SetSize(Vector2(100, 100));
-	//test->transform.scale = Vector3::one*10.f;
-	//test->transform.position.z = -100.0f;
-
-
-	//testBG = new Object;
-	//Texture::Load("testbg");
-	//testBG->AddComponent<RectPolygon>("testbg")->SetSize(Vector2(1000, 1000));
-	//testBG->transform.scale = Vector3::one*10.f;
-
-
-
 	Texture::Load("target");
 	ModelData::Load("field");
 

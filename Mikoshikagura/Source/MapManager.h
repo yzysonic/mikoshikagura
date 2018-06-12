@@ -14,6 +14,7 @@ class MapLayer {
 public:
 
 	std::string name;
+	std::string group;
 	std::map<std::pair<int,int>, Object*> mapobj;	//マップオブジェクトのマップ
 	std::vector<std::vector<int>> maptip;			//マップデータの二重配列
 
@@ -46,8 +47,10 @@ class MapManager :public Object {
 
 	//0612永井　マップの季節変化
 
-	std::map<std::pair<int, int>, Object*> fieldobject;
-	std::vector<Object *> seasonobjectlist;
+	std::map<std::pair<int, int>, Object*> fieldobjectmap;
+	std::vector<Object *> seasonobjectlist;			//季節変化
+	std::vector<Object *> summerobjectlist;			//夏用
+	std::vector<Object *> winterobjectlist;			//冬用
 
 
 
