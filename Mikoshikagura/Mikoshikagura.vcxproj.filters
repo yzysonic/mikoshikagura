@@ -331,6 +331,9 @@
     <ClInclude Include="Source\Core\Sound.h">
       <Filter>Core\Resource</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Core\SoundPlayer.h">
+      <Filter>Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Core\AllocateHirerachy.cpp">
@@ -586,6 +589,9 @@
     </ClCompile>
     <ClCompile Include="Source\Core\Sound.cpp">
       <Filter>Core\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Core\SoundPlayer.cpp">
+      <Filter>Core</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

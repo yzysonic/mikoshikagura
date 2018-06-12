@@ -24,6 +24,7 @@
 #include "ParticleSystem.h"
 #include "StaticModel.h"
 #include "SkinnedModel.h"
+#include "SoundPlayer.h"
 
 #include <vector>
 #include <list>

@@ -16,6 +16,7 @@ void SceneYangTest::Init(void)
 	Texture::Load("body_sum.tga");
 	Texture::Load("misaki_head.tga");
 	Texture::Load("mushroom");
+	Sound::Load("bgm_demo");
 
 	// ‹Gß‰Šú‰»
 	SeasonManager::Create();
@@ -27,6 +28,9 @@ void SceneYangTest::Init(void)
 
 	item = new Item("mushroom", Texture::Get("mushroom")->size*0.1f);
 	item->transform.position = Vector3(30.f, 15.f+ 0.5f*item->GetSize().y, 0.f);
+
+	bgm_player = new SeasonBgmPlayerTest;
+	bgm_player->Play();
 
 	// ƒJƒƒ‰‰Šú‰»
 	camera = new MainCamera;
@@ -50,7 +54,7 @@ void SceneYangTest::Init(void)
 			i++;
 		}
 	}
-	
+
 	debug	= DebugManager::GetInstance()->GetComponent<DebugMenu>();
 	DebugManager::OpenInspector(player);
 }
@@ -95,6 +99,7 @@ void SceneYangTest::Uninit(void)
 	Texture::Release("body_sum.tga");
 	Texture::Release("misaki_head.tga");
 	Texture::Release("mushroom");
+	Sound::Release("bgm_demo");
 
 	SeasonManager::Destroy();
 }
@@ -149,3 +154,23 @@ void SeasonTestObject::SwitchModel(void)
 		model->SetSummer();
 }
 #pragma endregion
+
+SeasonBgmPlayerTest::SeasonBgmPlayerTest(void)
+{
+	player = AddComponent<SoundPlayer>("bgm_demo");
+}
+
+void SeasonBgmPlayerTest::SetSummer(void)
+{
+	player->FadeVolume(1.0f, 1.5f);
+}
+
+void SeasonBgmPlayerTest::SetWinter(void)
+{
+	player->FadeVolume(0.3f, 1.5f);
+}
+
+void SeasonBgmPlayerTest::Play(void)
+{
+	player->Play();
+}

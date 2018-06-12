@@ -199,6 +199,7 @@
     <ClInclude Include="Source\Core\Singleton.h" />
     <ClInclude Include="Source\Core\SkinnedModel.h" />
     <ClInclude Include="Source\Core\Sound.h" />
+    <ClInclude Include="Source\Core\SoundPlayer.h" />
     <ClInclude Include="Source\Core\StaticModel.h" />
     <ClInclude Include="Source\Core\System.h" />
     <ClInclude Include="Source\Core\Text.h" />
@@ -238,7 +239,7 @@
     <ClInclude Include="Source\Scene_Stage1.h" />
     <ClInclude Include="Source\SeasonManager.h" />
     <ClInclude Include="Source\SeasonModel.h" />
-	<ClInclude Include="Source\Sign.h" />
+    <ClInclude Include="Source\Sign.h" />
     <ClInclude Include="Source\ISeason.h" />
     <ClInclude Include="Source\Snapshot.h" />
     <ClInclude Include="Source\MapManager.h" />
@@ -283,6 +284,7 @@
     <ClCompile Include="Source\Core\Shader.cpp" />
     <ClCompile Include="Source\Core\SkinnedModel.cpp" />
     <ClCompile Include="Source\Core\Sound.cpp" />
+    <ClCompile Include="Source\Core\SoundPlayer.cpp" />
     <ClCompile Include="Source\Core\StaticModel.cpp" />
     <ClCompile Include="Source\Core\System.cpp" />
     <ClCompile Include="Source\Core\Text.cpp" />
