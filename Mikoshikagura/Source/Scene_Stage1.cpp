@@ -25,7 +25,8 @@ void Scene_Stage1::Init(void)
 	camera->setBackColor(Color(250, 250, 250, 255));
 	Renderer::GetInstance()->setCamera(camera);
 
-	mapdata = new MapManager("Data/Map/prototype_map1.tmx");
+	mapdata = new MapManager();
+	mapdata->Load("Data/Map/prototype_map1.tmx");
 	mapdata->CreateMapObject();
 	mapdata->SetLayerActive(0, true);
 	mapdata->SetPlayerpointer(player);

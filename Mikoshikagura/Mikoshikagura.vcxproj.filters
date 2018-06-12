@@ -536,5 +536,6 @@
     <ClCompile Include="Source\Background.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
+    <ClCompile Include="Library\tinyxml2.cpp" />
   </ItemGroup>
 </Project>

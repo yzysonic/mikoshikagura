@@ -1,92 +1,119 @@
 #include "MapManager.h"
+#include <tinyxml2.h>
+
+
+/////////////////MapLayer///////////////////
+
+
+MapLayer::MapLayer()
+{
+}
+
+
+MapLayer::~MapLayer()
+{
+
+	//マップオブジェクトの削除
+	mapobj.clear();
+
+
+	//マップチップの削除
+	for (auto itr = maptip.begin(); itr != maptip.end(); ++itr)
+	{
+		itr->clear();
+		itr->shrink_to_fit();
+	}
+
+	maptip.clear();
+	maptip.shrink_to_fit();
+}
+
+
+
+
+
+
+
+
+
+//////////////////MapManager///////////////////
 
 MapManager::MapManager() {
 
 	this->name = "mapmanager";
 }
 
-MapManager::MapManager(std::string str)
+MapManager::~MapManager()
 {
-	std::ifstream ifs(str);
-	maplayer mapbuff;
 
-	std::string layername;
-	bool flag = false;
+	layer.clear();
+	layer.shrink_to_fit();
 
-	if (ifs.fail()) {
-		std::cerr << "Failed to open file." << std::endl;
-		return;
-	}
+}
 
 
-	//読み込み部
-	while (std::getline(ifs, str)) {
 
+void MapManager::Load(std::string str)
+{
+	tinyxml2::XMLDocument xml;
+	xml.LoadFile("Data/Map/prototype_map1.tmx");
+	MapLayer layerbuff;
+	tinyxml2::XMLElement * elem = xml.FirstChildElement("map")->FirstChildElement("layer");
+	while (elem !=nullptr) {
 
-		if(str.find("<layer") != -1){
-			std::stringstream ss(str);
+		layerbuff.maptip = Perse(elem->FirstChildElement("data")->GetText());	//csvパース
+		layerbuff.name = elem->Attribute("name");
 
-			std::getline(ss, layername, '"');
-			std::getline(ss, layername, '"');
-			mapbuff.name = layername;
-		}				
-		if (str.find("data") != -1) {
-			if (flag) {
-				flag = false;
+		layer.push_back(layerbuff);
 
-				layer.push_back(mapbuff);
-				mapbuff.maptip.clear();
-			} else {
-				flag = true;
-			}
-		} else {
-			if (flag == true) {
-
-				std::stringstream ss(str);
-				std::string tipbuff;
-				std::vector<int> xbuff;
-
-				while (std::getline(ss, tipbuff, ',')) {
-					xbuff.push_back(std::stoi(tipbuff));
-				}
-
-				mapbuff.maptip.push_back(xbuff);
-
-			}
-
-
-		}
+		elem = elem->NextSiblingElement();
 
 	}
-
-
 
 	layermax = layer.size();
 	height = layer[0].maptip.size();
 	width = layer[0].maptip[0].size();
-
-	playerobj = nullptr;
+	CreateMapObject();
 
 }
+//csvデータのパース
+std::vector<std::vector<int>> MapManager::Perse(std::string csvdata) {
 
-void MapManager::Load(std::string str)
-{
-	std::ifstream ifs(str);
 
-	if (ifs.fail()) {
-		std::cerr << "Failed to open file." << std::endl;
+	std::vector<std::string> vector;
 
+	std::stringstream ss(csvdata);
+
+	std::string csvline;
+	std::vector<int> xbuff;
+	std::vector<std::vector<int>> mapbuff;
+	MapLayer layerbuff;
+	while (std::getline(ss, csvline, '\n')) {
+		if (csvline != "") {
+			vector.push_back(csvline);
+		}
 	}
 
 
-	while (std::getline(ifs, str)) {
-		std::cout << "#" << str << std::endl;
+	for (int i = 0; i < vector.size(); i++) {
 
+		std::stringstream ss2(vector[i]);
+		std::string x;
+
+		std::cout << ss.str();
+
+		while (std::getline(ss2, x, ',')) {
+			xbuff.push_back(std::stoi(x));
+		}
+
+		mapbuff.push_back(xbuff);
+		xbuff.clear();
 
 	}
 
-}
+	return mapbuff;
 
+}
 
 void MapManager::MapView()
 {
@@ -119,29 +146,27 @@ void MapManager::CreateMapObject() {
 					Vector3 objscale;
 					Object  *objtemp = new Object;
 					objtemp->type = ObjectType::Field;
-					
+
 					auto model_name = "field_block_" + std::to_string(id);
 					if (!ModelData::Get(model_name))
 						model_name = "field_summer";
 					objtemp->AddComponent<StaticModel>(model_name);
-					
+
 					objtemp->transform.scale = transform.scale;
 					objscale = objtemp->transform.scale;
 
-					objtemp->transform.position = Vector3((float)(k * BlockSize * objscale.x), (float)((height-j) * BlockSize * objscale.y), float(i* objscale.z * BlockSize));
+					objtemp->transform.position = Vector3((float)(k * BlockSize * objscale.x), (float)((height - j) * BlockSize * objscale.y), float(i* objscale.z * BlockSize));
 
 					objtemp->AddComponent<BoxCollider2D>();
 					objtemp->GetComponent<BoxCollider2D>()->size = Vector2(BlockSize * objscale.x, BlockSize * objscale.y);
-					objtemp->GetComponent<BoxCollider2D>()->SetActive(false);
 
-					layer[i].mapobj[std::pair<int,int>(k,j)]= objtemp;
+					layer[i].mapobj[std::pair<int, int>(k, j)] = objtemp;
 				}
 			}
 		}
 	}
 
-	for (int i = 0; i < layer.size(); i++)
-	{
+	for (int i = 0; i < layer.size(); i++) {
 		SetLayerActive(i, false);
 	}
 }
@@ -163,7 +188,7 @@ void MapManager::UpdatePlayerCell()
 
 }
 
-void MapManager::SetActiveCollider(std::pair<int ,int> cell,bool state)
+void MapManager::SetActiveCollider(std::pair<int, int> cell, bool state)
 {
 
 	std::pair<int, int> targetcell[5];
@@ -175,7 +200,7 @@ void MapManager::SetActiveCollider(std::pair<int ,int> cell,bool state)
 	targetcell[2].second += 1;
 	targetcell[3] = cell;
 	targetcell[3].second += 1;
-	targetcell[3].first	-= 1;
+	targetcell[3].first -= 1;
 	targetcell[4] = cell;
 	targetcell[4].second += 1;
 	targetcell[4].first += 1;
@@ -183,7 +208,7 @@ void MapManager::SetActiveCollider(std::pair<int ,int> cell,bool state)
 
 	for (int i = 0; i < 5; i++) {
 		//エラー回避
-		if (targetcell[i].first < 0  || targetcell[i].first >= layer[0].maptip[0].size() ||
+		if (targetcell[i].first < 0 || targetcell[i].first >= layer[0].maptip[0].size() ||
 			targetcell[i].second < 0 || targetcell[i].second >= layer[0].maptip.size()) {
 			continue;
 		}
@@ -222,18 +247,6 @@ void MapManager::Update()
 
 }
 
-
-
-
-
-
-void MapManager::Perse(std::ifstream ifs, std::string str)
-{
-
-
-
-}
-
 std::pair<int, int> MapManager::WorldtoCell(Vector3 worldpos)
 {
 	int x, y;
@@ -260,9 +273,4 @@ void MapManager::SetLayerActive(int layernum, bool active) {
 
 
 }
-
-
-
-
-
 

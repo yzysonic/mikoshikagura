@@ -1,5 +1,4 @@
 #pragma once
-
 #include <vector>
 #include <fstream>
 #include <iostream>
@@ -10,7 +9,7 @@
 #include "player.h"
 
 /*マップレイヤークラス*/
-class maplayer {
+class MapLayer {
 
 public:
 
@@ -19,6 +18,9 @@ public:
 	std::vector<std::vector<int>> maptip;			//マップデータの二重配列
 
 public:
+	MapLayer();
+	~MapLayer();
+
 	void Load() {};									//未実装
 	int Gettip() {};								//未実装
 	void Settip(int x,int y ,int value) {};			//未実装
@@ -39,12 +41,19 @@ class MapManager :public Object {
 	Player *playerobj;								//プレイヤーのポインタ
 	std::pair<int, int> playercell;					//プレイヤーのいるセル
 
-	std::vector<maplayer> layer;					//マップデータ
+	std::vector<MapLayer> layer;					//マップデータ
+
+
+	//0612永井　マップの季節変化
+
+	std::map<std::pair<int, int>, Object*> fieldobject;
+	std::vector<Object *> seasonobjectlist;
+
+
 
 public:
 	MapManager();									//コンストラクタ
-	MapManager(std::string str);
-	~MapManager() {};								//デストラクタ
+	virtual ~MapManager();									//デストラクタ
 
 	virtual void Update();
 
@@ -62,7 +71,7 @@ public:
 
 private:
 
-	void MapManager::Perse(std::ifstream ifs, std::string str);			
+	std::vector<std::vector<int>> MapManager::Perse(std::string csvdata);
 	std::pair<int, int> WorldtoCell(Vector3 worldpos);					//ワールドとセルの変換
 	std::pair<float, float> CelltoWorld(int valuex, int valuey) {};		//セルとワールドの変換(未実装)
 

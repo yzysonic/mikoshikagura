@@ -77,8 +77,8 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)\</OutDir>
     <TargetName>$(ProjectName)_Debug</TargetName>
-    <IncludePath>C:\Users\yang.tzui\Source\Repos\mikoshikagura\Mikoshikagura\Library\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\yang.tzui\Source\Repos\mikoshikagura\Mikoshikagura\Library\Debug;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(IncludePath)</IncludePath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -237,6 +237,7 @@
     <ClInclude Include="Source\MapManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Library\tinyxml2.cpp" />
     <ClCompile Include="Source\Background.cpp" />
     <ClCompile Include="Source\CameraPlay.cpp" />
     <ClCompile Include="Source\CameraSmoothFallow.cpp" />
