@@ -1,5 +1,6 @@
 #pragma once
 #include "Common.h"
+#include "Window.h"
 #include <unordered_map>
 
 //=============================================================================

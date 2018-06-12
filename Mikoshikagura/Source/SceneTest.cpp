@@ -1,15 +1,13 @@
 #include "SceneTest.h"
 #include "FadeScreen.h"
-#include "Core/Game.h"
 #include "Light.h"
 #include "DebugManager.h"
 #include "Core\Physics.h"
 
-
 void SceneTest::Init(void)
 {
 
-	FadeScreen::FadeIn(Color::black, 0.0f);
+	FadeScreen::FadeIn(Color::white, 1.0f);
 	Light::Init();
 	ModelData::Load("field_summer");
 	Texture::Load("body_sum.tga");
@@ -29,16 +27,17 @@ void SceneTest::Init(void)
 
 
 	Texture::Load("target");
+	Texture::Load("hukidashi");
 	ModelData::Load("field");
 
 	target1 = new Object;
 	target1->AddComponent<RectPolygon>("target");
 	target1->transform.scale = Vector3::one*20.f;
-	target1->transform.position = Vector3(100, 20, 100);
+	target1->transform.position = Vector3(55, 65, 3);
 	target2 = new Object;
 	target2->AddComponent<RectPolygon>("target");
 	target2->transform.scale = Vector3::one*20.f;
-	target2->transform.position = Vector3(150, 25, 0);
+	target2->transform.position = Vector3(120, 65, 3);
 
 	camera = new MainCamera;
 	player = new Player;
@@ -61,15 +60,21 @@ void SceneTest::Init(void)
 	mapdata->SetPlayerpointer(player);
 
 	Physics::GetInstance()->setGravity(Vector3(0.0f, -98.0f, 0.0f));
+
+	//0601umeda hukidashi作成
+	hukidashi = new Hukidashi;
+
+	kanban = new Sign("これはテストメッセージです。\nThis is test message.", hukidashi);
+	kanban->AddComponent<RectPolygon>("target");
+	kanban->transform.scale = Vector3::one*10.f;
+	kanban->transform.position = Vector3(180, 60, 3);
+	kanban->AddComponent<BoxCollider2D>()->size = Vector2(10,10);
 }
 
 void SceneTest::Update(void)
 {
 	//test->transform.position.x += 0.3f;
 	//test->transform.rotate(0.05f,0,0);
-
-
-
 }
 
 void SceneTest::Uninit(void)

@@ -174,9 +174,6 @@
     <ClInclude Include="Source\Core\SkinnedModel.h">
       <Filter>Core\Graphic\Model</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Core\Sound.h">
-      <Filter>Core\System</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Core\StaticModel.h">
       <Filter>Core\Graphic\Model</Filter>
     </ClInclude>
@@ -307,6 +304,15 @@
     <ClInclude Include="Source\Background.h">
       <Filter>GameObject</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Core\Text.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneTitle.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Hukidashi.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Holdable.h">
       <Filter>Script</Filter>
     </ClInclude>
@@ -318,6 +324,12 @@
     </ClInclude>
     <ClInclude Include="Source\ISeason.h">
       <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Sign.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Core\Sound.h">
+      <Filter>Core\Resource</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -416,9 +428,6 @@
     </ClCompile>
     <ClCompile Include="Source\Core\SkinnedModel.cpp">
       <Filter>Core\Graphic\Model</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Core\Sound.cpp">
-      <Filter>Core\System</Filter>
     </ClCompile>
     <ClCompile Include="Source\Core\StaticModel.cpp">
       <Filter>Core\Graphic\Model</Filter>
@@ -554,11 +563,29 @@
     <ClCompile Include="Source\Item.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Core\Text.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneTitle.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Hukidashi.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
     <ClCompile Include="Source\SeasonModel.cpp">
       <Filter>Component</Filter>
     </ClCompile>
     <ClCompile Include="Source\ISeason.cpp">
       <Filter>Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Sign.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Core\Sound.cpp">
+      <Filter>Core\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Core\Sound.cpp">
+      <Filter>Core\Resource</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

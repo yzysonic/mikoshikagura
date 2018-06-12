@@ -15,6 +15,7 @@ void Scene_Stage1::Init(void)
 	ModelData::Load("field_block_23");
 	ModelData::Load("field_block_37");
 	ModelData::Load("field_summer");
+	Sound::Load("bgm_demo");
 	
 	// ゲームオブジェクトの初期化
 	player = new Player;
@@ -34,6 +35,7 @@ void Scene_Stage1::Init(void)
 
 	Light::Init();
 	FadeScreen::FadeIn(Color::black, 0.0f);
+	Sound::Get("bgm_demo")->Play();
 }
 
 void Scene_Stage1::Update(void)
@@ -52,4 +54,5 @@ void Scene_Stage1::Uninit(void)
 	ModelData::Release("field_block_23");
 	ModelData::Release("field_block_37");
 	ModelData::Release("field_summer");
+	Sound::Release("bgm_demo");
 }
