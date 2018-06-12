@@ -12,10 +12,16 @@ void Scene_Stage1::Init(void)
 	Texture::Load("misaki_head.tga");
 	Texture::Load("background");
 	ModelData::Load("Maptip/20_summer");
+	ModelData::Load("Maptip/20_winter");
 	ModelData::Load("Maptip/23");
 	ModelData::Load("Maptip/37");
 	ModelData::Load("field_summer");
 	
+
+
+	SeasonManager::Create();
+	SeasonManager::SetSeason(SeasonType::Summer);
+
 	// ゲームオブジェクトの初期化
 	player = new Player;
 	player->SetPosition(Vector3(0, 70, 0));
@@ -33,10 +39,18 @@ void Scene_Stage1::Init(void)
 
 	Light::Init();
 	FadeScreen::FadeIn(Color::black, 0.0f);
+
+
 }
 
 void Scene_Stage1::Update(void)
 {
+	if(GetKeyboardTrigger(DIK_0))
+	SeasonManager::SetSeason(SeasonType::Summer);
+	if (GetKeyboardTrigger(DIK_1))
+	SeasonManager::SetSeason(SeasonType::Winter);
+
+
 }
 
 void Scene_Stage1::Uninit(void)

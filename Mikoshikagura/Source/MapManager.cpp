@@ -1,6 +1,6 @@
 #include "MapManager.h"
 #include <tinyxml2.h>
-
+#include "SeasonModel.h"
 
 /////////////////MapLayer///////////////////
 
@@ -18,8 +18,7 @@ MapLayer::~MapLayer()
 
 
 	//マップチップの削除
-	for (auto itr = maptip.begin(); itr != maptip.end(); ++itr)
-	{
+	for (auto itr = maptip.begin(); itr != maptip.end(); ++itr) {
 		itr->clear();
 		itr->shrink_to_fit();
 	}
@@ -59,14 +58,12 @@ void MapManager::Load(std::string str)
 	height = std::stoi(xml.FirstChildElement("map")->Attribute("height"));
 	tinyxml2::XMLElement *xml_group = xml.FirstChildElement("map")->FirstChildElement("group");
 
-	while (xml_group != nullptr)
-	{
+	while (xml_group != nullptr) {
 		MapLayer layerbuff;
 		layerbuff.group = xml_group->Attribute("name");
 		tinyxml2::XMLElement *xml_layer = xml_group->FirstChildElement("layer");
 
-		while (xml_layer != nullptr)
-		{
+		while (xml_layer != nullptr) {
 			CreateMapObject(xml_group->Attribute("name"), xml_layer->Attribute("name"), Perse(xml_layer->FirstChildElement("data")->GetText()));
 			xml_layer = xml_layer->NextSiblingElement();
 		}
@@ -119,6 +116,17 @@ std::vector<std::vector<int>> MapManager::Perse(std::string csvdata) {
 void MapManager::CreateMapObject(std::string groupname, std::string layername, std::vector<std::vector<int>> mapdata)
 {
 
+	enum class Object_type :int {
+		Static,
+		Season,
+		Summer,
+		Winter,
+	};
+
+	bool IsField = false;
+	Object_type type;
+
+	std::vector<Object*>::iterator itr;
 
 	for (int i = 0; i < height; i++) {
 		for (int j = 0; j < width; j++) {
@@ -129,13 +137,10 @@ void MapManager::CreateMapObject(std::string groupname, std::string layername, s
 				Object  *objtemp = new Object;							//オブジェクト生成
 				objtemp->type = ObjectType::Field;						//タイプ設定
 
-				auto model_name = std::to_string(id);	//名前設定
-				if (!ModelData::Get(model_name))
-					model_name = "field_summer";
+				std::string model_name = "Maptip/" + std::to_string(id);	//名前設定
 
 
 
-				objtemp->AddComponent<StaticModel>(model_name);
 
 				objtemp->transform.scale = transform.scale;				//スケール設定
 				objscale = objtemp->transform.scale;
@@ -148,6 +153,16 @@ void MapManager::CreateMapObject(std::string groupname, std::string layername, s
 				objtemp->GetComponent<BoxCollider2D>()->size = Vector2(BlockSize * objscale.x, BlockSize * objscale.y);
 
 
+				if (groupname == "Season") {
+					objtemp->AddComponent<SeasonModel>(model_name.c_str(),true);
+				} else if (!ModelData::Get(model_name)) {
+					model_name = "field_summer"; 
+					objtemp->AddComponent<StaticModel>(model_name);
+				} else {
+					objtemp->AddComponent<StaticModel>(model_name);
+				}
+
+
 				//フィールドレイヤーの場合mapに格納
 				if (layername == "Field") {
 					fieldobjectmap[std::pair<int, int>(j, i)] = objtemp;
@@ -156,19 +171,18 @@ void MapManager::CreateMapObject(std::string groupname, std::string layername, s
 				//グループごとにリストにポインタを格納
 				if (groupname == "Season") {
 					seasonobjectlist.push_back(objtemp);
-				}
-				else if (groupname == "Summer") {
+				} else if (groupname == "Summer") {
 					objtemp->SetActive(false);
 					summerobjectlist.push_back(objtemp);
 
-				}
-				else if (groupname == "Winter") {
+				} else if (groupname == "Winter") {
 					objtemp->SetActive(false);
 					winterobjectlist.push_back(objtemp);
 				}
 			}
 		}
 	}
+
 }
 
 void MapManager::UpdatePlayerCell()
@@ -213,8 +227,7 @@ void MapManager::SetActiveCollider(std::pair<int, int> cell, bool state)
 			continue;
 		}
 
-		if (fieldobjectmap.find(itcell) != fieldobjectmap.end())
-		{
+		if (fieldobjectmap.find(itcell) != fieldobjectmap.end()) {
 			if (fieldobjectmap[itcell]->GetActive()) {
 				fieldobjectmap[itcell]->GetComponent<BoxCollider2D>()->SetActive(state);
 			}
@@ -237,6 +250,28 @@ void MapManager::Update()
 
 	}
 
+}
+
+void MapManager::SetSummer()
+{
+	for (auto itr :summerobjectlist) {
+		itr->SetActive(true);
+	}
+
+	for (auto itr : winterobjectlist) {
+		itr->SetActive(false);
+	}
+}
+
+void MapManager::SetWinter()
+{
+	for (auto itr : winterobjectlist) {
+		itr->SetActive(true);
+	}
+
+	for (auto itr : summerobjectlist) {
+		itr->SetActive(false);
+	}
 }
 
 std::pair<int, int> MapManager::WorldtoCell(Vector3 worldpos)

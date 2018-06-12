@@ -7,7 +7,7 @@
 #include <map>
 #include "Core\Core.h"
 #include "player.h"
-
+#include "ISeason.h"
 /*マップレイヤークラス*/
 class MapLayer {
 
@@ -31,7 +31,7 @@ public:
 
 
 /*マップ管理クラス*/
-class MapManager :public Object {
+class MapManager :public Object ,ISeason{
 
 	static constexpr int BlockSize = 10;			//ブロックサイズ
 
@@ -57,6 +57,8 @@ public:
 
 	virtual void Update();
 
+	virtual void SetSummer();
+	virtual void SetWinter();
 	void Load(std::string);							//マップロード
 	void SetMaptip(int x, int y, int value) {};		//マップ変更（未実装）
 
