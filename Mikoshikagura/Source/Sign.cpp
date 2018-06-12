@@ -19,5 +19,5 @@ void Sign::OnCollisionEnter(Object * object)
 void Sign::OnCollisionExit(Object * object)
 {
 	if (object->type == ObjectType::Player)
-		this->hukidashi->Unpop();
+		this->hukidashi->Unpop(this->message);
 }

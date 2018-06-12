@@ -69,6 +69,13 @@ void SceneTest::Init(void)
 	kanban->transform.scale = Vector3::one*10.f;
 	kanban->transform.position = Vector3(180, 60, 3);
 	kanban->AddComponent<BoxCollider2D>()->size = Vector2(10,10);
+
+
+	kanban2 = new Sign("メッセージ遷移テスト\nThis is test message.", hukidashi);
+	kanban2->AddComponent<RectPolygon>("target");
+	kanban2->transform.scale = Vector3::one*10.f;
+	kanban2->transform.position = Vector3(170, 60, 3);
+	kanban2->AddComponent<BoxCollider2D>()->size = Vector2(10, 10);
 }
 
 void SceneTest::Update(void)

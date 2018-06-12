@@ -90,18 +90,22 @@ void Hukidashi::Pop(std::string message)
 {
 	if (this->state != popped)
 	{
-		if (this->message != message)
-		{
-			this->message = message;
-			str_head = 0;
-		}
 		this->state = popping;
 		this->SetActive(true);
 	}
+	if (this->message != message)
+	{
+		this->GetComponent<Text>()->ClearText();
+		this->message = message;
+		str_head = 0;
+	}
 }
 
-void Hukidashi::Unpop(void)
+void Hukidashi::Unpop(std::string message)
 {
-	this->GetComponent<Text>()->ClearText();
-	this->state = unpopping;
+	if (this->message == message)
+	{
+		this->GetComponent<Text>()->ClearText();
+		this->state = unpopping;
+	}
 }
