@@ -110,7 +110,7 @@ std::vector<std::vector<int>> MapManager::Perse(std::string csvdata) {
 	}
 
 
-	for (int i = 0; i < vector.size(); i++) {
+	for (int i = 0; i < (int)vector.size(); i++) {
 
 		std::stringstream ss2(vector[i]);
 		std::string x;
@@ -253,17 +253,17 @@ void MapManager::SetActiveCollider(std::pair<int, int> cell, bool state)
 	targetcell[4].first += 1;
 
 
-	for (int i = 0; i < 5; i++) {
+	for (auto itcell : targetcell) {
 		//ƒGƒ‰[‰ñ”ð
-		if (targetcell[i].first < 0 || targetcell[i].first >= layer[0].maptip[0].size() ||
-			targetcell[i].second < 0 || targetcell[i].second >= layer[0].maptip.size()) {
+		if (itcell.first < 0 || itcell.first >= (int)layer[0].maptip[0].size() ||
+			itcell.second < 0 || itcell.second >= (int)layer[0].maptip.size()) {
 			continue;
 		}
 
-		if (fieldobjectmap.find(targetcell[i]) != fieldobjectmap.end())
+		if (fieldobjectmap.find(itcell) != fieldobjectmap.end())
 		{
-			if (fieldobjectmap[targetcell[i]]->GetActive()) {
-				fieldobjectmap[targetcell[i]]->GetComponent<BoxCollider2D>()->SetActive(state);
+			if (fieldobjectmap[itcell]->GetActive()) {
+				fieldobjectmap[itcell]->GetComponent<BoxCollider2D>()->SetActive(state);
 			}
 		}
 
@@ -310,7 +310,7 @@ std::pair<int, int> MapManager::WorldtoCell(Vector3 worldpos)
 
 void MapManager::SetLayerActive(int layernum, bool active) {
 
-	if (layernum >= layer.size()) {
+	if (layernum >= (int)layer.size()) {
 		return;
 	}
 
