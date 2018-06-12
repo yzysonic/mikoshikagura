@@ -44,8 +44,6 @@ void SceneTest::Init(void)
 	//0522nagai mapdataì¬
 	mapdata = new MapManager();
 	mapdata->Load("Data/Map/prototype_map1.tmx");
-	mapdata->CreateMapObject();
-	mapdata->SetLayerActive(0, true);
 	mapdata->SetPlayerpointer(player);
 
 	Physics::GetInstance()->setGravity(Vector3(0.0f, -98.0f, 0.0f));

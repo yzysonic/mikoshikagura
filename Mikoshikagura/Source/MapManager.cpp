@@ -46,9 +46,6 @@ MapManager::MapManager() {
 MapManager::~MapManager()
 {
 
-	layer.clear();
-	layer.shrink_to_fit();
-
 }
 
 
@@ -58,6 +55,8 @@ void MapManager::Load(std::string str)
 	tinyxml2::XMLDocument xml;
 	xml.LoadFile("Data/Map/prototype_map1.tmx");
 
+	width = std::stoi(xml.FirstChildElement("map")->Attribute("width"));
+	height = std::stoi(xml.FirstChildElement("map")->Attribute("height"));
 	tinyxml2::XMLElement *xml_group = xml.FirstChildElement("map")->FirstChildElement("group");
 
 	while (xml_group != nullptr)
@@ -68,27 +67,13 @@ void MapManager::Load(std::string str)
 
 		while (xml_layer != nullptr)
 		{
-			layerbuff.maptip = Perse(xml_layer->FirstChildElement("data")->GetText());	//csvパース
-			layerbuff.name = xml_layer->Attribute("name");
-
-			layer.push_back(layerbuff);
+			CreateMapObject(xml_group->Attribute("name"), xml_layer->Attribute("name"), Perse(xml_layer->FirstChildElement("data")->GetText()));
 			xml_layer = xml_layer->NextSiblingElement();
-
 		}
 
 		xml_group = xml_group->NextSiblingElement();
 
-
-
-
-
 	}
-
-
-	layermax = layer.size();
-	height = layer[0].maptip.size();
-	width = layer[0].maptip[0].size();
-	CreateMapObject();
 
 }
 //csvデータのパース
@@ -130,92 +115,60 @@ std::vector<std::vector<int>> MapManager::Perse(std::string csvdata) {
 
 }
 
-void MapManager::MapView()
+
+void MapManager::CreateMapObject(std::string groupname, std::string layername, std::vector<std::vector<int>> mapdata)
 {
-	int i = 0;
-	for (auto itr = layer.begin(); itr != layer.end(); ++itr) {
-		std::cout << i << std::endl;
-		for (auto itr2 = itr->maptip.begin(); itr2 != itr->maptip.end(); ++itr2) {
-
-			for (auto itr3 = itr2->begin(); itr3 != itr2->end(); ++itr3) {
-
-				std::cout << *(itr3);
-			}
 
 
-			std::cout << std::endl;
-		}
-		i++;
+	for (int i = 0; i < height; i++) {
+		for (int j = 0; j < width; j++) {
+			auto id = mapdata[i][j];
+			if (id > 0) {
 
-	}
-}
+				Vector3 objscale;										//スケール
+				Object  *objtemp = new Object;							//オブジェクト生成
+				objtemp->type = ObjectType::Field;						//タイプ設定
 
-void MapManager::CreateMapObject() {
+				auto model_name = std::to_string(id);	//名前設定
+				if (!ModelData::Get(model_name))
+					model_name = "field_summer";
 
 
 
-	//フィールドオブジェクトの作成
-	for (int i = 0; i < layermax; i++) {
-		for (int j = 0; j < height; j++) {
-			for (int k = 0; k < width; k++) {
-				auto id = layer[i].maptip[j][k];
-				if (id > 0) {
+				objtemp->AddComponent<StaticModel>(model_name);
 
-					Vector3 objscale;										//スケール
-					Object  *objtemp = new Object;							//オブジェクト生成
-					objtemp->type = ObjectType::Field;						//タイプ設定
+				objtemp->transform.scale = transform.scale;				//スケール設定
+				objscale = objtemp->transform.scale;
 
-					auto model_name = "field_block_" + std::to_string(id);	//名前設定
-					if (!ModelData::Get(model_name))
-						model_name = "field_summer";
-					objtemp->AddComponent<StaticModel>(model_name);
+				//位置計算
+				//objtemp->transform.position = Vector3((float)(k * BlockSize * objscale.x), (float)((height - j) * BlockSize * objscale.y), float(i* objscale.z * BlockSize));
+				objtemp->transform.position = Vector3((float)(j * BlockSize * objscale.x), (float)((height - i) * BlockSize * objscale.y), 0.0f);
 
-					objtemp->transform.scale = transform.scale;				//スケール設定
-					objscale = objtemp->transform.scale;
+				objtemp->AddComponent<BoxCollider2D>();					//コライダー追加
+				objtemp->GetComponent<BoxCollider2D>()->size = Vector2(BlockSize * objscale.x, BlockSize * objscale.y);
 
-					//位置計算
-					//objtemp->transform.position = Vector3((float)(k * BlockSize * objscale.x), (float)((height - j) * BlockSize * objscale.y), float(i* objscale.z * BlockSize));
-					objtemp->transform.position = Vector3((float)(k * BlockSize * objscale.x), (float)((height - j) * BlockSize * objscale.y), 0.0f);
 
-					objtemp->AddComponent<BoxCollider2D>();					//コライダー追加
-					objtemp->GetComponent<BoxCollider2D>()->size = Vector2(BlockSize * objscale.x, BlockSize * objscale.y);
-					objtemp->GetComponent<BoxCollider2D>()->SetActive(false);
+				//フィールドレイヤーの場合mapに格納
+				if (layername == "Field") {
+					fieldobjectmap[std::pair<int, int>(j, i)] = objtemp;
+				}
 
-					//フィールドレイヤーの場合mapに格納
-					if (layer[i].name == "Field") {
-						fieldobjectmap[std::pair<int, int>(k, j)] = objtemp;
-					}
+				//グループごとにリストにポインタを格納
+				if (groupname == "Season") {
+					seasonobjectlist.push_back(objtemp);
+				}
+				else if (groupname == "Summer") {
+					objtemp->SetActive(false);
+					summerobjectlist.push_back(objtemp);
 
-					//グループごとにリストにポインタを格納
-					 if (layer[i].group == "Season") {
-						 seasonobjectlist.push_back(objtemp);
-					}
-					 else if (layer[i].group == "Summer") {
-						 summerobjectlist.push_back(objtemp);
-
-					 }
-					 else if (layer[i].group == "Winter") {
-						 winterobjectlist.push_back(objtemp);
-					 }
-
+				}
+				else if (groupname == "Winter") {
+					objtemp->SetActive(false);
+					winterobjectlist.push_back(objtemp);
 				}
 			}
 		}
-
 	}
-
-
-
-
-	for (auto itr = summerobjectlist.begin(); itr != summerobjectlist.end(); ++itr) 
-	{
-		(*itr)->SetActive(false);
-	}
-	for (auto itr = winterobjectlist.begin(); itr != winterobjectlist.end(); ++itr)
-	{
-		(*itr)->SetActive(false);
-	}
-
 }
 
 void MapManager::UpdatePlayerCell()
@@ -255,8 +208,8 @@ void MapManager::SetActiveCollider(std::pair<int, int> cell, bool state)
 
 	for (auto itcell : targetcell) {
 		//エラー回避
-		if (itcell.first < 0 || itcell.first >= (int)layer[0].maptip[0].size() ||
-			itcell.second < 0 || itcell.second >= (int)layer[0].maptip.size()) {
+		if (itcell.first < 0 || itcell.first >= width ||
+			itcell.second < 0 || itcell.second >= height) {
 			continue;
 		}
 
@@ -279,16 +232,6 @@ void MapManager::SetPlayerpointer(Player *player)
 
 void MapManager::Update()
 {
-
-	if (GetKeyboardPress(DIK_1)) {
-
-		SetLayerActive(0, true);
-	}
-
-	if (GetKeyboardPress(DIK_2)) {
-
-		SetLayerActive(0, false);
-	}
 	if (playerobj != nullptr) {
 		UpdatePlayerCell();
 
@@ -308,18 +251,4 @@ std::pair<int, int> MapManager::WorldtoCell(Vector3 worldpos)
 
 
 
-void MapManager::SetLayerActive(int layernum, bool active) {
-
-	if (layernum >= (int)layer.size()) {
-		return;
-	}
-
-	for (auto itr = layer[layernum].mapobj.begin(); itr != layer[layernum].mapobj.end(); itr++) {
-
-		itr->second->SetActive(active);
-	}
-
-
-
-}
 

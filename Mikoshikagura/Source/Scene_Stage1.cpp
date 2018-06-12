@@ -11,9 +11,9 @@ void Scene_Stage1::Init(void)
 	Texture::Load("body_sum.tga");
 	Texture::Load("misaki_head.tga");
 	Texture::Load("background");
-	ModelData::Load("field_block_20");
-	ModelData::Load("field_block_23");
-	ModelData::Load("field_block_37");
+	ModelData::Load("Maptip/20_summer");
+	ModelData::Load("Maptip/23");
+	ModelData::Load("Maptip/37");
 	ModelData::Load("field_summer");
 	
 	// ゲームオブジェクトの初期化
@@ -27,8 +27,6 @@ void Scene_Stage1::Init(void)
 
 	mapdata = new MapManager();
 	mapdata->Load("Data/Map/prototype_map1.tmx");
-	mapdata->CreateMapObject();
-	mapdata->SetLayerActive(0, true);
 	mapdata->SetPlayerpointer(player);
 
 	background = new Background;
@@ -49,8 +47,8 @@ void Scene_Stage1::Uninit(void)
 	Texture::Release("body_sum.tga");
 	Texture::Release("misaki_head.tga");
 	Texture::Release("background");
-	ModelData::Release("field_block_20");
-	ModelData::Release("field_block_23");
-	ModelData::Release("field_block_37");
+	ModelData::Release("20");
+	ModelData::Release("23");
+	ModelData::Release("37");
 	ModelData::Release("field_summer");
 }

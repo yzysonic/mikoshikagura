@@ -42,9 +42,6 @@ class MapManager :public Object {
 	Player *playerobj;								//プレイヤーのポインタ
 	std::pair<int, int> playercell;					//プレイヤーのいるセル
 
-	std::vector<MapLayer> layer;					//マップデータ
-
-
 	//0612永井　マップの季節変化
 
 	std::map<std::pair<int, int>, Object*> fieldobjectmap;
@@ -63,13 +60,10 @@ public:
 	void Load(std::string);							//マップロード
 	void SetMaptip(int x, int y, int value) {};		//マップ変更（未実装）
 
-	void MapView();									//未実装
-	void CreateMapObject();							//オブジェクト生成
+	void CreateMapObject(std::string group, std::string layer, std::vector<std::vector<int>> mapdata);
 	void UpdatePlayerCell();						//プレイヤーがいるセルの更新
 	void SetActiveCollider(std::pair<int, int> cell, bool state);	//コライダーの更新
 	void SetPlayerpointer(Player *player);			//プレイヤーポインタの設定
-
-	void SetLayerActive(int layer, bool active);
 
 
 private:
