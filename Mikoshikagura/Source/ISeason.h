@@ -8,15 +8,15 @@ enum class SeasonType
 	Winter
 };
 
-class SeasonObject : public Object
+class ISeason
 {
 public:
-
-	SeasonObject(void);
-	~SeasonObject(void);
+	ISeason(bool auto_change = true);
+	~ISeason(void);
 	virtual void SetSummer(void) = 0;
 	virtual void SetWinter(void) = 0;
 
 protected:
 	SeasonType state;
+	bool auto_change;
 };

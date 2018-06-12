@@ -213,8 +213,10 @@
     <ClInclude Include="Source\InspectorContentCamera.h" />
     <ClInclude Include="Source\InspectorContentPlayer.h" />
     <ClInclude Include="Source\Inspector.h" />
+    <ClInclude Include="Source\Item.h" />
     <ClInclude Include="Source\ObjectExplorer.h" />
     <ClInclude Include="Source\NagaiSceneTest.h" />
+    <ClInclude Include="Source\Holdable.h" />
     <ClInclude Include="Source\SceneExplorer.h" />
     <ClInclude Include="Source\SceneImGuiTest.h" />
     <ClInclude Include="Source\Imgui\imconfig.h" />
@@ -232,7 +234,8 @@
     <ClInclude Include="Source\SceneYangTest.h" />
     <ClInclude Include="Source\Scene_Stage1.h" />
     <ClInclude Include="Source\SeasonManager.h" />
-    <ClInclude Include="Source\SeasonObject.h" />
+    <ClInclude Include="Source\SeasonModel.h" />
+    <ClInclude Include="Source\ISeason.h" />
     <ClInclude Include="Source\Snapshot.h" />
     <ClInclude Include="Source\MapManager.h" />
   </ItemGroup>
@@ -287,6 +290,7 @@
     <ClCompile Include="Source\DebugMenu.cpp" />
     <ClCompile Include="Source\FadeScreen.cpp" />
     <ClCompile Include="Source\FreeCamera.cpp" />
+    <ClCompile Include="Source\Holdable.cpp" />
     <ClCompile Include="Source\InspectorContentCamera.cpp" />
     <ClCompile Include="Source\InspectorContentPlayer.cpp" />
     <ClCompile Include="Source\Imgui\imgui.cpp" />
@@ -294,6 +298,7 @@
     <ClCompile Include="Source\Imgui\imgui_demo.cpp" />
     <ClCompile Include="Source\Imgui\imgui_draw.cpp" />
     <ClCompile Include="Source\Inspector.cpp" />
+    <ClCompile Include="Source\Item.cpp" />
     <ClCompile Include="Source\Light.cpp" />
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\MainCamera.cpp" />
@@ -310,7 +315,8 @@
     <ClCompile Include="Source\SceneYangTest.cpp" />
     <ClCompile Include="Source\Scene_Stage1.cpp" />
     <ClCompile Include="Source\SeasonManager.cpp" />
-    <ClCompile Include="Source\SeasonObject.cpp" />
+    <ClCompile Include="Source\SeasonModel.cpp" />
+    <ClCompile Include="Source\ISeason.cpp" />
     <ClCompile Include="Source\Snapshot.cpp" />
     <ClCompile Include="Source\MapManager.cpp" />
   </ItemGroup>

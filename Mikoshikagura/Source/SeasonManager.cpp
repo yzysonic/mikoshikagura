@@ -25,7 +25,7 @@ SeasonType SeasonManager::GetSeason(void)
 	return m_pInstance->current_season;
 }
 
-void SeasonManager::AddObject(SeasonObject * obj)
+void SeasonManager::AddObject(ISeason * obj)
 {
 	if (!m_pInstance)
 		return;
@@ -33,7 +33,7 @@ void SeasonManager::AddObject(SeasonObject * obj)
 	m_pInstance->object_list.emplace_back(obj);
 }
 
-void SeasonManager::RemoveObject(SeasonObject * obj)
+void SeasonManager::RemoveObject(ISeason * obj)
 {
 	if (!m_pInstance)
 		return;

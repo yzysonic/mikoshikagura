@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "Core/Physics.h"
+#include "Holdable.h"
 
 #ifdef _DEBUG
 #include "InspectorContentPlayer.h"
@@ -16,6 +17,7 @@ Player::Player(void)
 	this->speed = PlayerSpeed;
 	this->anime = AnimeSet::Idle;
 	this->is_grounded = false;
+	this->is_holding_item = false;
 
 	// モデル初期化
 	this->model = AddComponent<SkinnedModel>("player");
@@ -23,7 +25,7 @@ Player::Player(void)
 
 	// コライダー初期化
 	this->collider = AddComponent<BoxCollider2D>();
-	this->collider->size = Vector2(4.0f, 16.0f);
+	this->collider->size = Vector2(4.0f, 9.0f);
 	this->collider->offset.y += 0.5f*this->collider->size.y;
 
 	this->rigidbody = AddComponent<Rigidbody>();
@@ -54,6 +56,27 @@ void Player::Update(void)
 
 void Player::Uninit(void)
 {
+}
+
+void Player::OnCollisionEnter(Object * other)
+{
+	if (other->type == ObjectType::Item)
+	{
+		this->action = [other, this] {
+			auto item = other->GetComponent<Holdable>();
+			if (!this->is_holding_item)
+			{
+				item->offset_y = this->collider->size.y +0.5f*item->object->GetComponent<BoxCollider2D>()->size.y + 2.0f;
+				item->SetOwner(&this->transform);
+				this->is_holding_item = true;
+			}
+			else
+			{
+				item->SetOwner(nullptr);
+				this->is_holding_item = false;
+			}
+		};
+	}
 }
 
 void Player::OnCollisionStay(Object * other)
@@ -119,14 +142,28 @@ void Player::OnCollisionStay(Object * other)
 
 void Player::OnCollisionExit(Object * other)
 {
-	auto collider = other->GetComponent<BoxCollider2D>();
-	if (this->ground_colliders.find(collider) != this->ground_colliders.end())
+	switch (other->type)
 	{
-		this->ground_colliders.erase(collider);
+	case ObjectType::Field:
+	{
+		auto collider = other->GetComponent<BoxCollider2D>();
+		if (this->ground_colliders.find(collider) != this->ground_colliders.end())
+		{
+			this->ground_colliders.erase(collider);
 
-		if(this->ground_colliders.empty())
-			this->is_grounded = false;
+			if (this->ground_colliders.empty())
+				this->is_grounded = false;
+		}
 	}
+		break;
+
+	case ObjectType::Item:
+		if (!this->is_holding_item)
+		{
+			this->action = nullptr;
+		}
+	}
+	
 }
 
 void Player::SetPosition(Vector3 pos)
@@ -177,7 +214,7 @@ void Player::MoveControl(void)
 
 void Player::ActionControl(void)
 {
-	if ((GetKeyboardTrigger(KeyAction) || IsButtonTriggered(ButtonJump)) && action)
+	if ((GetKeyboardTrigger(KeyAction) || IsButtonTriggered(ButtonAction)) && action)
 	{
 		action();
 	}

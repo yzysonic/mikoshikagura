@@ -1,6 +1,6 @@
 #pragma once
 #include "Core/Core.h"
-#include "SeasonObject.h"
+#include "ISeason.h"
 
 class SeasonManager : public Singleton<SeasonManager>
 {
@@ -9,11 +9,11 @@ class SeasonManager : public Singleton<SeasonManager>
 public:
 	static void SetSeason(SeasonType season);
 	static SeasonType GetSeason(void);
-	static void AddObject(SeasonObject* obj);
-	static void RemoveObject(SeasonObject* obj);
+	static void AddObject(ISeason* obj);
+	static void RemoveObject(ISeason* obj);
 
 private:
 	SeasonType current_season;
-	std::vector<SeasonObject*>object_list;
+	std::vector<ISeason*>object_list;
 	SeasonManager(void) : current_season(SeasonType::None) {};
 };

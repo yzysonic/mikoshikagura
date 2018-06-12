@@ -3,28 +3,26 @@
 #include "Player.h"
 #include "MainCamera.h"
 #include "SeasonManager.h"
+#include "SeasonModel.h"
 #include "DebugMenu.h"
+#include "Item.h"
 
-class SeasonTestObject : public SeasonObject
+class SeasonTestObject : public Object
 {
 public:
 	SeasonTestObject(void);
-	void SetSummer(void) override;
-	void SetWinter(void) override;
 	void Update(void) override;
 	void OnCollisionEnter(Object* other) override;
 	void OnCollisionStay(Object* object) override;
 	void OnCollisionExit(Object* other) override;
 
 private:
-	StaticModel * model;
-	ModelData * summer_model;
-	ModelData * winter_model;
+	SeasonModel * model;
 	BoxCollider2D * collider;
 	bool collide;
 
 	void SwitchModel(void);
-};
+}; 
 
 class SceneYangTest : public Scene
 {
@@ -39,4 +37,5 @@ private:
 	MainCamera * camera;
 	DebugMenu * debug;
 	FrameTimer timer;
+	Item * item;
 };
