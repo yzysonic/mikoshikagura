@@ -205,6 +205,7 @@
     <ClInclude Include="Source\DebugMenu.h" />
     <ClInclude Include="Source\FadeScreen.h" />
     <ClInclude Include="Source\FreeCamera.h" />
+    <ClInclude Include="Source\GoalObject.h" />
     <ClInclude Include="Source\InspectorContentCamera.h" />
     <ClInclude Include="Source\InspectorContentPlayer.h" />
     <ClInclude Include="Source\Inspector.h" />
