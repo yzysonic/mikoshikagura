@@ -162,12 +162,32 @@ Object* MapManager::CreateMapObject(int id , MapLayer layer) {
 
 	std::string model_name = "Maptip/" + std::to_string(id);	//名前設定
 
+
 	if (layer.group == GroupType::Season) {
 
 	}
-	else {
-
+	else if (!(ModelData::Get(model_name))) {
+		model_name = "field_summer";
 	}
+
+	switch (layer.group)
+	{
+	case GroupType::Season:
+		if (!(ModelData::Get(model_name + "_summer")) && !(ModelData::Get(model_name + "_winter"))) {
+			model_name = "field";
+		}
+
+		objtemp->AddComponent<SeasonModel>(model_name.c_str());
+		break;
+	default:
+		if (!(ModelData::Get(model_name))) {
+			model_name = "field_summer";
+		}
+
+		objtemp->AddComponent<StaticModel>(model_name);
+		break;
+	}
+
 	objtemp->AddComponent<BoxCollider2D>();					//コライダー追加
 	objtemp->GetComponent<BoxCollider2D>()->size = Vector2(BlockSize * objscale.x, BlockSize * objscale.y);
 	objtemp->GetComponent<BoxCollider2D>()->SetActive(false);
@@ -175,14 +195,22 @@ Object* MapManager::CreateMapObject(int id , MapLayer layer) {
 
 	switch (id)
 	{
+
+	case 45:
+
+
+		break;
 	default:
+
 		break;
 	}
-
+	return objtemp;
 }
 
 void MapManager::CreateMap(MapLayer layer)
 {
+
+	objscale = Vector3(1.0f, 1.0f, 1.0f);
 
 	for (int i = 0; i < height; i++) {
 		for (int j = 0; j < width; j++) {
@@ -194,29 +222,19 @@ void MapManager::CreateMap(MapLayer layer)
 				objtemp->transform.position = Vector3((float)(j * BlockSize * objscale.x), (float)((height - i) * BlockSize * objscale.y), 0.0f);
 
 
-				if (groupname == "Season") {
-					objtemp->AddComponent<SeasonModel>(model_name.c_str(),true);
-				} else if (!ModelData::Get(model_name)) {
-					model_name = "field_summer"; 
-					objtemp->AddComponent<StaticModel>(model_name);
-				} else {
-					objtemp->AddComponent<StaticModel>(model_name);
-				}
-
-
 				//フィールドレイヤーの場合mapに格納
-				if (layername == "Field") {
+				if (layer.layer == LayerType::Field) {
 					fieldobjectmap[std::pair<int, int>(j, i)] = objtemp;
 				}
 
 				//グループごとにリストにポインタを格納
-				if (groupname == "Season") {
+				if (layer.group == GroupType::Season) {
 					seasonobjectlist.push_back(objtemp);
-				} else if (groupname == "Summer") {
+				} else if (layer.group == GroupType::Summer) {
 					objtemp->SetActive(false);
 					summerobjectlist.push_back(objtemp);
 
-				} else if (groupname == "Winter") {
+				} else if (layer.group == GroupType::Winter) {
 					objtemp->SetActive(false);
 					winterobjectlist.push_back(objtemp);
 				}
