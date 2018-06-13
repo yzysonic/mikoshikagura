@@ -210,9 +210,6 @@
     <ClInclude Include="Source\CameraPlay.h">
       <Filter>Script</Filter>
     </ClInclude>
-    <ClInclude Include="Source\CameraSnap.h">
-      <Filter>GameObject</Filter>
-    </ClInclude>
     <ClInclude Include="Source\DebugManager.h">
       <Filter>GameObject\Debug</Filter>
     </ClInclude>
@@ -330,6 +327,12 @@
     </ClInclude>
     <ClInclude Include="Source\ISeason.h">
       <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CameraLimit.h">
+      <Filter>Script</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CameraSnap.h">
+      <Filter>Script</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -465,9 +468,6 @@
     <ClCompile Include="Source\CameraPlay.cpp">
       <Filter>Script</Filter>
     </ClCompile>
-    <ClCompile Include="Source\CameraSnap.cpp">
-      <Filter>GameObject</Filter>
-    </ClCompile>
     <ClCompile Include="Source\DebugManager.cpp">
       <Filter>GameObject\Debug</Filter>
     </ClCompile>
@@ -573,7 +573,6 @@
       <Filter>Interface</Filter>
     </ClCompile>
     <ClCompile Include="Library\tinyxml2.cpp" />
-<<<<<<< HEAD
     <ClCompile Include="Source\Core\Sound.cpp">
       <Filter>Core\Resource</Filter>
     </ClCompile>
@@ -586,13 +585,8 @@
     <ClCompile Include="Source\Holdable.cpp">
       <Filter>Script</Filter>
     </ClCompile>
-=======
-    <ClCompile Include="Source\Core\Sound.cpp" />
-    <ClCompile Include="Source\Holdable.cpp" />
-    <ClCompile Include="Source\Item.cpp" />
-    <ClCompile Include="Source\Sign.cpp">
-      <Filter>GameObject</Filter>
+    <ClCompile Include="Source\CameraSnap.cpp">
+      <Filter>Script</Filter>
     </ClCompile>
->>>>>>> master
   </ItemGroup>
 </Project>

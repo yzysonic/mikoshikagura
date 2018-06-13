@@ -154,6 +154,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Source\Background.h" />
+    <ClInclude Include="Source\CameraLimit.h" />
     <ClInclude Include="Source\CameraSphericalCoordinate.h" />
     <ClInclude Include="Source\Core\ModelData.h" />
     <ClInclude Include="Source\Core\Resource.h" />
