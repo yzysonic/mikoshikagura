@@ -1,10 +1,6 @@
 #include "CameraSnap.h"
 #include "CameraSmoothFallow.h"
 
-void CameraSnap::Init(void)
-{
-	camera = dynamic_cast<Camera*>(object);
-}
 
 void CameraSnap::Update(void)
 {
