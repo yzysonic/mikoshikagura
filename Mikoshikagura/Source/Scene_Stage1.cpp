@@ -40,16 +40,20 @@ void Scene_Stage1::Init(void)
 	Light::Init();
 	FadeScreen::FadeIn(Color::black, 0.0f);
 
+	wall = new Object;
+	wall->type = ObjectType::Field;
+	wall->AddComponent<BoxCollider2D>();
+	wall->GetComponent<BoxCollider2D>()->size = Vector2(10.0f, 1000.0f);
+	wall->GetComponent<BoxCollider2D>()->offset = Vector2(-10.0f,0.0f);
+	wall->GetComponent<BoxCollider2D>()->SetActive(true);
+	wall->transform.position = Vector3(0.0f, 0.0f, 0.0f);
 
 }
 
 void Scene_Stage1::Update(void)
 {
 	if(GetKeyboardTrigger(DIK_0))
-	SeasonManager::SetSeason(SeasonType::Summer);
-	if (GetKeyboardTrigger(DIK_1))
-	SeasonManager::SetSeason(SeasonType::Winter);
-
+	SeasonManager::SetSeason((SeasonType)(((int)SeasonManager::GetSeason()%2)+1));
 
 }
 

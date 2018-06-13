@@ -18,4 +18,8 @@ private:
 	MapManager *mapdata;
 	Background *background;
 	SeasonManager  *seasonmanager;
+
+
+	//テスト用壁
+	Object *wall;
 };
