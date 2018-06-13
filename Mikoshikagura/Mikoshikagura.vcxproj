@@ -159,7 +159,7 @@
     <ClInclude Include="Source\Core\ModelData.h" />
     <ClInclude Include="Source\Core\Resource.h" />
     <ClInclude Include="Source\CameraPlay.h" />
-    <ClInclude Include="Source\CameraSmoothFallow.h" />
+    <ClInclude Include="Source\CameraSmoothFollow.h" />
     <ClInclude Include="Source\CameraSnap.h" />
     <ClInclude Include="Source\Core\AllocateHirerachy.h" />
     <ClInclude Include="Source\Core\Billboard.h" />
@@ -249,7 +249,7 @@
     <ClCompile Include="Source\Background.cpp" />
     <ClCompile Include="Source\CameraLimit.cpp" />
     <ClCompile Include="Source\CameraPlay.cpp" />
-    <ClCompile Include="Source\CameraSmoothFallow.cpp" />
+    <ClCompile Include="Source\CameraSmoothFollow.cpp" />
     <ClCompile Include="Source\CameraSnap.cpp" />
     <ClCompile Include="Source\CameraSphericalCoordinate.cpp" />
     <ClCompile Include="Source\Core\AllocateHirerachy.cpp" />

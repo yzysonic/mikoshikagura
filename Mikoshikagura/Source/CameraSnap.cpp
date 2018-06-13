@@ -1,11 +1,11 @@
 #include "CameraSnap.h"
-#include "CameraSmoothFallow.h"
+#include "CameraSmoothFollow.h"
 
 
 void CameraSnap::Update(void)
 {
 	float base_length = SnapDistance;
-	auto smooth = this->object->GetComponent<CameraSmoothFallow>();
+	auto smooth = this->object->GetComponent<CameraSmoothFollow>();
 	for (auto snapper = this->snappers.begin(); snapper != this->snappers.end(); ++snapper)
 	{
 		float distance = (this->target->position.toVector2() - (*snapper)->position.toVector2()).length();

@@ -6,7 +6,7 @@ MainCamera::MainCamera(void)
 	fov		= Deg2Rad(60.0f);
 
 	coordinate	= AddComponent<CameraSphericalCoordinate>();
-	smooth		= AddComponent<CameraSmoothFallow>();
+	smooth		= AddComponent<CameraSmoothFollow>();
 	snap		= AddComponent<CameraSnap>();
 	limit		= AddComponent<CameraLimit>();
 

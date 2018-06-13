@@ -1,7 +1,7 @@
 #pragma once
 #include "Core/Core.h"
 #include "CameraSphericalCoordinate.h"
-#include "CameraSmoothFallow.h"
+#include "CameraSmoothFollow.h"
 #include "CameraPlay.h"
 
 class FreeCamera : public Camera
@@ -11,6 +11,6 @@ public:
 
 private:
 	CameraSphericalCoordinate * coordinate;
-	CameraSmoothFallow* smooth;
+	CameraSmoothFollow* smooth;
 	CameraPlay* play;
 };
