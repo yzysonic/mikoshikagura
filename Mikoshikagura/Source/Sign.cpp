@@ -21,3 +21,9 @@ void Sign::OnCollisionExit(Object * object)
 	if (object->type == ObjectType::Player)
 		this->hukidashi->Unpop(this->message);
 }
+
+void Sign::SetText(std::string message, Hukidashi * hukidashi)
+{
+	this->message = message;
+	this->hukidashi = hukidashi;
+}
