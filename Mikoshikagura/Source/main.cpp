@@ -37,7 +37,7 @@ int APIENTRY WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 #endif
 
 	// タイトル
-	SystemParameters::windowTitle = "みこしかぐら";
+	SystemParameters::windowTitle = "MIKOSHIKAGURA";
 
 	// システム初期化
 	if (FAILED(System::Init()))
