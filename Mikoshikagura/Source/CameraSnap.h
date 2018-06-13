@@ -11,9 +11,8 @@ public:
 
 	void Init(void) override;
 	void Update(void) override;
-	void Uninit(void) override;
 
 private:
 	Camera* camera;
-	Transform* focus = nullptr;
+	Transform focus;
 };

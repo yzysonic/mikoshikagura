@@ -4,7 +4,6 @@
 void CameraSnap::Init(void)
 {
 	camera = dynamic_cast<Camera*>(object);
-	this->focus = new Transform();	// 5/25 Init重複でメモリリーク。要修正
 }
 
 void CameraSnap::Update(void)
@@ -18,8 +17,8 @@ void CameraSnap::Update(void)
 		if (distance < base_length)
 		{
 			base_length = distance;
-			this->focus->position = Vector3::Lerp(this->target->position, (*snapper)->position, 0.5f);
-			smooth->target = this->focus;
+			this->focus.position = Vector3::Lerp(this->target->position, (*snapper)->position, 0.5f);
+			smooth->target = &this->focus;
 		}
 	}
 
@@ -27,9 +26,4 @@ void CameraSnap::Update(void)
 	{
 		smooth->target = this->target;
 	}
-}
-
-void CameraSnap::Uninit(void)
-{
-	delete(focus);
 }
