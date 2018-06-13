@@ -573,5 +573,17 @@
       <Filter>Interface</Filter>
     </ClCompile>
     <ClCompile Include="Library\tinyxml2.cpp" />
+    <ClCompile Include="Source\Core\Sound.cpp">
+      <Filter>Core\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Sign.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Item.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Holdable.cpp">
+      <Filter>Script</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
