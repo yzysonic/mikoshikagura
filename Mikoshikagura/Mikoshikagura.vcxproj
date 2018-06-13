@@ -217,8 +217,8 @@
     <ClInclude Include="Source\Item.h" />
     <ClInclude Include="Source\ObjectExplorer.h" />
     <ClInclude Include="Source\NagaiSceneTest.h" />
-    <ClInclude Include="Source\Holdable.h" />
     <ClInclude Include="Source\Hukidashi.h" />
+    <ClInclude Include="Source\Holdable.h" />
     <ClInclude Include="Source\SceneExplorer.h" />
     <ClInclude Include="Source\SceneImGuiTest.h" />
     <ClInclude Include="Source\Imgui\imconfig.h" />
@@ -237,9 +237,9 @@
     <ClInclude Include="Source\SceneYangTest.h" />
     <ClInclude Include="Source\Scene_Stage1.h" />
     <ClInclude Include="Source\SeasonManager.h" />
-    <ClInclude Include="Source\Sign.h" />
     <ClInclude Include="Source\SeasonModel.h" />
     <ClInclude Include="Source\ISeason.h" />
+    <ClInclude Include="Source\Sign.h" />
     <ClInclude Include="Source\Snapshot.h" />
     <ClInclude Include="Source\MapManager.h" />
   </ItemGroup>

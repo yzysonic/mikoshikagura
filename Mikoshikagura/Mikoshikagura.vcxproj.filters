@@ -313,6 +313,12 @@
     <ClInclude Include="Source\Hukidashi.h">
       <Filter>GameObject</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Sign.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Core\Sound.h">
+      <Filter>Core\Resource</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Holdable.h">
       <Filter>Script</Filter>
     </ClInclude>
@@ -324,12 +330,6 @@
     </ClInclude>
     <ClInclude Include="Source\ISeason.h">
       <Filter>Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Sign.h">
-      <Filter>GameObject</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Core\Sound.h">
-      <Filter>Core\Resource</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -566,12 +566,6 @@
     <ClCompile Include="Source\Hukidashi.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Holdable.cpp">
-      <Filter>Script</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Item.cpp">
-      <Filter>GameObject</Filter>
-    </ClCompile>
     <ClCompile Include="Source\SeasonModel.cpp">
       <Filter>Component</Filter>
     </ClCompile>
@@ -579,11 +573,5 @@
       <Filter>Interface</Filter>
     </ClCompile>
     <ClCompile Include="Library\tinyxml2.cpp" />
-    <ClCompile Include="Source\Sign.cpp">
-      <Filter>GameObject</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Core\Sound.cpp">
-      <Filter>Core\Resource</Filter>
-    </ClCompile>
   </ItemGroup>
 </Project>
