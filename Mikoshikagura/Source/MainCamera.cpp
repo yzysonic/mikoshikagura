@@ -8,6 +8,7 @@ MainCamera::MainCamera(void)
 	coordinate	= AddComponent<CameraSphericalCoordinate>();
 	smooth		= AddComponent<CameraSmoothFallow>();
 	snap		= AddComponent<CameraSnap>();
+	limit		= AddComponent<CameraLimit>();
 
 	coordinate->theta		= 1.444f;
 	coordinate->distance	= 65.0f;

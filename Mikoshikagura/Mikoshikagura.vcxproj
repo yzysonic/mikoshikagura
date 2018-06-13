@@ -247,6 +247,7 @@
   <ItemGroup>
     <ClCompile Include="Library\tinyxml2.cpp" />
     <ClCompile Include="Source\Background.cpp" />
+    <ClCompile Include="Source\CameraLimit.cpp" />
     <ClCompile Include="Source\CameraPlay.cpp" />
     <ClCompile Include="Source\CameraSmoothFallow.cpp" />
     <ClCompile Include="Source\CameraSnap.cpp" />

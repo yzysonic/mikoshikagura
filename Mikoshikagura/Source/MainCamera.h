@@ -3,6 +3,7 @@
 #include "CameraSphericalCoordinate.h"
 #include "CameraSmoothFallow.h"
 #include "CameraSnap.h"
+#include "CameraLimit.h"
 
 class MainCamera :public Camera
 {
@@ -16,4 +17,5 @@ private:
 	CameraSphericalCoordinate* coordinate;
 	CameraSmoothFallow* smooth;
 	CameraSnap* snap;
+	CameraLimit* limit;
 };

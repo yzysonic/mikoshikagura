@@ -588,5 +588,8 @@
     <ClCompile Include="Source\CameraSnap.cpp">
       <Filter>Script</Filter>
     </ClCompile>
+    <ClCompile Include="Source\CameraLimit.cpp">
+      <Filter>Script</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
