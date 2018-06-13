@@ -48,7 +48,7 @@ class MapManager :public Object ,ISeason{
 	std::vector<Object *> seasonobjectlist;			//‹Gß•Ï‰»
 	std::vector<Object *> summerobjectlist;			//‰Ä—p
 	std::vector<Object *> winterobjectlist;			//“~—p
-
+	std::vector<Object *> allobjectlist;
 
 
 public:

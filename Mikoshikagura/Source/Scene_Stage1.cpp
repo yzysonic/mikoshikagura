@@ -61,8 +61,9 @@ void Scene_Stage1::Uninit(void)
 	Texture::Release("body_sum.tga");
 	Texture::Release("misaki_head.tga");
 	Texture::Release("background");
-	ModelData::Release("20");
-	ModelData::Release("23");
-	ModelData::Release("37");
+	ModelData::Release("Maptip/23");
+	ModelData::Release("Maptip/37");
+	ModelData::Release("Maptip/20_summer");
+	ModelData::Release("Maptip/20_winter");
 	ModelData::Release("field_summer");
 }

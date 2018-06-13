@@ -13,21 +13,7 @@ MapLayer::MapLayer()
 MapLayer::~MapLayer()
 {
 
-	//マップオブジェクトの削除
-	mapobj.clear();
-
-
-	//マップチップの削除
-	for (auto itr = maptip.begin(); itr != maptip.end(); ++itr) {
-		itr->clear();
-		itr->shrink_to_fit();
-	}
-
-	maptip.clear();
-	maptip.shrink_to_fit();
 }
-
-
 
 
 
@@ -44,16 +30,23 @@ MapManager::MapManager() {
 
 MapManager::~MapManager()
 {
+	//for (auto itr : allobjectlist) {
+	//	itr->Destroy();
+	//}
+	allobjectlist.shrink_to_fit();
+	for (auto itr : seasonobjectlist) {
 
-	seasonobjectlist.clear();
+	}
 	seasonobjectlist.shrink_to_fit();
-	winterobjectlist.clear();
-	winterobjectlist.shrink_to_fit();
-	summerobjectlist.clear();
+	for (auto itr : summerobjectlist) {
+
+	}
 	summerobjectlist.shrink_to_fit();
+	for (auto itr : winterobjectlist) {
 
+	}
+	winterobjectlist.shrink_to_fit();
 	fieldobjectmap.clear();
-
 
 }
 
@@ -126,15 +119,8 @@ std::vector<std::vector<int>> MapManager::Perse(std::string csvdata) {
 void MapManager::CreateMapObject(std::string groupname, std::string layername, std::vector<std::vector<int>> mapdata)
 {
 
-	enum class Object_type :int {
-		Static,
-		Season,
-		Summer,
-		Winter,
-	};
 
 	bool IsField = false;
-	Object_type type;
 
 	std::vector<Object*>::iterator itr;
 
@@ -189,6 +175,7 @@ void MapManager::CreateMapObject(std::string groupname, std::string layername, s
 					objtemp->SetActive(false);
 					winterobjectlist.push_back(objtemp);
 				}
+				allobjectlist.push_back(objtemp);
 			}
 		}
 	}
