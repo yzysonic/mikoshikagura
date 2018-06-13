@@ -9,7 +9,7 @@ public:
 	~Hukidashi(void) {};
 	void Update(void) override;
 	void Pop(std::string message);
-	void Unpop(void);
+	void Unpop(std::string message);
 private:
 	enum STATE
 	{

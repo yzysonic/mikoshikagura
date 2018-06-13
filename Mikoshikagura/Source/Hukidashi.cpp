@@ -47,6 +47,11 @@ void Hukidashi::Update(void)
 		}
 		else
 		{
+			if (str_head != 0)
+			{
+				std::string sub = message.substr(0, str_head);
+				this->GetComponent<Text>()->SetText(sub);
+			}
 			this->state = popped;
 		}
 		break;
@@ -55,7 +60,7 @@ void Hukidashi::Update(void)
 		if (read_count == READCOUNT)
 		{
 			read_count = 0;
-			if (str_head < (float)(message.length()))
+			if (str_head < (int)(message.length()))
 			{
 				this->GetComponent<Text>()->AddText(message[str_head]);
 				str_head++;
@@ -73,6 +78,7 @@ void Hukidashi::Update(void)
 		}
 		else
 		{
+			this->message.clear();
 			this->state = none;
 			this->SetActive(false);
 		}
@@ -84,16 +90,22 @@ void Hukidashi::Pop(std::string message)
 {
 	if (this->state != popped)
 	{
-		this->message = message;
 		this->state = popping;
 		this->SetActive(true);
+	}
+	if (this->message != message)
+	{
+		this->GetComponent<Text>()->ClearText();
+		this->message = message;
 		str_head = 0;
 	}
 }
 
-void Hukidashi::Unpop(void)
+void Hukidashi::Unpop(std::string message)
 {
-	this->message.clear();
-	this->GetComponent<Text>()->ClearText();
-	this->state = unpopping;
+	if (this->message == message)
+	{
+		this->GetComponent<Text>()->ClearText();
+		this->state = unpopping;
+	}
 }

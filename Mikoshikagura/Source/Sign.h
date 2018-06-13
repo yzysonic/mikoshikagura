@@ -7,10 +7,10 @@ class Sign : public Object
 public:
 	Sign(std::string message, Hukidashi *hukidashi);
 	void Update(void) override;
-	void OnCollisionStay(Object *object) override;
+	void OnCollisionEnter(Object *object) override;
+	void OnCollisionExit(Object *object) override;
 
 private:
-	int delay;
 	Hukidashi *hukidashi;
 	std::string message;
 };

@@ -18,6 +18,7 @@ private:
 	Object *target1;
 	Object *target2;
 	Sign *kanban;
+	Sign *kanban2;
 	MainCamera *camera;
 	Player *player;
 	Hukidashi *hukidashi;

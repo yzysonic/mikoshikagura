@@ -23,7 +23,7 @@ void SceneTitle::Init(void)
 
 void SceneTitle::Update(void)
 {
-	if (GetKeyboardTrigger(DIK_RETURN))
+	if (!SceneEnd && GetKeyboardTrigger(DIK_RETURN))
 	{
 		FadeScreen::FadeOut(Color::white, 1.0f);
 		SceneEnd = true;
