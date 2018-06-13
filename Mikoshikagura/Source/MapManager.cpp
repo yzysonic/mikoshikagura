@@ -62,12 +62,15 @@ void MapManager::Load(std::string str)
 	tinyxml2::XMLElement *xml_group = xml.FirstChildElement("map")->FirstChildElement("group");
 
 	while (xml_group != nullptr) {
-		MapLayer layerbuff;
-		layerbuff.group = xml_group->Attribute("name");
 		tinyxml2::XMLElement *xml_layer = xml_group->FirstChildElement("layer");
 
 		while (xml_layer != nullptr) {
-			CreateMapObject(xml_group->Attribute("name"), xml_layer->Attribute("name"), Perse(xml_layer->FirstChildElement("data")->GetText()));
+			MapLayer layerbuff;
+			layerbuff.group = SetGroupType(xml_group->Attribute("name"));
+			layerbuff.layer = SetLayerType(xml_layer->Attribute("name"));
+			layerbuff.maptip = Perse(xml_layer->FirstChildElement("data")->GetText());
+
+			CreateMap(layerbuff);
 			xml_layer = xml_layer->NextSiblingElement();
 		}
 
@@ -115,39 +118,81 @@ std::vector<std::vector<int>> MapManager::Perse(std::string csvdata) {
 
 }
 
+LayerType MapManager::SetLayerType(std::string layertype) {
 
-void MapManager::CreateMapObject(std::string groupname, std::string layername, std::vector<std::vector<int>> mapdata)
+	if (layertype == "Field") {
+		return LayerType::Field;
+	}
+	else if (layertype == "Accessory") {
+
+		return LayerType::Accessory;
+	}
+	else if (layertype == "Gimmick_Object") {
+		return LayerType::Gimmick_Object;
+	}
+}
+
+
+GroupType MapManager::SetGroupType(std::string grouptype) {
+	if (grouptype == "Season") {
+		return GroupType::Season;
+	}
+	else if (grouptype == "Summer") {
+
+		return GroupType::Summer;
+	}
+	else if (grouptype == "Winter") {
+		return GroupType::Winter;
+	}
+	else if (grouptype == "Static") {
+		return GroupType::Static;
+	}
+
+}
+
+Object* MapManager::CreateMapObject(int id , MapLayer layer) {
+
+	Vector3 objscale;										//スケール
+	Object  *objtemp = new Object;							//オブジェクト生成
+	objtemp->type = ObjectType::Field;						//タイプ設定
+
+	objtemp->transform.scale = transform.scale;				//スケール設定
+	objscale = objtemp->transform.scale;
+
+
+	std::string model_name = "Maptip/" + std::to_string(id);	//名前設定
+
+	if (layer.group == GroupType::Season) {
+
+	}
+	else {
+
+	}
+	objtemp->AddComponent<BoxCollider2D>();					//コライダー追加
+	objtemp->GetComponent<BoxCollider2D>()->size = Vector2(BlockSize * objscale.x, BlockSize * objscale.y);
+	objtemp->GetComponent<BoxCollider2D>()->SetActive(false);
+
+
+	switch (id)
+	{
+	default:
+		break;
+	}
+
+}
+
+void MapManager::CreateMap(MapLayer layer)
 {
-
-
-	bool IsField = false;
-
-	std::vector<Object*>::iterator itr;
 
 	for (int i = 0; i < height; i++) {
 		for (int j = 0; j < width; j++) {
-			auto id = mapdata[i][j];
+			int id = layer.maptip[i][j];
 			if (id > 0) {
 
-				Vector3 objscale;										//スケール
-				Object  *objtemp = new Object;							//オブジェクト生成
-				objtemp->type = ObjectType::Field;						//タイプ設定
+				Object* objtemp = CreateMapObject(id,layer);
 
-				std::string model_name = "Maptip/" + std::to_string(id);	//名前設定
-
-
-
-
-				objtemp->transform.scale = transform.scale;				//スケール設定
-				objscale = objtemp->transform.scale;
-
-				//位置計算
-				//objtemp->transform.position = Vector3((float)(k * BlockSize * objscale.x), (float)((height - j) * BlockSize * objscale.y), float(i* objscale.z * BlockSize));
 				objtemp->transform.position = Vector3((float)(j * BlockSize * objscale.x), (float)((height - i) * BlockSize * objscale.y), 0.0f);
 
-				objtemp->AddComponent<BoxCollider2D>();					//コライダー追加
-				objtemp->GetComponent<BoxCollider2D>()->size = Vector2(BlockSize * objscale.x, BlockSize * objscale.y);
-				objtemp->GetComponent<BoxCollider2D>()->SetActive(false);
 
 				if (groupname == "Season") {
 					objtemp->AddComponent<SeasonModel>(model_name.c_str(),true);
