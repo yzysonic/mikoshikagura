@@ -5,6 +5,8 @@
 #include "Hukidashi.h"
 #include "Sign.h"
 #include "MapManager.h"
+#include "GoalObject.h"
+
 class SceneTest : public Scene
 {
 public:
@@ -22,6 +24,7 @@ private:
 	MainCamera *camera;
 	Player *player;
 	Hukidashi *hukidashi;
+	GoalObject<SceneTest> *goal;
 
 	MapManager *mapdata;
 
