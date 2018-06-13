@@ -19,8 +19,7 @@ void SceneYangTest::Init(void)
 	Sound::Load("bgm_demo");
 
 	// 季節初期化
-	SeasonManager::Create();
-	SeasonManager::SetSeason(SeasonType::Summer);
+	SeasonManager::Create(SeasonType::Summer);
 
 	// オブジェクト初期化
 	player	= new Player;
