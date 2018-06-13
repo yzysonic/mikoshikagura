@@ -119,6 +119,7 @@ public:
 	Player(void);
 	void Update(void) override;
 	void Uninit(void) override;
+	void OnCollisionEnter(Object*  other) override;
 	void OnCollisionStay(Object* other) override;
 	void OnCollisionExit(Object* other) override;
 	void SetPosition(Vector3 pos);
@@ -136,6 +137,7 @@ private:
 	FrameTimer anime_timer;
 	float speed;
 	bool is_grounded;
+	bool is_holding_item;
 	std::function<void(void)> action;
 
 

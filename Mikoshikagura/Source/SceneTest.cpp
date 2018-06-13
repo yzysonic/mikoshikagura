@@ -13,19 +13,6 @@ void SceneTest::Init(void)
 	Texture::Load("body_sum.tga");
 	Texture::Load("misaki_head.tga");
 
-	//test = new Object;
-	//test->AddComponent<RectPolygon>("magic_square")->SetSize(Vector2(100, 100));
-	//test->transform.scale = Vector3::one*10.f;
-	//test->transform.position.z = -100.0f;
-
-
-	//testBG = new Object;
-	//Texture::Load("testbg");
-	//testBG->AddComponent<RectPolygon>("testbg")->SetSize(Vector2(1000, 1000));
-	//testBG->transform.scale = Vector3::one*10.f;
-
-
-
 	Texture::Load("target");
 	Texture::Load("hukidashi");
 	ModelData::Load("field");
@@ -54,9 +41,8 @@ void SceneTest::Init(void)
 
 
 	//0522nagai mapdataì¬
-	mapdata = new MapManager("Data/Map/prototype_map1.tmx");
-	mapdata->CreateMapObject();
-	mapdata->SetLayerActive(0, true);
+	mapdata = new MapManager();
+	mapdata->Load("Data/Map/prototype_map1.tmx");
 	mapdata->SetPlayerpointer(player);
 
 	Physics::GetInstance()->setGravity(Vector3(0.0f, -98.0f, 0.0f));

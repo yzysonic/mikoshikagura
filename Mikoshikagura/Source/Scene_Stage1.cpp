@@ -11,12 +11,18 @@ void Scene_Stage1::Init(void)
 	Texture::Load("body_sum.tga");
 	Texture::Load("misaki_head.tga");
 	Texture::Load("background");
-	ModelData::Load("field_block_20");
-	ModelData::Load("field_block_23");
-	ModelData::Load("field_block_37");
+	ModelData::Load("Maptip/20_summer");
+	ModelData::Load("Maptip/20_winter");
+	ModelData::Load("Maptip/23");
+	ModelData::Load("Maptip/37");
 	ModelData::Load("field_summer");
 	Sound::Load("bgm_demo");
 	
+
+
+	SeasonManager::Create();
+	SeasonManager::SetSeason(SeasonType::Summer);
+
 	// ゲームオブジェクトの初期化
 	player = new Player;
 	player->SetPosition(Vector3(0, 70, 0));
@@ -26,20 +32,30 @@ void Scene_Stage1::Init(void)
 	camera->setBackColor(Color(250, 250, 250, 255));
 	Renderer::GetInstance()->setCamera(camera);
 
-	mapdata = new MapManager("Data/Map/prototype_map1.tmx");
-	mapdata->CreateMapObject();
-	mapdata->SetLayerActive(0, true);
+	mapdata = new MapManager();
+	mapdata->Load("Data/Map/prototype_map1.tmx");
 	mapdata->SetPlayerpointer(player);
 
 	background = new Background;
 
 	Light::Init();
 	FadeScreen::FadeIn(Color::black, 0.0f);
-	Sound::Get("bgm_demo")->Play();
+
+	wall = new Object;
+	wall->type = ObjectType::Field;
+	wall->AddComponent<BoxCollider2D>();
+	wall->GetComponent<BoxCollider2D>()->size = Vector2(10.0f, 1000.0f);
+	wall->GetComponent<BoxCollider2D>()->offset = Vector2(-10.0f,0.0f);
+	wall->GetComponent<BoxCollider2D>()->SetActive(true);
+	wall->transform.position = Vector3(0.0f, 0.0f, 0.0f);
+
 }
 
 void Scene_Stage1::Update(void)
 {
+	if(GetKeyboardTrigger(DIK_0))
+	SeasonManager::SetSeason((SeasonType)(((int)SeasonManager::GetSeason()%2)+1));
+
 }
 
 void Scene_Stage1::Uninit(void)
@@ -50,9 +66,10 @@ void Scene_Stage1::Uninit(void)
 	Texture::Release("body_sum.tga");
 	Texture::Release("misaki_head.tga");
 	Texture::Release("background");
-	ModelData::Release("field_block_20");
-	ModelData::Release("field_block_23");
-	ModelData::Release("field_block_37");
+	ModelData::Release("Maptip/23");
+	ModelData::Release("Maptip/37");
+	ModelData::Release("Maptip/20_summer");
+	ModelData::Release("Maptip/20_winter");
 	ModelData::Release("field_summer");
 	Sound::Release("bgm_demo");
 }

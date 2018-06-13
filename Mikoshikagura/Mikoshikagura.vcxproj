@@ -59,10 +59,12 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="Directx9Debug.props" />
+    <Import Project="LibraryDebug.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="Directx9Release32.props" />
+    <Import Project="LibraryRelease.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -75,6 +77,8 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)\</OutDir>
     <TargetName>$(ProjectName)_Debug</TargetName>
+    <IncludePath>$(IncludePath)</IncludePath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -82,6 +86,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)\</OutDir>
+    <IncludePath>$(IncludePath)</IncludePath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -208,8 +214,10 @@
     <ClInclude Include="Source\InspectorContentCamera.h" />
     <ClInclude Include="Source\InspectorContentPlayer.h" />
     <ClInclude Include="Source\Inspector.h" />
+    <ClInclude Include="Source\Item.h" />
     <ClInclude Include="Source\ObjectExplorer.h" />
     <ClInclude Include="Source\NagaiSceneTest.h" />
+    <ClInclude Include="Source\Holdable.h" />
     <ClInclude Include="Source\Hukidashi.h" />
     <ClInclude Include="Source\SceneExplorer.h" />
     <ClInclude Include="Source\SceneImGuiTest.h" />
@@ -229,12 +237,14 @@
     <ClInclude Include="Source\SceneYangTest.h" />
     <ClInclude Include="Source\Scene_Stage1.h" />
     <ClInclude Include="Source\SeasonManager.h" />
-    <ClInclude Include="Source\SeasonObject.h" />
     <ClInclude Include="Source\Sign.h" />
+    <ClInclude Include="Source\SeasonModel.h" />
+    <ClInclude Include="Source\ISeason.h" />
     <ClInclude Include="Source\Snapshot.h" />
     <ClInclude Include="Source\MapManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Library\tinyxml2.cpp" />
     <ClCompile Include="Source\Background.cpp" />
     <ClCompile Include="Source\CameraPlay.cpp" />
     <ClCompile Include="Source\CameraSmoothFallow.cpp" />
@@ -286,6 +296,7 @@
     <ClCompile Include="Source\DebugMenu.cpp" />
     <ClCompile Include="Source\FadeScreen.cpp" />
     <ClCompile Include="Source\FreeCamera.cpp" />
+    <ClCompile Include="Source\Holdable.cpp" />
     <ClCompile Include="Source\InspectorContentCamera.cpp" />
     <ClCompile Include="Source\InspectorContentPlayer.cpp" />
     <ClCompile Include="Source\Hukidashi.cpp" />
@@ -294,6 +305,7 @@
     <ClCompile Include="Source\Imgui\imgui_demo.cpp" />
     <ClCompile Include="Source\Imgui\imgui_draw.cpp" />
     <ClCompile Include="Source\Inspector.cpp" />
+    <ClCompile Include="Source\Item.cpp" />
     <ClCompile Include="Source\Light.cpp" />
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\MainCamera.cpp" />
@@ -311,8 +323,9 @@
     <ClCompile Include="Source\SceneYangTest.cpp" />
     <ClCompile Include="Source\Scene_Stage1.cpp" />
     <ClCompile Include="Source\SeasonManager.cpp" />
-    <ClCompile Include="Source\SeasonObject.cpp" />
     <ClCompile Include="Source\Sign.cpp" />
+    <ClCompile Include="Source\SeasonModel.cpp" />
+    <ClCompile Include="Source\ISeason.cpp" />
     <ClCompile Include="Source\Snapshot.cpp" />
     <ClCompile Include="Source\MapManager.cpp" />
   </ItemGroup>

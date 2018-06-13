@@ -4,7 +4,7 @@
 #include "Player.h"
 #include "MapManager.h"
 #include "Background.h"
-
+#include "SeasonManager.h"
 class Scene_Stage1 : public Scene
 {
 public:
@@ -17,4 +17,9 @@ private:
 	Player *player;
 	MapManager *mapdata;
 	Background *background;
+	SeasonManager  *seasonmanager;
+
+
+	//テスト用壁
+	Object *wall;
 };

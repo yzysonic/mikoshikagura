@@ -15,6 +15,7 @@ void SceneYangTest::Init(void)
 	ModelData::Load("field_winter");
 	Texture::Load("body_sum.tga");
 	Texture::Load("misaki_head.tga");
+	Texture::Load("mushroom");
 
 	// 季節初期化
 	SeasonManager::Create();
@@ -23,6 +24,9 @@ void SceneYangTest::Init(void)
 	// オブジェクト初期化
 	player	= new Player;
 	player->SetPosition(Vector3(0.0f, 30.0f, 0.0f));
+
+	item = new Item("mushroom", Texture::Get("mushroom")->size*0.1f);
+	item->transform.position = Vector3(30.f, 15.f+ 0.5f*item->GetSize().y, 0.f);
 
 	// カメラ初期化
 	camera = new MainCamera;
@@ -90,6 +94,7 @@ void SceneYangTest::Uninit(void)
 	ModelData::Release("field_winter");
 	Texture::Release("body_sum.tga");
 	Texture::Release("misaki_head.tga");
+	Texture::Release("mushroom");
 
 	SeasonManager::Destroy();
 }
@@ -102,21 +107,9 @@ void SceneYangTest::Uninit(void)
 SeasonTestObject::SeasonTestObject(void)
 {
 	type = ObjectType::Field;
-	model = AddComponent<StaticModel>("field_summer");
+	model = AddComponent<SeasonModel>("field");
 	collider = AddComponent<BoxCollider2D>();
 	collider->size = Vector2::one*10.0f;
-	summer_model = ModelData::Get("field_summer");
-	winter_model = ModelData::Get("field_winter");
-}
-
-void SeasonTestObject::SetSummer(void)
-{
-	model->pData = summer_model;
-}
-
-void SeasonTestObject::SetWinter(void)
-{
-	model->pData = winter_model;
 }
 
 void SeasonTestObject::Update(void)
@@ -150,10 +143,9 @@ void SeasonTestObject::OnCollisionExit(Object * other)
 
 void SeasonTestObject::SwitchModel(void)
 {
-	if (model->pData == summer_model)
-		model->pData = winter_model;
+	if (model->GetSeason() == SeasonType::Summer)
+		model->SetWinter();
 	else
-		model->pData = summer_model;
+		model->SetSummer();
 }
-
 #pragma endregion
