@@ -573,6 +573,7 @@
       <Filter>Interface</Filter>
     </ClCompile>
     <ClCompile Include="Library\tinyxml2.cpp" />
+<<<<<<< HEAD
     <ClCompile Include="Source\Core\Sound.cpp">
       <Filter>Core\Resource</Filter>
     </ClCompile>
@@ -585,5 +586,13 @@
     <ClCompile Include="Source\Holdable.cpp">
       <Filter>Script</Filter>
     </ClCompile>
+=======
+    <ClCompile Include="Source\Core\Sound.cpp" />
+    <ClCompile Include="Source\Holdable.cpp" />
+    <ClCompile Include="Source\Item.cpp" />
+    <ClCompile Include="Source\Sign.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+>>>>>>> master
   </ItemGroup>
 </Project>

@@ -3,19 +3,34 @@
 #include "Light.h"
 #include "DebugManager.h"
 #include "Core\Physics.h"
-
+#include "SeasonManager.h"
 void SceneTest::Init(void)
 {
 
+	SeasonManager::Create();
+	SeasonManager::SetSeason(SeasonType::Summer);
+
 	FadeScreen::FadeIn(Color::white, 1.0f);
 	Light::Init();
-	ModelData::Load("field_summer");
 	Texture::Load("body_sum.tga");
 	Texture::Load("misaki_head.tga");
 
 	Texture::Load("target");
 	Texture::Load("hukidashi");
-	ModelData::Load("field");
+	// リソースのロード
+	Texture::Load("map");
+	Texture::Load("body_sum.tga");
+	Texture::Load("misaki_head.tga");
+	Texture::Load("background");
+
+	ModelData::Load("Maptip/20_summer");
+	ModelData::Load("Maptip/20_winter");
+	ModelData::Load("Maptip/23");
+	ModelData::Load("Maptip/37");
+	ModelData::Load("field_summer");
+	Sound::Load("bgm_demo");
+
+
 
 	target1 = new Object;
 	target1->AddComponent<RectPolygon>("target");
@@ -73,6 +88,21 @@ void SceneTest::Update(void)
 void SceneTest::Uninit(void)
 {
 	Renderer::GetInstance()->setCamera(nullptr);
-	ModelData::Release("field");
+	Texture::Release("body_sum.tga");
+	Texture::Release("misaki_head.tga");
 
+	Texture::Release("target");
+	Texture::Release("hukidashi");
+	// リソースのロード
+	Texture::Release("map");
+	Texture::Release("body_sum.tga");
+	Texture::Release("misaki_head.tga");
+	Texture::Release("background");
+
+	ModelData::Release("Maptip/20_summer");
+	ModelData::Release("Maptip/20_winter");
+	ModelData::Release("Maptip/23");
+	ModelData::Release("Maptip/37");
+	ModelData::Release("field_summer");
+	Sound::Release("bgm_demo");
 }

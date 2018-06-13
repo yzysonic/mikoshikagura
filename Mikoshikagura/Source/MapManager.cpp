@@ -136,6 +136,17 @@ void MapManager::CreateMapObject(std::string groupname, std::string layername, s
 				std::string model_name = "Maptip/" + std::to_string(id);	//名前設定
 
 
+				if (groupname == "Season") {
+					if (!(ModelData::Get(model_name + "_summer")) && !(ModelData::Get(model_name + "_winter"))) {
+						model_name = "field_summer";
+
+					}
+				}
+				else if (!(ModelData::Get(model_name))) {
+					model_name = "field_summer";
+				}
+
+
 
 
 				objtemp->transform.scale = transform.scale;				//スケール設定
@@ -150,11 +161,13 @@ void MapManager::CreateMapObject(std::string groupname, std::string layername, s
 				objtemp->GetComponent<BoxCollider2D>()->SetActive(false);
 
 				if (groupname == "Season") {
-					objtemp->AddComponent<SeasonModel>(model_name.c_str(),true);
-				} else if (!ModelData::Get(model_name)) {
-					model_name = "field_summer"; 
+					objtemp->AddComponent<SeasonModel>(model_name.c_str(), true);
+				}
+				else if (!ModelData::Get(model_name)) {
+					model_name = "field_summer";
 					objtemp->AddComponent<StaticModel>(model_name);
-				} else {
+				}
+				else {
 					objtemp->AddComponent<StaticModel>(model_name);
 				}
 
@@ -167,11 +180,13 @@ void MapManager::CreateMapObject(std::string groupname, std::string layername, s
 				//グループごとにリストにポインタを格納
 				if (groupname == "Season") {
 					seasonobjectlist.push_back(objtemp);
-				} else if (groupname == "Summer") {
+				}
+				else if (groupname == "Summer") {
 					objtemp->SetActive(false);
 					summerobjectlist.push_back(objtemp);
 
-				} else if (groupname == "Winter") {
+				}
+				else if (groupname == "Winter") {
 					objtemp->SetActive(false);
 					winterobjectlist.push_back(objtemp);
 				}
@@ -251,7 +266,7 @@ void MapManager::Update()
 
 void MapManager::SetSummer()
 {
-	for (auto itr :summerobjectlist) {
+	for (auto itr : summerobjectlist) {
 		itr->SetActive(true);
 	}
 
