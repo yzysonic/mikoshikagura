@@ -45,6 +45,16 @@ MapManager::MapManager() {
 MapManager::~MapManager()
 {
 
+	seasonobjectlist.clear();
+	seasonobjectlist.shrink_to_fit();
+	winterobjectlist.clear();
+	winterobjectlist.shrink_to_fit();
+	summerobjectlist.clear();
+	summerobjectlist.shrink_to_fit();
+
+	fieldobjectmap.clear();
+
+
 }
 
 
@@ -151,7 +161,7 @@ void MapManager::CreateMapObject(std::string groupname, std::string layername, s
 
 				objtemp->AddComponent<BoxCollider2D>();					//コライダー追加
 				objtemp->GetComponent<BoxCollider2D>()->size = Vector2(BlockSize * objscale.x, BlockSize * objscale.y);
-
+				objtemp->GetComponent<BoxCollider2D>()->SetActive(false);
 
 				if (groupname == "Season") {
 					objtemp->AddComponent<SeasonModel>(model_name.c_str(),true);
