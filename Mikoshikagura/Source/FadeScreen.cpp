@@ -5,6 +5,7 @@ FadeScreen::FadeScreen(void)
 	this->polygon = AddComponent<RectPolygon2D>("none", Layer::TOP, "default");
 	this->polygon->SetSize((float)SystemParameters::ResolutionX, (float)SystemParameters::ResolutionY);
 	this->polygon->SetOpacity(0.0f);
+	this->callback = nullptr;
 
 	state = Stop;
 
@@ -31,6 +32,12 @@ void FadeScreen::Update()
 
 	case Stop:
 		SetActive(false);
+		if (callback)
+		{
+			auto call = callback;
+			call();
+			callback = nullptr;
+		}
 		break;
 	}
 
@@ -44,7 +51,7 @@ void FadeScreen::SetActive(bool value)
 	this->isActive = value;
 }
 
-void FadeScreen::Fade(FadeType type, Color color, float interval)
+void FadeScreen::Fade(FadeType type, Color color, float interval, Action callback)
 {
 	switch (type)
 	{
@@ -68,23 +75,25 @@ void FadeScreen::Fade(FadeType type, Color color, float interval)
 		m_pInstance->oldOpacity = m_pInstance->GetComponent<RectPolygon2D>()->GetOpacity();
 		m_pInstance->SetActive(true);
 		m_pInstance->state = Run;
+		m_pInstance->callback = callback;
 	}
 	else
 	{
 		m_pInstance->GetComponent<RectPolygon2D>()->SetOpacity(m_pInstance->targetOpacity);
 		m_pInstance->state = Stop;
+		if(callback) callback();
 	}
 		
 }
 
-void FadeScreen::FadeIn(Color color, float interval)
+void FadeScreen::FadeIn(Color color, float interval, Action callback)
 {
-	Fade(FADE_IN, color, interval);
+	Fade(FADE_IN, color, interval, callback);
 }
 
-void FadeScreen::FadeOut(Color color, float interval)
+void FadeScreen::FadeOut(Color color, float interval, Action callback)
 {
-	Fade(FADE_OUT, color, interval);
+	Fade(FADE_OUT, color, interval, callback);
 }
 
 void FadeScreen::SetTexture(const char * texture_name)
