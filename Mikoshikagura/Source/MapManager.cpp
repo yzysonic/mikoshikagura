@@ -3,6 +3,8 @@
 #include "SeasonModel.h"
 #include "Sign.h"
 
+#pragma comment(lib, "tinyxml2.lib")
+
 /////////////////MapLayer///////////////////
 
 

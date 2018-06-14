@@ -249,7 +249,6 @@
     <ClInclude Include="Source\MapManager.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Library\tinyxml2.cpp" />
     <ClCompile Include="Source\Background.cpp" />
     <ClCompile Include="Source\CameraLimit.cpp" />
     <ClCompile Include="Source\CameraPlay.cpp" />

@@ -584,7 +584,6 @@
     <ClCompile Include="Source\ISeason.cpp">
       <Filter>Interface</Filter>
     </ClCompile>
-    <ClCompile Include="Library\tinyxml2.cpp" />
     <ClCompile Include="Source\Core\Sound.cpp">
       <Filter>Core\Resource</Filter>
     </ClCompile>
