@@ -16,6 +16,7 @@ void Scene_Stage1::Init(void)
 	ModelData::Load("Maptip/23");
 	ModelData::Load("Maptip/37");
 	ModelData::Load("field_summer");
+	Sound::Load("bgm_demo");
 	
 
 
@@ -24,7 +25,7 @@ void Scene_Stage1::Init(void)
 
 	// ゲームオブジェクトの初期化
 	player = new Player;
-	player->SetPosition(Vector3(0, 70, 0));
+	player->SetPosition(Vector3(10, 70, 0));
 
 	camera = new MainCamera;
 	camera->SetTarget(&player->transform);
@@ -44,9 +45,9 @@ void Scene_Stage1::Init(void)
 	wall->type = ObjectType::Field;
 	wall->AddComponent<BoxCollider2D>();
 	wall->GetComponent<BoxCollider2D>()->size = Vector2(10.0f, 1000.0f);
-	wall->GetComponent<BoxCollider2D>()->offset = Vector2(-10.0f,0.0f);
+	//wall->GetComponent<BoxCollider2D>()->offset = Vector2(0.0f,0.0f);
 	wall->GetComponent<BoxCollider2D>()->SetActive(true);
-	wall->transform.position = Vector3(0.0f, 0.0f, 0.0f);
+	//wall->transform.position = Vector3(0.0f, 0.0f, 0.0f);
 
 }
 
@@ -70,4 +71,5 @@ void Scene_Stage1::Uninit(void)
 	ModelData::Release("Maptip/20_summer");
 	ModelData::Release("Maptip/20_winter");
 	ModelData::Release("field_summer");
+	Sound::Release("bgm_demo");
 }

@@ -154,11 +154,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Source\Background.h" />
+    <ClInclude Include="Source\CameraLimit.h" />
     <ClInclude Include="Source\CameraSphericalCoordinate.h" />
     <ClInclude Include="Source\Core\ModelData.h" />
     <ClInclude Include="Source\Core\Resource.h" />
     <ClInclude Include="Source\CameraPlay.h" />
-    <ClInclude Include="Source\CameraSmoothFallow.h" />
+    <ClInclude Include="Source\CameraSmoothFollow.h" />
     <ClInclude Include="Source\CameraSnap.h" />
     <ClInclude Include="Source\Core\AllocateHirerachy.h" />
     <ClInclude Include="Source\Core\Billboard.h" />
@@ -201,6 +202,7 @@
     <ClInclude Include="Source\Core\Sound.h" />
     <ClInclude Include="Source\Core\StaticModel.h" />
     <ClInclude Include="Source\Core\System.h" />
+    <ClInclude Include="Source\Core\Text.h" />
     <ClInclude Include="Source\Core\Texture.h" />
     <ClInclude Include="Source\Core\Time.h" />
     <ClInclude Include="Source\Core\Transform.h" />
@@ -216,6 +218,7 @@
     <ClInclude Include="Source\Item.h" />
     <ClInclude Include="Source\ObjectExplorer.h" />
     <ClInclude Include="Source\NagaiSceneTest.h" />
+    <ClInclude Include="Source\Hukidashi.h" />
     <ClInclude Include="Source\Holdable.h" />
     <ClInclude Include="Source\SceneExplorer.h" />
     <ClInclude Include="Source\SceneImGuiTest.h" />
@@ -231,19 +234,22 @@
     <ClInclude Include="Source\SceneStackSampleGame.h" />
     <ClInclude Include="Source\SceneStackSampleOp.h" />
     <ClInclude Include="Source\SceneTest.h" />
+    <ClInclude Include="Source\SceneTitle.h" />
     <ClInclude Include="Source\SceneYangTest.h" />
     <ClInclude Include="Source\Scene_Stage1.h" />
     <ClInclude Include="Source\SeasonManager.h" />
     <ClInclude Include="Source\SeasonModel.h" />
     <ClInclude Include="Source\ISeason.h" />
+    <ClInclude Include="Source\Sign.h" />
     <ClInclude Include="Source\Snapshot.h" />
     <ClInclude Include="Source\MapManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Library\tinyxml2.cpp" />
     <ClCompile Include="Source\Background.cpp" />
+    <ClCompile Include="Source\CameraLimit.cpp" />
     <ClCompile Include="Source\CameraPlay.cpp" />
-    <ClCompile Include="Source\CameraSmoothFallow.cpp" />
+    <ClCompile Include="Source\CameraSmoothFollow.cpp" />
     <ClCompile Include="Source\CameraSnap.cpp" />
     <ClCompile Include="Source\CameraSphericalCoordinate.cpp" />
     <ClCompile Include="Source\Core\AllocateHirerachy.cpp" />
@@ -282,6 +288,7 @@
     <ClCompile Include="Source\Core\Sound.cpp" />
     <ClCompile Include="Source\Core\StaticModel.cpp" />
     <ClCompile Include="Source\Core\System.cpp" />
+    <ClCompile Include="Source\Core\Text.cpp" />
     <ClCompile Include="Source\Core\Texture.cpp" />
     <ClCompile Include="Source\Core\Time.cpp" />
     <ClCompile Include="Source\Core\Transform.cpp" />
@@ -294,6 +301,7 @@
     <ClCompile Include="Source\Holdable.cpp" />
     <ClCompile Include="Source\InspectorContentCamera.cpp" />
     <ClCompile Include="Source\InspectorContentPlayer.cpp" />
+    <ClCompile Include="Source\Hukidashi.cpp" />
     <ClCompile Include="Source\Imgui\imgui.cpp" />
     <ClCompile Include="Source\Imgui\ImGuiImpl.cpp" />
     <ClCompile Include="Source\Imgui\imgui_demo.cpp" />
@@ -313,9 +321,11 @@
     <ClCompile Include="Source\SceneStackSampleGame.cpp" />
     <ClCompile Include="Source\SceneStackSampleOp.cpp" />
     <ClCompile Include="Source\SceneTest.cpp" />
+    <ClCompile Include="Source\SceneTitle.cpp" />
     <ClCompile Include="Source\SceneYangTest.cpp" />
     <ClCompile Include="Source\Scene_Stage1.cpp" />
     <ClCompile Include="Source\SeasonManager.cpp" />
+    <ClCompile Include="Source\Sign.cpp" />
     <ClCompile Include="Source\SeasonModel.cpp" />
     <ClCompile Include="Source\ISeason.cpp" />
     <ClCompile Include="Source\Snapshot.cpp" />

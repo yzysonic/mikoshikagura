@@ -21,14 +21,14 @@ HRESULT System::Init()
 
 	// ƒTƒEƒ“ƒh‚Ì‰Šú‰»
 	if (SUCCEEDED(hr))
-		hr = InitSound(Window::GetHWnd());
+		hr = Sound::Init(Window::GetHWnd());
 
 	return hr;
 }
 
 void System::Uninit()
 {
-	UninitSound();
+	Sound::Uninit();
 	UninitInput();
 	Direct3D::Uninit();
 	Window::Uninit();

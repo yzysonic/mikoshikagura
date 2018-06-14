@@ -4,7 +4,7 @@ FreeCamera::FreeCamera(Camera* camera)
 {
 	// コンポーネント初期化
 	coordinate	= AddComponent<CameraSphericalCoordinate>();
-	smooth		= AddComponent<CameraSmoothFallow>();
+	smooth		= AddComponent<CameraSmoothFollow>();
 	play		= AddComponent<CameraPlay>();
 
 	if (!camera)
@@ -29,7 +29,7 @@ FreeCamera::FreeCamera(Camera* camera)
 		coordinate->SetActive(_coordinate->GetActive());
 	}
 
-	auto _smooth = camera->GetComponent<CameraSmoothFallow>();
+	auto _smooth = camera->GetComponent<CameraSmoothFollow>();
 	if (_smooth)
 	{
 		smooth->speed		= _smooth->speed;

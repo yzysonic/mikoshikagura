@@ -1,8 +1,9 @@
 #pragma once
 #include "Core/Core.h"
 #include "CameraSphericalCoordinate.h"
-#include "CameraSmoothFallow.h"
+#include "CameraSmoothFollow.h"
 #include "CameraSnap.h"
+#include "CameraLimit.h"
 
 class MainCamera :public Camera
 {
@@ -14,6 +15,7 @@ public:
 
 private:
 	CameraSphericalCoordinate* coordinate;
-	CameraSmoothFallow* smooth;
+	CameraSmoothFollow* smooth;
 	CameraSnap* snap;
+	CameraLimit* limit;
 };
