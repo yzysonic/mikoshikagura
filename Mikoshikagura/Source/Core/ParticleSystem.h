@@ -20,8 +20,9 @@ struct ParticleElement
 {
 	Transform transform;
 	Color color;
-	FrameTimer timer;
+	Vector3 init_pos;
 	Vector3 dir;
+	FrameTimer timer;
 	float random_seed;
 	bool active = false;
 };

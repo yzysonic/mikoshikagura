@@ -58,6 +58,9 @@
     <Filter Include="Interface">
       <UniqueIdentifier>{43234f2e-df38-4834-81ce-029b7cc680ec}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shader">
+      <UniqueIdentifier>{3bca47e7-985d-41d3-8c09-1a58707f88e6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Core\AllocateHirerachy.h">
@@ -340,6 +343,12 @@
     <ClInclude Include="Source\ISeason.h">
       <Filter>Interface</Filter>
     </ClInclude>
+    <ClInclude Include="Source\FallingSnow.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\InspectorContentFallingSnow.h">
+      <Filter>Script\Debug</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Core\AllocateHirerachy.cpp">
@@ -600,5 +609,16 @@
     <ClCompile Include="Source\Core\SoundPlayer.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="Source\FallingSnow.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\InspectorContentFallingSnow.cpp">
+      <Filter>Script\Debug</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shader\InstancingVS.hlsl">
+      <Filter>Shader</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -51,4 +51,5 @@ private:
 	FrameTimer timer;
 	Item * item;
 	SeasonBgmPlayerTest * bgm_player;
+	Object * snow;
 };

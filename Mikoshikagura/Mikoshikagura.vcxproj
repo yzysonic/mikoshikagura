@@ -212,9 +212,11 @@
     <ClInclude Include="Source\DebugManager.h" />
     <ClInclude Include="Source\DebugMenu.h" />
     <ClInclude Include="Source\FadeScreen.h" />
+    <ClInclude Include="Source\FallingSnow.h" />
     <ClInclude Include="Source\FreeCamera.h" />
     <ClInclude Include="Source\GoalObject.h" />
     <ClInclude Include="Source\InspectorContentCamera.h" />
+    <ClInclude Include="Source\InspectorContentFallingSnow.h" />
     <ClInclude Include="Source\InspectorContentPlayer.h" />
     <ClInclude Include="Source\Inspector.h" />
     <ClInclude Include="Source\ISeason.h" />
@@ -300,9 +302,11 @@
     <ClCompile Include="Source\DebugManager.cpp" />
     <ClCompile Include="Source\DebugMenu.cpp" />
     <ClCompile Include="Source\FadeScreen.cpp" />
+    <ClCompile Include="Source\FallingSnow.cpp" />
     <ClCompile Include="Source\FreeCamera.cpp" />
     <ClCompile Include="Source\Holdable.cpp" />
     <ClCompile Include="Source\InspectorContentCamera.cpp" />
+    <ClCompile Include="Source\InspectorContentFallingSnow.cpp" />
     <ClCompile Include="Source\InspectorContentPlayer.cpp" />
     <ClCompile Include="Source\Hukidashi.cpp" />
     <ClCompile Include="Source\Imgui\imgui.cpp" />
@@ -333,6 +337,15 @@
     <ClCompile Include="Source\ISeason.cpp" />
     <ClCompile Include="Source\Snapshot.cpp" />
     <ClCompile Include="Source\MapManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shader\InstancingVS.hlsl">
+      <FileType>Document</FileType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">3.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">3.0</ShaderModel>
+    </None>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
