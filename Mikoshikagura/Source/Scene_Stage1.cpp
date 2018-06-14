@@ -11,6 +11,9 @@ void Scene_Stage1::Init(void)
 	Texture::Load("body_sum.tga");
 	Texture::Load("misaki_head.tga");
 	Texture::Load("background");
+	Texture::Load("hukidashi");
+	Texture::Load("Maptip/45");
+
 	ModelData::Load("Maptip/20_summer");
 	ModelData::Load("Maptip/20_winter");
 	ModelData::Load("Maptip/23");
@@ -36,6 +39,16 @@ void Scene_Stage1::Init(void)
 	mapdata->Load("Data/Map/prototype_map1.tmx");
 	mapdata->SetPlayerpointer(player);
 
+	hukidashi = new Hukidashi;
+
+	mapdata->SetSignText(hukidashi);
+
+
+	background = new Background;
+
+	Light::Init();
+	FadeScreen::FadeIn(Color::black, 0.0f);
+
 	wall = new Object;
 	wall->type = ObjectType::Field;
 	wall->AddComponent<BoxCollider2D>();
@@ -60,6 +73,7 @@ void Scene_Stage1::Uninit(void)
 	Texture::Release("body_sum.tga");
 	Texture::Release("misaki_head.tga");
 	Texture::Release("background");
+	Texture::Release("hukidashi");
 	ModelData::Release("Maptip/23");
 	ModelData::Release("Maptip/37");
 	ModelData::Release("Maptip/20_summer");

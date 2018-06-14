@@ -5,6 +5,7 @@
 class Sign : public Object
 {
 public:
+	Sign();
 	Sign(std::string message, Hukidashi *hukidashi);
 	void Update(void) override;
 	void OnCollisionEnter(Object *object) override;

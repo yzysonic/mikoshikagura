@@ -333,6 +333,9 @@
     <ClCompile Include="Source\Snapshot.cpp" />
     <ClCompile Include="Source\MapManager.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Xml Include="Sign_txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

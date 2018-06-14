@@ -1,6 +1,7 @@
 #include "MapManager.h"
 #include <tinyxml2.h>
 #include "SeasonModel.h"
+#include "Sign.h"
 
 /////////////////MapLayer///////////////////
 
@@ -62,12 +63,15 @@ void MapManager::Load(std::string str)
 	tinyxml2::XMLElement *xml_group = xml.FirstChildElement("map")->FirstChildElement("group");
 
 	while (xml_group != nullptr) {
-		MapLayer layerbuff;
-		layerbuff.group = xml_group->Attribute("name");
 		tinyxml2::XMLElement *xml_layer = xml_group->FirstChildElement("layer");
 
 		while (xml_layer != nullptr) {
-			CreateMapObject(xml_group->Attribute("name"), xml_layer->Attribute("name"), Perse(xml_layer->FirstChildElement("data")->GetText()));
+			MapLayer layerbuff;
+			layerbuff.group = SetGroupType(xml_group->Attribute("name"));
+			layerbuff.layer = SetLayerType(xml_layer->Attribute("name"));
+			layerbuff.maptip = Perse(xml_layer->FirstChildElement("data")->GetText());
+
+			CreateMap(layerbuff);
 			xml_layer = xml_layer->NextSiblingElement();
 		}
 
@@ -115,78 +119,129 @@ std::vector<std::vector<int>> MapManager::Perse(std::string csvdata) {
 
 }
 
+LayerType MapManager::SetLayerType(std::string layertype) {
 
-void MapManager::CreateMapObject(std::string groupname, std::string layername, std::vector<std::vector<int>> mapdata)
+	if (layertype == "Field") {
+		return LayerType::Field;
+	}
+	else if (layertype == "Accessory") {
+
+		return LayerType::Accessory;
+	}
+	else if (layertype == "Gimmick_Object") {
+		return LayerType::Gimmick_Object;
+	}
+}
+
+
+GroupType MapManager::SetGroupType(std::string grouptype) {
+	if (grouptype == "Season") {
+		return GroupType::Season;
+	}
+	else if (grouptype == "Summer") {
+
+		return GroupType::Summer;
+	}
+	else if (grouptype == "Winter") {
+		return GroupType::Winter;
+	}
+	else if (grouptype == "Static") {
+		return GroupType::Static;
+	}
+
+}
+//マップチップオブジェクト作成
+Object* MapManager::CreateMapObject(int id , MapLayer layer) {
+
+	Vector3 objscale;										//スケール
+	Object  *objtemp;							//オブジェクト生成
+
+												/*モデル読み込み処理*/
+	std::string model_name = "Maptip/" + std::to_string(id);	//名前設定
+	switch (id)
+	{
+
+	case 45:
+
+		//看板用処理
+		objtemp = new Sign();
+		objtemp->type = ObjectType::Accessary;						//タイプ設定
+		signobjectlist.push_back(objtemp);
+		if (Texture::Get(model_name)) {
+			objtemp->AddComponent<RectPolygon>(model_name,Layer::MASK);
+		}
+		else {
+			
+		}
+		
+		objtemp->GetComponent<RectPolygon>()->SetSize(Vector2::one *10);
+
+		break;
+	default:
+		objtemp = new Object();
+		objtemp->type = ObjectType::Field;						//タイプ設定
+
+														//モデルエラーチェック
+		switch (layer.group)
+		{
+		case GroupType::Season:
+			if (!(ModelData::Get(model_name + "_summer")) && !(ModelData::Get(model_name + "_winter"))) {
+				model_name = "field_summer";
+			}
+
+			objtemp->AddComponent<SeasonModel>(model_name.c_str());
+			break;
+		default:
+			if (!(ModelData::Get(model_name))) {
+				model_name = "field_summer";
+			}
+
+			objtemp->AddComponent<StaticModel>(model_name);
+			break;
+		}
+		break;
+	}
+
+
+	objtemp->transform.scale = transform.scale;				//スケール設定
+	objscale = objtemp->transform.scale;
+
+	objtemp->AddComponent<BoxCollider2D>();					//コライダー追加
+	objtemp->GetComponent<BoxCollider2D>()->size = Vector2(BlockSize * objscale.x, BlockSize * objscale.y);
+	objtemp->GetComponent<BoxCollider2D>()->SetActive(false);
+
+
+	return objtemp;
+}
+
+void MapManager::CreateMap(MapLayer layer)
 {
 
-
-	bool IsField = false;
-
-	std::vector<Object*>::iterator itr;
+	objscale = Vector3(1.0f, 1.0f, 1.0f);
 
 	for (int i = 0; i < height; i++) {
 		for (int j = 0; j < width; j++) {
-			auto id = mapdata[i][j];
+			int id = layer.maptip[i][j];
 			if (id > 0) {
 
-				Vector3 objscale;										//スケール
-				Object  *objtemp = new Object;							//オブジェクト生成
-				objtemp->type = ObjectType::Field;						//タイプ設定
+				Object* objtemp = CreateMapObject(id,layer);
 
-				std::string model_name = "Maptip/" + std::to_string(id);	//名前設定
-
-
-				if (groupname == "Season") {
-					if (!(ModelData::Get(model_name + "_summer")) && !(ModelData::Get(model_name + "_winter"))) {
-						model_name = "field_summer";
-
-					}
-				}
-				else if (!(ModelData::Get(model_name))) {
-					model_name = "field_summer";
-				}
-
-
-
-
-				objtemp->transform.scale = transform.scale;				//スケール設定
-				objscale = objtemp->transform.scale;
-
-				//位置計算
-				//objtemp->transform.position = Vector3((float)(k * BlockSize * objscale.x), (float)((height - j) * BlockSize * objscale.y), float(i* objscale.z * BlockSize));
 				objtemp->transform.position = Vector3((float)(j * BlockSize * objscale.x), (float)((height - i) * BlockSize * objscale.y), 0.0f);
-
-				objtemp->AddComponent<BoxCollider2D>();					//コライダー追加
-				objtemp->GetComponent<BoxCollider2D>()->size = Vector2(BlockSize * objscale.x, BlockSize * objscale.y);
-				objtemp->GetComponent<BoxCollider2D>()->SetActive(false);
-
-				if (groupname == "Season") {
-					objtemp->AddComponent<SeasonModel>(model_name.c_str(), true);
-				}
-				else if (!ModelData::Get(model_name)) {
-					model_name = "field_summer";
-					objtemp->AddComponent<StaticModel>(model_name);
-				}
-				else {
-					objtemp->AddComponent<StaticModel>(model_name);
-				}
 
 
 				//フィールドレイヤーの場合mapに格納
-				if (layername == "Field") {
+				if (layer.layer == LayerType::Field) {
 					fieldobjectmap[std::pair<int, int>(j, i)] = objtemp;
 				}
 
 				//グループごとにリストにポインタを格納
-				if (groupname == "Season") {
+				if (layer.group == GroupType::Season) {
 					seasonobjectlist.push_back(objtemp);
-				}
-				else if (groupname == "Summer") {
+				} else if (layer.group == GroupType::Summer) {
 					objtemp->SetActive(false);
 					summerobjectlist.push_back(objtemp);
 
-				}
-				else if (groupname == "Winter") {
+				} else if (layer.group == GroupType::Winter) {
 					objtemp->SetActive(false);
 					winterobjectlist.push_back(objtemp);
 				}
@@ -266,7 +321,7 @@ void MapManager::Update()
 
 void MapManager::SetSummer()
 {
-	for (auto itr : summerobjectlist) {
+	for (auto itr :summerobjectlist) {
 		itr->SetActive(true);
 	}
 
@@ -299,3 +354,18 @@ std::pair<int, int> MapManager::WorldtoCell(Vector3 worldpos)
 
 
 
+//////////////////////////////////////////////////ここからテスト//////////////////////////
+void MapManager::SetSignText(Hukidashi* hukidasi) {
+
+	tinyxml2::XMLDocument xml;
+
+	xml.LoadFile("Data/Text/Sign_txt.xml");
+
+	tinyxml2::XMLElement *xml_id = xml.FirstChildElement("root")->FirstChildElement("sign");
+
+	for (auto itr : signobjectlist) {
+		itr->GetComponent<BoxCollider2D>()->SetActive(true);
+		dynamic_cast<Sign*>(itr)->Sign::SetText(xml_id->FirstChildElement("data")->GetText(),hukidasi);
+	}
+
+}
