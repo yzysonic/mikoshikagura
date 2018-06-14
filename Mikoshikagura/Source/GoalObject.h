@@ -30,11 +30,11 @@ inline GoalObject<T>::GoalObject(void)
 template<class T>
 inline GoalObject<T>::~GoalObject(void)
 {
-	if (goal_state == finish)
-	{
-		goal_state = standby;
-		GameManager::GetInstance()->SetScene(new T);
-	}
+	//if (goal_state == finish)
+	//{
+	//	goal_state = standby;
+	//	GameManager::GetInstance()->SetScene(new T);
+	//}
 }
 
 template<class T>
@@ -47,7 +47,8 @@ inline void GoalObject<T>::Update(void)
 			goal_state = finish;
 		break;
 	case finish:
-		Destroy();
+		//Destroy();
+		GameManager::GetInstance()->SetScene(new T);
 		break;
 	case standby:
 	default:
