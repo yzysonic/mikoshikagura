@@ -1,7 +1,7 @@
 	#pragma once
 #include "Core\Core.h"
-
 #undef GetObject
+#include "Imgui/ImGuiImpl.h"
 
 class InspectorContent
 {

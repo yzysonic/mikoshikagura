@@ -1,5 +1,6 @@
 #include "ObjectExplorer.h"
 #include "DebugManager.h"
+#include "Imgui/ImGuiImpl.h"
 
 ObjectExplorer::ObjectExplorer(void)
 {

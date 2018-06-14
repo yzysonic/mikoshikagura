@@ -15,9 +15,7 @@
 
 class Player : public Object
 {
-#ifdef _DEBUG
 	friend class InspectorContentPlayer;
-#endif
 public:
 	// ’è”’è‹`
 
