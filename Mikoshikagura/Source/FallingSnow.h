@@ -9,6 +9,7 @@ public:
 	float	falling_speed	= 10.0f;
 	float	noise_scale		= 9.0f;
 	float	noise_frequency = 0.05f;
+	float camera_range		= 100.0f;
 
 	SnowParticleBehavior(void);
 	void Init(ParticleElement & element) override;
