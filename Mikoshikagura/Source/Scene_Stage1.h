@@ -5,6 +5,9 @@
 #include "MapManager.h"
 #include "Background.h"
 #include "SeasonManager.h"
+#include "GoalObject.h"
+#include "SceneTitle.h"
+
 class Scene_Stage1 : public Scene
 {
 public:
@@ -20,6 +23,7 @@ private:
 	SeasonManager  *seasonmanager;
 
 	Hukidashi *hukidashi;
+	GoalObject<SceneTitle> *goal;
 
 	//テスト用壁
 	Object *wall;

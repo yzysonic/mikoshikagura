@@ -55,6 +55,11 @@ void Scene_Stage1::Init(void)
 	wall->GetComponent<BoxCollider2D>()->size = Vector2(10.0f, 1000.0f);
 	wall->GetComponent<BoxCollider2D>()->SetActive(true);
 
+	goal = new GoalObject<SceneTitle>();
+	goal->transform.scale = Vector3::one*10.f;
+	goal->transform.position = Vector3(380, 0, 0);
+	goal->AddComponent<BoxCollider2D>()->size = Vector2(10, 1000);
+
 	FadeScreen::FadeIn(Color::white, 1.0f);
 
 	Sound::Get("bgm_demo")->Play();

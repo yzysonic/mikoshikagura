@@ -23,18 +23,6 @@ Hukidashi::Hukidashi(void)
 
 void Hukidashi::Update(void)
 {
-#ifdef _DEBUG
-	if (ImGui::SliderFloat2("hukidashi_pos", (float *)&hukidashi_pos, -500, 500))
-	{
-		this->transform.position = Vector3(hukidashi_pos.x, hukidashi_pos.y, 0.0f);
-	}
-	if (ImGui::SliderFloat2("text_pos", (float *)&text_pos, 0, 500)
-		|| ImGui::SliderFloat2("text_size", (float *)&text_size, 100, 1000))
-	{
-		*area = { (int)text_pos.x, (int)text_pos.y, (int)(text_pos.x + text_size.x), (int)(text_pos.y + text_size.y) };
-	}
-#endif
-
 	switch (this->state)
 	{
 	case none:

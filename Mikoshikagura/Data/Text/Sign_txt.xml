@@ -3,8 +3,8 @@
 <root>
   <sign id="0"  name ="TestMasserge">
     <data>
-      テストメッセージです。
-      This is test messerge.
+      これはアルファバージョンです。
+      Tabキーで季節を移動できます。
     </data>
   </sign>
 </root>

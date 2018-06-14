@@ -601,7 +601,4 @@
       <Filter>Core</Filter>
     </ClCompile>
   </ItemGroup>
-  <ItemGroup>
-    <Xml Include="Sign_txt" />
-  </ItemGroup>
 </Project>
