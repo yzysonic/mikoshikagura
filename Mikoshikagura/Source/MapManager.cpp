@@ -149,7 +149,7 @@ GroupType MapManager::SetGroupType(std::string grouptype) {
 	}
 
 }
-
+//マップチップオブジェクト作成
 Object* MapManager::CreateMapObject(int id , MapLayer layer) {
 
 	Vector3 objscale;										//スケール
@@ -159,22 +159,15 @@ Object* MapManager::CreateMapObject(int id , MapLayer layer) {
 	objtemp->transform.scale = transform.scale;				//スケール設定
 	objscale = objtemp->transform.scale;
 
+	/*モデル読み込み処理*/
 
 	std::string model_name = "Maptip/" + std::to_string(id);	//名前設定
-
-
-	if (layer.group == GroupType::Season) {
-
-	}
-	else if (!(ModelData::Get(model_name))) {
-		model_name = "field_summer";
-	}
-
+	//モデルエラーチェック
 	switch (layer.group)
 	{
 	case GroupType::Season:
 		if (!(ModelData::Get(model_name + "_summer")) && !(ModelData::Get(model_name + "_winter"))) {
-			model_name = "field";
+			model_name = "field_summer";
 		}
 
 		objtemp->AddComponent<SeasonModel>(model_name.c_str());
@@ -188,6 +181,8 @@ Object* MapManager::CreateMapObject(int id , MapLayer layer) {
 		break;
 	}
 
+	/*モデルidごとの処理*/
+
 	objtemp->AddComponent<BoxCollider2D>();					//コライダー追加
 	objtemp->GetComponent<BoxCollider2D>()->size = Vector2(BlockSize * objscale.x, BlockSize * objscale.y);
 	objtemp->GetComponent<BoxCollider2D>()->SetActive(false);
@@ -197,7 +192,6 @@ Object* MapManager::CreateMapObject(int id , MapLayer layer) {
 	{
 
 	case 45:
-
 
 		break;
 	default:
