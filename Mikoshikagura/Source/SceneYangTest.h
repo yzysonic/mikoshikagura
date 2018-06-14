@@ -24,6 +24,18 @@ private:
 	void SwitchModel(void);
 }; 
 
+class SeasonBgmPlayerTest : public Object, public ISeason
+{
+public:
+	SeasonBgmPlayerTest(void);
+	void SetSummer(void) override;
+	void SetWinter(void) override;
+	void Play(void);
+
+private:
+	SoundPlayer * player;
+};
+
 class SceneYangTest : public Scene
 {
 public:
@@ -38,4 +50,5 @@ private:
 	DebugMenu * debug;
 	FrameTimer timer;
 	Item * item;
+	SeasonBgmPlayerTest * bgm_player;
 };

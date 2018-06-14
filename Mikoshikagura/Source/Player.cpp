@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "Core/Physics.h"
 #include "Holdable.h"
+#include "SeasonManager.h"
 
 #ifdef _DEBUG
 #include "InspectorContentPlayer.h"
@@ -37,6 +38,7 @@ Player::Player(void)
 	this->state[(int)StateName::Move	].reset(new StateMove(this));
 	this->state[(int)StateName::Air		].reset(new StateAir(this));
 	this->state[(int)StateName::Action	].reset(new StateAction(this));
+	this->state[(int)StateName::Whistle	].reset(new StateWhistle(this));
 	this->current_state = this->state[(int)StateName::Idle].get();
 
 #ifdef _DEBUG
@@ -49,6 +51,7 @@ void Player::Update(void)
 {
 	MoveControl();
 	ActionControl();
+	WhistleControl();
 
 	this->current_state->Update();
 	this->last_position = this->transform.position;
@@ -60,7 +63,7 @@ void Player::Uninit(void)
 
 void Player::OnCollisionEnter(Object * other)
 {
-	if (other->type == ObjectType::Item)
+	if (other->type == ObjectType::Item && !this->action)
 	{
 		this->action = [other, this] {
 			auto item = other->GetComponent<Holdable>();
@@ -214,9 +217,17 @@ void Player::MoveControl(void)
 
 void Player::ActionControl(void)
 {
-	if ((GetKeyboardTrigger(KeyAction) || IsButtonTriggered(ButtonAction)) && action)
+	if ((GetKeyboardTrigger(KeyAction) || IsButtonTriggered(ButtonAction)))
 	{
 		action();
+	}
+}
+
+void Player::WhistleControl(void)
+{
+	if ((GetKeyboardTrigger(KeyWhistle) || IsButtonTriggered(ButtonWhistle)) && !this->is_holding_item)
+	{
+		this->current_state->SetState(StateName::Whistle);
 	}
 }
 
@@ -291,6 +302,7 @@ void Player::StateIdle::SetState(StateName state)
 {
 	switch (state)
 	{
+	case StateName::Whistle:
 	case StateName::Move:
 	case StateName::Air:
 	case StateName::Action:
@@ -423,3 +435,19 @@ void Player::StateAir::SetState(StateName state)
 }
 
 #pragma endregion
+
+void Player::StateWhistle::OnEnter(void)
+{
+	SeasonManager::SwitchSeason([this] 
+	{
+		this->SetState(StateName::Idle); 
+	});
+
+	this->player->whistle();
+}
+
+void Player::StateWhistle::SetState(StateName state)
+{
+	if(state == StateName::Idle)
+		State::SetState(state);
+}

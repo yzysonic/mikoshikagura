@@ -1,4 +1,4 @@
-#pragma once
+	#pragma once
 #include "Core\Core.h"
 
 #undef GetObject
@@ -29,9 +29,9 @@ private:
 	std::vector<Script*> script_list;
 	ImGuiWindowFlags flags;
 	Rigidbody* rigidbody;
+	BoxCollider2D* boxcollider2d;
 	Object* object;
 	bool active;
-
 };
 
 class InspectorExtension : public Script

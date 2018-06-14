@@ -1,23 +1,33 @@
 #include "SeasonManager.h"
+#include "FadeScreen.h"
 
-void SeasonManager::SetSeason(SeasonType season)
+void SeasonManager::Create(SeasonType season)
 {
-	if (season == SeasonType::Summer)
+	Singleton<SeasonManager>::Create();
+	InternalSetSeason(season);
+}
+
+void SeasonManager::SetSeason(SeasonType season, Action callback)
+{
+	FadeScreen::FadeOut(Color::white, 0.3f, [&, season, callback]
 	{
-		for (auto obj : m_pInstance->object_list)
-		{
-			obj->SetSummer();
-		}
-	}
-	else if (season == SeasonType::Winter)
+		InternalSetSeason(season);
+		if (callback) callback();
+		FadeScreen::FadeIn(Color::white);
+	});
+}
+
+void SeasonManager::SwitchSeason(Action callback)
+{
+	switch (m_pInstance->current_season)
 	{
-		for (auto obj : m_pInstance->object_list)
-		{
-			obj->SetWinter();
-		}
+	case SeasonType::Summer:
+		SetSeason(SeasonType::Winter, callback);
+		break;
+
+	case SeasonType::Winter:
+		SetSeason(SeasonType::Summer, callback);
 	}
-	
-	m_pInstance->current_season = season;
 }
 
 SeasonType SeasonManager::GetSeason(void)
@@ -47,4 +57,23 @@ void SeasonManager::RemoveObject(ISeason * obj)
 			break;
 		}
 	}
+}
+
+void SeasonManager::InternalSetSeason(SeasonType season)
+{
+	if (season == SeasonType::Summer)
+	{
+		for (auto obj : m_pInstance->object_list)
+		{
+			obj->SetSummer();
+		}
+	}
+	else if (season == SeasonType::Winter)
+	{
+		for (auto obj : m_pInstance->object_list)
+		{
+			obj->SetWinter();
+		}
+	}
+	m_pInstance->current_season = season;
 }

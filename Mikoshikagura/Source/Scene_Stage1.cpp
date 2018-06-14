@@ -18,12 +18,12 @@ void Scene_Stage1::Init(void)
 	ModelData::Load("field_summer");
 	Sound::Load("bgm_demo");
 	
-
-
-	SeasonManager::Create();
-	SeasonManager::SetSeason(SeasonType::Summer);
+	Light::Init();
+	SeasonManager::Create(SeasonType::Summer);
 
 	// ゲームオブジェクトの初期化
+	background = new Background;
+
 	player = new Player;
 	player->SetPosition(Vector3(10, 70, 0));
 
@@ -36,25 +36,19 @@ void Scene_Stage1::Init(void)
 	mapdata->Load("Data/Map/prototype_map1.tmx");
 	mapdata->SetPlayerpointer(player);
 
-	background = new Background;
-
-	Light::Init();
-	FadeScreen::FadeIn(Color::black, 0.0f);
-
 	wall = new Object;
 	wall->type = ObjectType::Field;
 	wall->AddComponent<BoxCollider2D>();
 	wall->GetComponent<BoxCollider2D>()->size = Vector2(10.0f, 1000.0f);
-	//wall->GetComponent<BoxCollider2D>()->offset = Vector2(0.0f,0.0f);
 	wall->GetComponent<BoxCollider2D>()->SetActive(true);
-	//wall->transform.position = Vector3(0.0f, 0.0f, 0.0f);
 
+	FadeScreen::FadeIn(Color::white, 1.0f);
+
+	Sound::Get("bgm_demo")->Play();
 }
 
 void Scene_Stage1::Update(void)
 {
-	if(GetKeyboardTrigger(DIK_0))
-	SeasonManager::SetSeason((SeasonType)(((int)SeasonManager::GetSeason()%2)+1));
 
 }
 

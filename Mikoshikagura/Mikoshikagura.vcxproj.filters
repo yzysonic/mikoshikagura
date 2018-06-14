@@ -322,9 +322,6 @@
     <ClInclude Include="Source\SeasonModel.h">
       <Filter>Component</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ISeason.h">
-      <Filter>Interface</Filter>
-    </ClInclude>
     <ClInclude Include="Source\CameraLimit.h">
       <Filter>Script</Filter>
     </ClInclude>
@@ -333,6 +330,12 @@
     </ClInclude>
     <ClInclude Include="Source\CameraSmoothFollow.h">
       <Filter>Script</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Core\SoundPlayer.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ISeason.h">
+      <Filter>Interface</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -590,6 +593,9 @@
     </ClCompile>
     <ClCompile Include="Source\CameraSmoothFollow.cpp">
       <Filter>Script</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Core\SoundPlayer.cpp">
+      <Filter>Core</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

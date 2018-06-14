@@ -1,6 +1,7 @@
 #include "sound.h"
 #include "Common.h"
 #include "Game.h"
+#include "Math.h"
 
 #include <tchar.h>
 #include <mmsystem.h>
@@ -160,6 +161,7 @@ Sound::Sound(std::string name) : Resource<Sound>(name)
 {
 	pBuffer = NULL;
 	loop = false;
+	volume = 1.0f;
 }
 
 Sound::~Sound(void)
@@ -181,12 +183,13 @@ void Sound::Stop(void)
 
 void Sound::SetVolume(float value)
 {
-	pBuffer->SetVolume((long)(MinVolume*value));
+	volume = clamp(value, 0.0f, 1.0f);
+	pBuffer->SetVolume(volume > 0.0f ? (long)(2000.0f*log10f(volume)) : MinVolume);
 }
 
-void Sound::SetVolume(long value)
+float Sound::GetVolume(void)
 {
-	pBuffer->SetVolume(value);
+	return volume;
 }
 
 bool Sound::IsPlaying(void)
