@@ -334,6 +334,9 @@
     <ClInclude Include="Source\CameraSmoothFollow.h">
       <Filter>Script</Filter>
     </ClInclude>
+    <ClInclude Include="Source\GoalObject.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Core\AllocateHirerachy.cpp">
