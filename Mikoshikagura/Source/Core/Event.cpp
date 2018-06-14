@@ -7,18 +7,19 @@ void Event::operator()(void)
 
 }
 
-void Event::operator=(std::function<void(void)> callback)
+void Event::operator=(Func callback)
 {
 	this->callback_list.clear();
-	*this += callback;
+	if(callback)
+		*this += callback;
 }
 
-void Event::operator+=(std::function<void(void)> callback)
+void Event::operator+=(Func callback)
 {
 	this->callback_list.push_back(callback);
 }
 
-Event::operator bool(void)
+Event::operator bool()
 {
 	return !callback_list.empty();
 }

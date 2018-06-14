@@ -69,6 +69,21 @@ void Inspector::GuiContent(void)
 
 	}
 
+	// BoxCollider2D
+	if (boxcollider2d)
+	{
+		if (ImGui::TreeNodeEx("BoxCollider2D", ImGuiTreeNodeFlags_DefaultOpen))
+		{
+			auto active = boxcollider2d->GetActive();
+			if (ImGui::Checkbox("Active", &active)) { boxcollider2d->SetActive(active); }
+			ImGui::DragFloat2("size", (float*)&boxcollider2d->size);
+			ImGui::DragFloat2("offset", (float*)&boxcollider2d->offset);
+
+			ImGui::Spacing();
+			ImGui::TreePop();
+		}
+	}
+
 	// Scripts
 	if (!script_list.empty())
 	{
@@ -106,7 +121,7 @@ void Inspector::SetObject(Object * object)
 
 	object->GetScripts().swap(script_list);
 	rigidbody = object->GetComponent<Rigidbody>();
-
+	boxcollider2d = object->GetComponent<BoxCollider2D>();
 }
 
 Object * Inspector::GetObject(void)

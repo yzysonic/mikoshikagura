@@ -17,6 +17,5 @@ public:
 	virtual void SetWinter(void) = 0;
 
 protected:
-	SeasonType state;
 	bool auto_change;
 };

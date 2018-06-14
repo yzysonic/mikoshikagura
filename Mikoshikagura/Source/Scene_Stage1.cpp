@@ -11,6 +11,9 @@ void Scene_Stage1::Init(void)
 	Texture::Load("body_sum.tga");
 	Texture::Load("misaki_head.tga");
 	Texture::Load("background");
+	Texture::Load("hukidashi");
+	Texture::Load("Maptip/45");
+
 	ModelData::Load("Maptip/20_summer");
 	ModelData::Load("Maptip/20_winter");
 	ModelData::Load("Maptip/23");
@@ -18,12 +21,12 @@ void Scene_Stage1::Init(void)
 	ModelData::Load("field_summer");
 	Sound::Load("bgm_demo");
 	
-
-
-	SeasonManager::Create();
-	SeasonManager::SetSeason(SeasonType::Summer);
+	Light::Init();
+	SeasonManager::Create(SeasonType::Summer);
 
 	// ゲームオブジェクトの初期化
+	background = new Background;
+
 	player = new Player;
 	player->SetPosition(Vector3(10, 70, 0));
 
@@ -36,6 +39,11 @@ void Scene_Stage1::Init(void)
 	mapdata->Load("Data/Map/prototype_map1.tmx");
 	mapdata->SetPlayerpointer(player);
 
+	hukidashi = new Hukidashi;
+
+	mapdata->SetSignText(hukidashi);
+
+
 	background = new Background;
 
 	Light::Init();
@@ -45,16 +53,15 @@ void Scene_Stage1::Init(void)
 	wall->type = ObjectType::Field;
 	wall->AddComponent<BoxCollider2D>();
 	wall->GetComponent<BoxCollider2D>()->size = Vector2(10.0f, 1000.0f);
-	//wall->GetComponent<BoxCollider2D>()->offset = Vector2(0.0f,0.0f);
 	wall->GetComponent<BoxCollider2D>()->SetActive(true);
-	//wall->transform.position = Vector3(0.0f, 0.0f, 0.0f);
 
+	FadeScreen::FadeIn(Color::white, 1.0f);
+
+	Sound::Get("bgm_demo")->Play();
 }
 
 void Scene_Stage1::Update(void)
 {
-	if(GetKeyboardTrigger(DIK_0))
-	SeasonManager::SetSeason((SeasonType)(((int)SeasonManager::GetSeason()%2)+1));
 
 }
 
@@ -66,6 +73,7 @@ void Scene_Stage1::Uninit(void)
 	Texture::Release("body_sum.tga");
 	Texture::Release("misaki_head.tga");
 	Texture::Release("background");
+	Texture::Release("hukidashi");
 	ModelData::Release("Maptip/23");
 	ModelData::Release("Maptip/37");
 	ModelData::Release("Maptip/20_summer");

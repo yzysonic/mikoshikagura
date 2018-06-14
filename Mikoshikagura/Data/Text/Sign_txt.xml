@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="shift_jis"?>
+
+<root>
+  <sign id="0"  name ="TestMasserge">
+    <data>
+      テストメッセージです。
+      This is test messerge.
+    </data>
+  </sign>
+</root>

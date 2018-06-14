@@ -1,5 +1,10 @@
 #include "Sign.h"
 
+Sign::Sign()
+{
+	this->name = "Sign";
+}
+
 Sign::Sign(std::string message, Hukidashi * hukidashi)
 {
 	this->message = message;

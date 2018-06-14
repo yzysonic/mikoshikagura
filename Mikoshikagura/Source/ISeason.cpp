@@ -3,8 +3,6 @@
 
 ISeason::ISeason(bool auto_change)
 {
-	state = SeasonType::None;
-
 	if (auto_change)
 	{
 		SeasonManager::AddObject(this);

@@ -32,7 +32,10 @@ public:
 	void Play(void);
 	void Stop(void);
 	void SetVolume(float value);
-	void SetVolume(long value);
+	float GetVolume(void);
 	bool IsPlaying(void);
 	DWORD GetCurrentPosition(void);
+
+private:
+	float volume;
 };

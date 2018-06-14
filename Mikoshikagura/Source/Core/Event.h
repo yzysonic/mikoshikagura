@@ -5,13 +5,14 @@
 
 class Event
 {
+	using Func = std::function<void(void)>;
+
 public:
-
 	void operator ()(void);
+	void operator =(Func callback);
+	void operator +=(Func callback);
+	operator bool();
 
-	void operator =(std::function<void(void)> callback);
-	void operator +=(std::function<void(void)> callback);
-	operator bool(void);
 private:
-	std::vector<std::function<void(void)>> callback_list;
+	std::vector<Func> callback_list;
 };
