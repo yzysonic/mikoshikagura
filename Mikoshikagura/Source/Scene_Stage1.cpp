@@ -71,6 +71,8 @@ void Scene_Stage1::Update(void)
 
 void Scene_Stage1::Uninit(void)
 {
+	SeasonManager::Destroy();
+
 	Renderer::GetInstance()->setCamera(nullptr);
 	
 	Texture::Release("map");

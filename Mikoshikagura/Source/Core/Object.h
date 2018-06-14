@@ -133,20 +133,14 @@ inline T * Object::GetComponent(void)
 {
 	static_assert(std::is_base_of<Component, T>::value, "Not a subclass of Component.");
 
-	Component* component;
-
-	try 
-	{
 #ifndef _DEBUG
-		component = this->components.at(typeid(T).hash_code()).get();
+	auto it = this->components.find(typeid(T).hash_code());
 #else
-		component = this->components.at(TypeName<T>()).get();
+	auto it = this->components.find(TypeName<T>());
 #endif
-	}
-	catch (std::out_of_range)
-	{
-		return nullptr;
-	}
 
-	return dynamic_cast<T*>(component);
+	if (it == this->components.end())
+		return nullptr;
+
+	return dynamic_cast<T*>(it->second.get());
 }

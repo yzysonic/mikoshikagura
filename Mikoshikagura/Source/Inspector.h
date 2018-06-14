@@ -8,6 +8,7 @@ class InspectorContent
 public:
 	Object* object;
 	InspectorContent(void) : object(nullptr) {};
+	virtual ~InspectorContent(void) {};
 	virtual void Init(void) {};
 	virtual void GuiContent(void) = 0;
 };

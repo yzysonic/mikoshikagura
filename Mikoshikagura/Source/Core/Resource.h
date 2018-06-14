@@ -75,14 +75,11 @@ inline T* Resource<T>::Load(std::string path)
 template<class T>
 inline T * Resource<T>::Get(std::string name)
 {
-	try
-	{
-		return name_map.at(name).get();
-	}
-	catch (std::out_of_range)
-	{
+	auto it = name_map.find(name);
+	if (it != name_map.end())
+		return it->second.get();
+	else
 		return nullptr;
-	}
 }
 
 template<class T>
