@@ -11,7 +11,7 @@ public:
 
 	void operator =(std::function<void(void)> callback);
 	void operator +=(std::function<void(void)> callback);
-
+	operator bool(void);
 private:
 	std::vector<std::function<void(void)>> callback_list;
 };

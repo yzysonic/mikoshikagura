@@ -2,6 +2,7 @@
 
 #include "Scene.h"
 #include "Singleton.h"
+#include "Event.h"
 #include <memory>
 #include <unordered_map>
 
@@ -13,13 +14,13 @@
 
 class GameManager : public Singleton<GameManager>
 {
+	friend class Singleton<GameManager>;
 	static constexpr UINT SceneStackMax = 3;
 public:
-	template<typename T>
-	static T& Var(std::string key);
+	~GameManager(void);
 
-	static void Create(void);
-	static void Destroy(void);
+	template<typename T>
+	static T& Var(std::string key);	
 	static void Update(void);
 	static void SetGlobalScene(Scene* scene);
 	static void SetScene(Scene* scene);
@@ -30,7 +31,9 @@ public:
 	static Scene* GetGlobalScene(void);
 
 private:
+	GameManager(void);
 	std::unique_ptr<Scene> scene[SceneStackMax+2];
+	Event set_scene_event;
 	UINT scene_stack_num;
 
 	static void SetScene(Scene* scene, int no);
