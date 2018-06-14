@@ -86,12 +86,10 @@ void ParticleSystem::Draw(void)
 	Update();
 
 	// ビューマトリクスの設定
-	const_handle = this->vshader->pConstantTable->GetConstantByName(NULL, "mtxView");
-	this->vshader->pConstantTable->SetMatrix(pDevice, const_handle, &Renderer::GetInstance()->getCamera()->getViewMatrix(false));
+	this->vshader->SetMatrix("mtxView", Renderer::GetInstance()->getCamera()->getViewMatrix(false));
 
 	// プロジェクションマトリクスの設定
-	const_handle = this->vshader->pConstantTable->GetConstantByName(NULL, "mtxProjection");
-	this->vshader->pConstantTable->SetMatrix(pDevice, const_handle, &Renderer::GetInstance()->getCamera()->getProjectionMatrix(false));
+	this->vshader->SetMatrix("mtxProjection", Renderer::GetInstance()->getCamera()->getProjectionMatrix(false));
 	
 	// インスタンスバッファの更新
 	this->pInstanceBuff->Lock(0, 0, (void**)&pInstance, D3DLOCK_DISCARD);

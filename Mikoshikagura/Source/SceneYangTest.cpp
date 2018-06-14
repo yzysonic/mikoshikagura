@@ -5,6 +5,7 @@
 #include "InspectorContentCamera.h"
 #include "Inspector.h"
 #include "DebugManager.h"
+#include "FallingSnow.h"
 
 #pragma region SceneYangTest
 
@@ -16,6 +17,8 @@ void SceneYangTest::Init(void)
 	Texture::Load("body_sum.tga");
 	Texture::Load("misaki_head.tga");
 	Texture::Load("mushroom");
+	Texture::Load("particle");
+	VertexShader::Load("InstancingVS.hlsl");
 	Sound::Load("bgm_demo");
 
 	// ‹Gß‰Šú‰»
@@ -34,6 +37,8 @@ void SceneYangTest::Init(void)
 	// ƒJƒƒ‰‰Šú‰»
 	camera = new MainCamera;
 	camera->SetTarget(&player->transform);
+	camera->setBackColor(0xC1CED3);
+	camera->GetComponent<CameraLimit>()->SetActive(false);
 
 	// ƒŒƒ“ƒ_ƒŠƒ“ƒOÝ’è
 	Renderer::GetInstance()->setCamera(camera);
@@ -53,6 +58,8 @@ void SceneYangTest::Init(void)
 			i++;
 		}
 	}
+
+	snow = new FallingSnow;
 
 	debug	= DebugManager::GetInstance()->GetComponent<DebugMenu>();
 	DebugManager::OpenInspector(player);
@@ -98,6 +105,7 @@ void SceneYangTest::Uninit(void)
 	Texture::Release("body_sum.tga");
 	Texture::Release("misaki_head.tga");
 	Texture::Release("mushroom");
+	Texture::Release("snow");
 	Sound::Release("bgm_demo");
 
 	SeasonManager::Destroy();
