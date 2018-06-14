@@ -215,6 +215,7 @@
     <ClInclude Include="Source\FallingSnow.h" />
     <ClInclude Include="Source\FreeCamera.h" />
     <ClInclude Include="Source\InspectorContentCamera.h" />
+    <ClInclude Include="Source\InspectorContentFallingSnow.h" />
     <ClInclude Include="Source\InspectorContentPlayer.h" />
     <ClInclude Include="Source\Inspector.h" />
     <ClInclude Include="Source\ISeason.h" />
@@ -304,6 +305,7 @@
     <ClCompile Include="Source\FreeCamera.cpp" />
     <ClCompile Include="Source\Holdable.cpp" />
     <ClCompile Include="Source\InspectorContentCamera.cpp" />
+    <ClCompile Include="Source\InspectorContentFallingSnow.cpp" />
     <ClCompile Include="Source\InspectorContentPlayer.cpp" />
     <ClCompile Include="Source\Hukidashi.cpp" />
     <ClCompile Include="Source\Imgui\imgui.cpp" />

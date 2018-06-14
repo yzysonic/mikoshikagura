@@ -66,7 +66,6 @@ void ParticleSystem::Update(void)
 			this->behavior->Update(*element);
 			if (element->active == false)
 			{
-				element->transform.scale = Vector3::zero;
 				this->particle_num--;
 			}
 		}
@@ -80,7 +79,6 @@ void ParticleSystem::Draw(void)
 {
 	LPDIRECT3DDEVICE9 pDevice = Direct3D::GetDevice();
 	VtxParticleInstance* pInstance;
-	D3DXHANDLE const_handle;
 
 	// XVˆ—
 	Update();
