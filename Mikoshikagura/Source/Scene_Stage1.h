@@ -19,6 +19,7 @@ private:
 	Background *background;
 	SeasonManager  *seasonmanager;
 
+	Hukidashi *hukidashi;
 
 	//テスト用壁
 	Object *wall;

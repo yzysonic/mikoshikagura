@@ -6,5 +6,6 @@ enum struct ObjectType
 	Player,
 	Field,
 	Item,
+	Accessary,
 	ObjTypeMax
 };

@@ -1,6 +1,7 @@
 #include "MapManager.h"
 #include <tinyxml2.h>
 #include "SeasonModel.h"
+#include "Sign.h"
 
 /////////////////MapLayer///////////////////
 
@@ -153,51 +154,63 @@ GroupType MapManager::SetGroupType(std::string grouptype) {
 Object* MapManager::CreateMapObject(int id , MapLayer layer) {
 
 	Vector3 objscale;										//スケール
-	Object  *objtemp = new Object;							//オブジェクト生成
-	objtemp->type = ObjectType::Field;						//タイプ設定
+	Object  *objtemp;							//オブジェクト生成
 
-	objtemp->transform.scale = transform.scale;				//スケール設定
-	objscale = objtemp->transform.scale;
-
-	/*モデル読み込み処理*/
-
+												/*モデル読み込み処理*/
 	std::string model_name = "Maptip/" + std::to_string(id);	//名前設定
-	//モデルエラーチェック
-	switch (layer.group)
+	switch (id)
 	{
-	case GroupType::Season:
-		if (!(ModelData::Get(model_name + "_summer")) && !(ModelData::Get(model_name + "_winter"))) {
-			model_name = "field_summer";
-		}
 
-		objtemp->AddComponent<SeasonModel>(model_name.c_str());
+	case 45:
+
+		//看板用処理
+		objtemp = new Sign();
+		objtemp->type = ObjectType::Accessary;						//タイプ設定
+		signobjectlist.push_back(objtemp);
+		if (Texture::Get(model_name)) {
+			objtemp->AddComponent<RectPolygon>(model_name,Layer::MASK);
+		}
+		else {
+			
+		}
+		
+		objtemp->GetComponent<RectPolygon>()->SetSize(Vector2::one *10);
+
 		break;
 	default:
-		if (!(ModelData::Get(model_name))) {
-			model_name = "field_summer";
-		}
+		objtemp = new Object();
+		objtemp->type = ObjectType::Field;						//タイプ設定
 
-		objtemp->AddComponent<StaticModel>(model_name);
+														//モデルエラーチェック
+		switch (layer.group)
+		{
+		case GroupType::Season:
+			if (!(ModelData::Get(model_name + "_summer")) && !(ModelData::Get(model_name + "_winter"))) {
+				model_name = "field_summer";
+			}
+
+			objtemp->AddComponent<SeasonModel>(model_name.c_str());
+			break;
+		default:
+			if (!(ModelData::Get(model_name))) {
+				model_name = "field_summer";
+			}
+
+			objtemp->AddComponent<StaticModel>(model_name);
+			break;
+		}
 		break;
 	}
 
-	/*モデルidごとの処理*/
+
+	objtemp->transform.scale = transform.scale;				//スケール設定
+	objscale = objtemp->transform.scale;
 
 	objtemp->AddComponent<BoxCollider2D>();					//コライダー追加
 	objtemp->GetComponent<BoxCollider2D>()->size = Vector2(BlockSize * objscale.x, BlockSize * objscale.y);
 	objtemp->GetComponent<BoxCollider2D>()->SetActive(false);
 
 
-	switch (id)
-	{
-
-	case 45:
-
-		break;
-	default:
-
-		break;
-	}
 	return objtemp;
 }
 
@@ -341,3 +354,18 @@ std::pair<int, int> MapManager::WorldtoCell(Vector3 worldpos)
 
 
 
+//////////////////////////////////////////////////ここからテスト//////////////////////////
+void MapManager::SetSignText(Hukidashi* hukidasi) {
+
+	tinyxml2::XMLDocument xml;
+
+	xml.LoadFile("Data/Text/Sign_txt.xml");
+
+	tinyxml2::XMLElement *xml_id = xml.FirstChildElement("root")->FirstChildElement("sign");
+
+	for (auto itr : signobjectlist) {
+		itr->GetComponent<BoxCollider2D>()->SetActive(true);
+		dynamic_cast<Sign*>(itr)->Sign::SetText(xml_id->FirstChildElement("data")->GetText(),hukidasi);
+	}
+
+}

@@ -8,7 +8,7 @@
 #include "Core\Core.h"
 #include "player.h"
 #include "ISeason.h"
-
+#include "sign.h"
 enum class LayerType :int				//レイヤータイプ
 {
 	Field = 0,
@@ -65,7 +65,7 @@ class MapManager :public Object ,ISeason{
 	std::vector<Object *> summerobjectlist;			//夏用
 	std::vector<Object *> winterobjectlist;			//冬用
 	std::vector<Object *> allobjectlist;
-
+	std::vector<Object *> signobjectlist;
 
 public:
 	MapManager();									//コンストラクタ
@@ -82,7 +82,7 @@ public:
 	void UpdatePlayerCell();						//プレイヤーがいるセルの更新
 	void SetActiveCollider(std::pair<int, int> cell, bool state);	//コライダーの更新
 	void SetPlayerpointer(Player *player);			//プレイヤーポインタの設定
-
+	void SetSignText(Hukidashi * hukidasi);
 
 private:
 
@@ -91,6 +91,7 @@ private:
 	GroupType SetGroupType(std::string grouptype);
 	Object * CreateMapObject(int id,MapLayer layer);
 	std::pair<int, int> WorldtoCell(Vector3 worldpos);					//ワールドとセルの変換
+
 	std::pair<float, float> CelltoWorld(int valuex, int valuey) {};		//セルとワールドの変換(未実装)
 
 
