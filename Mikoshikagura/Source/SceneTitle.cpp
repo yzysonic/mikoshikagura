@@ -16,7 +16,7 @@ void SceneTitle::Init(void)
 	title->AddComponent<RectPolygon2D>("mikoshikagura_rogo")->SetSize(960, 222);
 	title->transform.position = Vector3(0, 100, 0);
 	title->AddComponent<Text>()->LoadFont("‚¨‚Â‚Æ‚ßƒtƒHƒ“ƒg");
-	title->GetComponent<Text>()->area = { 500,400,1000,500 };
+	title->GetComponent<Text>()->area = { 475,400,1000,500 };
 
 	SceneEnd = false;
 }
