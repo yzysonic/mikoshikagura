@@ -7,6 +7,7 @@
 #include "SeasonManager.h"
 #include "GoalObject.h"
 #include "SceneTitle.h"
+#include "FallingSnow.h"
 
 class Scene_Stage1 : public Scene
 {
@@ -16,13 +17,13 @@ public:
 	void Uninit(void) override;
 
 private:
-	MainCamera *camera;
-	Player *player;
-	MapManager *mapdata;
-	Background *background;
-	SeasonManager  *seasonmanager;
-
-	Hukidashi *hukidashi;
+	MainCamera		*camera;
+	SeasonManager	*seasonmanager;
+	Background		*background;
+	FallingSnow		*falling_snow;
+	MapManager		*mapdata;
+	Hukidashi		*hukidashi;
+	Player			*player;
 	GoalObject<SceneTitle> *goal;
 
 	//テスト用壁

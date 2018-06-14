@@ -5,7 +5,7 @@
 
 Hukidashi::Hukidashi(void)
 {
-	this->AddComponent<RectPolygon2D>("hukidashi")->SetSize(1080, 360);
+	this->AddComponent<RectPolygon2D>("hukidashi", Layer::UI_00)->SetSize(1080, 360);
 	this->AddComponent<Text>()->LoadFont("APJapanesefont");
 	hukidashi_pos = Vector2(0, 175);
 	text_pos = Vector2(200, 80);

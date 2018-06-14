@@ -193,12 +193,12 @@ void Player::MoveControl(void)
 	this->control = Vector3::zero;
 
 	// キーボード入力
-	if (GetKeyboardPress(DIK_A) || IsButtonPressed(BUTTON_LEFT))
+	if (GetKeyboardPress(DIK_A) || GetKeyboardPress(DIK_LEFT) || IsButtonPressed(BUTTON_LEFT))
 		control += Vector3(-1.0f, 0.0f, 0.0f);
-	if (GetKeyboardPress(DIK_D) || IsButtonPressed(BUTTON_RIGHT))
+	if (GetKeyboardPress(DIK_D) || GetKeyboardPress(DIK_RIGHT) || IsButtonPressed(BUTTON_RIGHT))
 		control += Vector3(1.0f, 0.0f, 0.0f);
 
-	if (GetKeyboardPress(DIK_A) || GetKeyboardPress(DIK_D))
+	if (GetKeyboardPress(DIK_A) || GetKeyboardPress(DIK_D) || GetKeyboardPress(DIK_LEFT) || GetKeyboardPress(DIK_RIGHT))
 		control = control.normalized();
 
 	// パッド入力

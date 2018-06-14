@@ -1,4 +1,5 @@
 #include "FallingSnow.h"
+#include "SeasonManager.h"
 #ifdef _DEBUG
 #include "InspectorContentFallingSnow.h"
 #endif
@@ -11,18 +12,38 @@ FallingSnow::FallingSnow(void)
 
 	name = "FallingSnow";
 	transform.position.z = -15.0f;
-	particle = AddComponent<ParticleSystem>(1000);
+	particle = AddComponent<ParticleSystem>(2000);
+	particle->SetLayer(Layer::MASK);
 	particle->SetBehavior(&behavior);
 	particle->loop = true;
 	particle->pTexture = Texture::Get("particle");
 	particle->emission_rate = 100.0f;
+
+	if (SeasonManager::GetSeason() == SeasonType::Summer)
+		SetActive(false);
+}
+
+void FallingSnow::SetSummer(void)
+{
+	SetActive(false);
+}
+
+void FallingSnow::SetWinter(void)
+{
+	SetActive(true);
 }
 
 
+SnowParticleBehavior::SnowParticleBehavior(void)
+{
+	camera = &RenderSpace::Get("default")->GetCamera(0)->transform;
+}
+
 void SnowParticleBehavior::Init(ParticleElement & element)
 {
-	element.init_pos.x = Randomf(-70.0f, 70.0f);
-	element.transform.position.y = 50.0f + Randomf(0.0f, 10.0f);
+	element.init_pos.x = camera->position.x + Randomf(-100.0f, 100.0f);
+	element.transform.position.y = camera->position.y + 30.f + Randomf(0.0f, 10.0f);
+	element.transform.position.z = Randomf(-30.f, 30.f);
 	element.random_seed = Randomf(0.0f, 10.0f);
 }
 

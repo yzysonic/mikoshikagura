@@ -11,6 +11,7 @@ void Scene_Stage1::Init(void)
 	Texture::Load("body_sum.tga");
 	Texture::Load("misaki_head.tga");
 	Texture::Load("background");
+	Texture::Load("particle");
 	Texture::Load("hukidashi");
 	Texture::Load("Maptip/45");
 
@@ -25,8 +26,6 @@ void Scene_Stage1::Init(void)
 	SeasonManager::Create(SeasonType::Summer);
 
 	// ゲームオブジェクトの初期化
-	background = new Background;
-
 	player = new Player;
 	player->SetPosition(Vector3(10, 70, 0));
 
@@ -35,6 +34,9 @@ void Scene_Stage1::Init(void)
 	camera->setBackColor(Color(250, 250, 250, 255));
 	Renderer::GetInstance()->setCamera(camera);
 
+	background = new Background;
+	falling_snow = new FallingSnow;
+
 	mapdata = new MapManager();
 	mapdata->Load("Data/Map/prototype_map1.tmx");
 	mapdata->SetPlayerpointer(player);
@@ -42,9 +44,6 @@ void Scene_Stage1::Init(void)
 	hukidashi = new Hukidashi;
 
 	mapdata->SetSignText(hukidashi);
-
-
-	background = new Background;
 
 	Light::Init();
 	FadeScreen::FadeIn(Color::black, 0.0f);
@@ -78,6 +77,7 @@ void Scene_Stage1::Uninit(void)
 	Texture::Release("body_sum.tga");
 	Texture::Release("misaki_head.tga");
 	Texture::Release("background");
+	Texture::Release("particle");
 	Texture::Release("hukidashi");
 	ModelData::Release("Maptip/23");
 	ModelData::Release("Maptip/37");

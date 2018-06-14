@@ -10,7 +10,7 @@ void SceneTitle::Init(void)
 
 	Texture::Load("mikoshikagura_rogo");
 
-	Renderer::GetInstance()->getCamera()->setBackColor(Color::black);
+	RenderSpace::Get("default")->GetCamera(0)->setBackColor(Color::black);
 
 	title = new Object;
 	title->AddComponent<RectPolygon2D>("mikoshikagura_rogo")->SetSize(960, 222);
