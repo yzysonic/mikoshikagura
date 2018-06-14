@@ -366,6 +366,8 @@ void MapManager::SetSignText(Hukidashi* hukidasi) {
 	for (auto itr : signobjectlist) {
 		itr->GetComponent<BoxCollider2D>()->SetActive(true);
 		dynamic_cast<Sign*>(itr)->Sign::SetText(xml_id->FirstChildElement("data")->GetText(),hukidasi);
+
+		xml_id = xml_id->NextSiblingElement();
 	}
 
 }

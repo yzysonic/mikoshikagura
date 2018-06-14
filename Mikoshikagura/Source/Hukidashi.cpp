@@ -1,6 +1,6 @@
 #include "Hukidashi.h"
 
-#define READCOUNT 2
+#define READCOUNT 1
 #define POPCOUNT 15
 
 Hukidashi::Hukidashi(void)
