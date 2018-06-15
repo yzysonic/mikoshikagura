@@ -11,13 +11,15 @@
 #include "sign.h"
 enum class LayerType :int				//レイヤータイプ
 {
-	Field = 0,
+	None = 0,
+	Field,
 	Accessory,
 	Gimmick_Object
 };
 enum class GroupType :int				//グループタイプ
 {
-	Static = 0,
+	None = 0,
+	Static,
 	Season,
 	Summer,
 	Winter,

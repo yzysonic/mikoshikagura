@@ -133,6 +133,10 @@ LayerType MapManager::SetLayerType(std::string layertype) {
 	else if (layertype == "Gimmick_Object") {
 		return LayerType::Gimmick_Object;
 	}
+	else
+	{
+		LayerType::None;
+	}
 }
 
 
@@ -149,6 +153,10 @@ GroupType MapManager::SetGroupType(std::string grouptype) {
 	}
 	else if (grouptype == "Static") {
 		return GroupType::Static;
+	}
+	else
+	{
+		return GroupType::None;
 	}
 
 }
