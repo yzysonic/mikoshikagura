@@ -92,7 +92,7 @@ bool Vector2::operator==(const Vector2 v) const
 
 bool Vector2::operator!=(const Vector2 v) const
 {
-	return (this->x != v.x) && (this->y != v.y);
+	return (this->x != v.x) || (this->y != v.y);
 }
 
 Vector2::operator D3DXVECTOR2() const
@@ -219,7 +219,7 @@ bool Vector3::operator==(const Vector3 v) const
 
 bool Vector3::operator!=(const Vector3 v) const
 {
-	return (this->x != v.x) && (this->y != v.y) && (this->z != v.z);
+	return (this->x != v.x) || (this->y != v.y) || (this->z != v.z);
 }
 
 Vector3::operator D3DXVECTOR3() const

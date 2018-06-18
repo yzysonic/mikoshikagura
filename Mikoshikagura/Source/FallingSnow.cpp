@@ -53,9 +53,9 @@ void SnowParticleBehavior::Update(ParticleElement & element)
 	element.transform.position.x = element.init_pos.x+noise_scale*PerlinNoise(element.random_seed+element.transform.position.y*noise_frequency, noise_octavers);
 
 	if (element.transform.position.x > camera->position.x + camera_range)
-		element.transform.position.x -= 2.0*camera_range;
+		element.transform.position.x -= 2.0f*camera_range;
 	if (element.transform.position.x < camera->position.x - camera_range)
-		element.transform.position.x += 2.0*camera_range;
+		element.transform.position.x += 2.0f*camera_range;
 
 	if (element.transform.position.y < 0.0f)
 		element.active = false;
