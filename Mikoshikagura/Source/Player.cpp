@@ -199,7 +199,7 @@ void Player::MoveControl(void)
 		control += Vector3(1.0f, 0.0f, 0.0f);
 
 	if (GetKeyboardPress(DIK_A) || GetKeyboardPress(DIK_D) || GetKeyboardPress(DIK_LEFT) || GetKeyboardPress(DIK_RIGHT))
-		control = control.normalized();
+		control = control.normalized() * (GetKeyboardPress(DIK_LSHIFT)? 1.0f : 0.5f);
 
 	// ƒpƒbƒh“ü—Í
 	control += Vector3(GetPadLX(), 0.0f, 0.0f);
