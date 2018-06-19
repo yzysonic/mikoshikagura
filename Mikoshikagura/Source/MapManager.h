@@ -9,6 +9,7 @@
 #include "player.h"
 #include "ISeason.h"
 #include "sign.h"
+#include "Maincamera.h"
 enum class LayerType :int				//レイヤータイプ
 {
 	None = 0,
@@ -68,7 +69,7 @@ class MapManager :public Object ,ISeason{
 	std::vector<Object *> winterobjectlist;			//冬用
 	std::vector<Object *> allobjectlist;
 	std::vector<Object *> signobjectlist;
-
+	std::vector<Object *> smoothobjectlist;
 public:
 	MapManager();									//コンストラクタ
 	virtual ~MapManager();									//デストラクタ
@@ -85,7 +86,7 @@ public:
 	void SetActiveCollider(std::pair<int, int> cell, bool state);	//コライダーの更新
 	void SetPlayerpointer(Player *player);			//プレイヤーポインタの設定
 	void SetSignText(Hukidashi * hukidasi);
-
+	void SetSmoothPoint(MainCamera *camera);
 private:
 
 	std::vector<std::vector<int>> MapManager::Perse(std::string csvdata);
