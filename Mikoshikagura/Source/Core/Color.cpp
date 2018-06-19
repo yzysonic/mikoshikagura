@@ -8,7 +8,7 @@ const Color Color::blue		= Color(0, 0, 255, 255);
 const Color Color::none		= Color(0, 0, 0, 0);
 
 
-Color::Color(void) : Color(0,0,0,0)
+Color::Color(void) : Color(255,255,255,255)
 {
 }
 

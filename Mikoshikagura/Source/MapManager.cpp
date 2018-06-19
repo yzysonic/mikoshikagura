@@ -3,6 +3,8 @@
 #include "SeasonModel.h"
 #include "Sign.h"
 
+#pragma comment(lib, "tinyxml2.lib")
+
 /////////////////MapLayer///////////////////
 
 
@@ -56,7 +58,7 @@ MapManager::~MapManager()
 void MapManager::Load(std::string str)
 {
 	tinyxml2::XMLDocument xml;
-	xml.LoadFile("Data/Map/prototype_map1.tmx");
+	xml.LoadFile(str.c_str());
 
 	width = std::stoi(xml.FirstChildElement("map")->Attribute("width"));
 	height = std::stoi(xml.FirstChildElement("map")->Attribute("height"));
@@ -131,6 +133,10 @@ LayerType MapManager::SetLayerType(std::string layertype) {
 	else if (layertype == "Gimmick_Object") {
 		return LayerType::Gimmick_Object;
 	}
+	else
+	{
+		LayerType::None;
+	}
 }
 
 
@@ -147,6 +153,10 @@ GroupType MapManager::SetGroupType(std::string grouptype) {
 	}
 	else if (grouptype == "Static") {
 		return GroupType::Static;
+	}
+	else
+	{
+		return GroupType::None;
 	}
 
 }
@@ -175,6 +185,12 @@ Object* MapManager::CreateMapObject(int id , MapLayer layer) {
 		}
 		
 		objtemp->GetComponent<RectPolygon>()->SetSize(Vector2::one *10);
+
+		break;
+
+	case 99:
+		objtemp = new Object();
+		smoothobjectlist.push_back(objtemp);
 
 		break;
 	default:
@@ -366,6 +382,16 @@ void MapManager::SetSignText(Hukidashi* hukidasi) {
 	for (auto itr : signobjectlist) {
 		itr->GetComponent<BoxCollider2D>()->SetActive(true);
 		dynamic_cast<Sign*>(itr)->Sign::SetText(xml_id->FirstChildElement("data")->GetText(),hukidasi);
+
+		xml_id = xml_id->NextSiblingElement();
+	}
+
+}
+
+void MapManager::SetSmoothPoint(MainCamera *camera)
+{
+	for (auto itr : smoothobjectlist) {
+		camera->AddSnapper(&(itr->transform));
 	}
 
 }

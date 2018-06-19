@@ -10,6 +10,8 @@
 
 void SceneGlobal::Init(void)
 {
+	VertexShader::Load("InstancingVS.hlsl");
+
 	// グローバルカメラを作成
 	camera = new Camera;
 

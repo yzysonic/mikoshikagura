@@ -1,11 +1,11 @@
 #include "Hukidashi.h"
 
-#define READCOUNT 2
+#define READCOUNT 1
 #define POPCOUNT 15
 
 Hukidashi::Hukidashi(void)
 {
-	this->AddComponent<RectPolygon2D>("hukidashi")->SetSize(1080, 360);
+	this->AddComponent<RectPolygon2D>("hukidashi", Layer::UI_00)->SetSize(1080, 360);
 	this->AddComponent<Text>()->LoadFont("APJapanesefont");
 	hukidashi_pos = Vector2(0, 175);
 	text_pos = Vector2(200, 80);
@@ -23,18 +23,6 @@ Hukidashi::Hukidashi(void)
 
 void Hukidashi::Update(void)
 {
-#ifdef _DEBUG
-	if (ImGui::SliderFloat2("hukidashi_pos", (float *)&hukidashi_pos, -500, 500))
-	{
-		this->transform.position = Vector3(hukidashi_pos.x, hukidashi_pos.y, 0.0f);
-	}
-	if (ImGui::SliderFloat2("text_pos", (float *)&text_pos, 0, 500)
-		|| ImGui::SliderFloat2("text_size", (float *)&text_size, 100, 1000))
-	{
-		*area = { (int)text_pos.x, (int)text_pos.y, (int)(text_pos.x + text_size.x), (int)(text_pos.y + text_size.y) };
-	}
-#endif
-
 	switch (this->state)
 	{
 	case none:

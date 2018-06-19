@@ -77,6 +77,12 @@ void SceneTest::Init(void)
 	kanban2->transform.scale = Vector3::one*10.f;
 	kanban2->transform.position = Vector3(170, 60, 3);
 	kanban2->AddComponent<BoxCollider2D>()->size = Vector2(10, 10);
+
+	//0613umeda GoalObject
+	goal = new GoalObject<SceneTest>();
+	goal->transform.scale = Vector3::one*10.f;
+	goal->transform.position = Vector3(200, 60, 3);
+	goal->AddComponent<BoxCollider2D>()->size = Vector2(10, 10);
 }
 
 void SceneTest::Update(void)

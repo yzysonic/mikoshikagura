@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="shift_jis"?>
 
 <root>
-  <sign id="0"  name ="TestMasserge">
+  <sign id="0"  name ="movehint">
     <data>
-      テストメッセージです。
-      This is test messerge.
+      これはアルファバージョンです。
+      十字キーかA,Dキーで移動ができます。
+      スペースキーでジャンプができます。
+    </data>
+  </sign>
+  <sign id="1"  name ="TestMasserge">
+    <data>
+      これはアルファバージョンです。
+      Tabキーで季節を遷移できます。
     </data>
   </sign>
 </root>

@@ -12,6 +12,7 @@
 #include <string>
 #include <stdio.h>
 #include <memory>
+#include <functional>
 
 //システムのパラメータ
 //数値の変更に反映するのはシステム初期化するときのみ。
@@ -71,3 +72,5 @@ std::string TypeName(void)
 
 template<class T>
 using smart_ptr = std::unique_ptr<T>;
+
+using Action = std::function<void(void)>;

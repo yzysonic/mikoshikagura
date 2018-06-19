@@ -1,13 +1,14 @@
-#pragma once
+	#pragma once
 #include "Core\Core.h"
-
 #undef GetObject
+#include "Imgui/ImGuiImpl.h"
 
 class InspectorContent
 {
 public:
 	Object* object;
 	InspectorContent(void) : object(nullptr) {};
+	virtual ~InspectorContent(void) {};
 	virtual void Init(void) {};
 	virtual void GuiContent(void) = 0;
 };
@@ -29,9 +30,9 @@ private:
 	std::vector<Script*> script_list;
 	ImGuiWindowFlags flags;
 	Rigidbody* rigidbody;
+	BoxCollider2D* boxcollider2d;
 	Object* object;
 	bool active;
-
 };
 
 class InspectorExtension : public Script

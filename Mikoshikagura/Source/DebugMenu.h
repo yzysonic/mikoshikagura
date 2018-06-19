@@ -1,7 +1,7 @@
 #pragma once
-#ifdef IMGUI
 
 #include "Core\Core.h"
+#include "Imgui/ImGuiImpl.h"
 
 class DebugMenu : public Script
 {
@@ -18,5 +18,3 @@ private:
 	ImVec2 buttonSize;
 	void OnPress(bool trigger, std::function<void(void)> callBack = [] {});
 };
-
-#endif

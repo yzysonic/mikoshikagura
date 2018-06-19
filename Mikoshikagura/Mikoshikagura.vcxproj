@@ -200,6 +200,7 @@
     <ClInclude Include="Source\Core\Singleton.h" />
     <ClInclude Include="Source\Core\SkinnedModel.h" />
     <ClInclude Include="Source\Core\Sound.h" />
+    <ClInclude Include="Source\Core\SoundPlayer.h" />
     <ClInclude Include="Source\Core\StaticModel.h" />
     <ClInclude Include="Source\Core\System.h" />
     <ClInclude Include="Source\Core\Text.h" />
@@ -211,15 +212,19 @@
     <ClInclude Include="Source\DebugManager.h" />
     <ClInclude Include="Source\DebugMenu.h" />
     <ClInclude Include="Source\FadeScreen.h" />
+    <ClInclude Include="Source\FallingSnow.h" />
     <ClInclude Include="Source\FreeCamera.h" />
+    <ClInclude Include="Source\GoalObject.h" />
     <ClInclude Include="Source\InspectorContentCamera.h" />
+    <ClInclude Include="Source\InspectorContentFallingSnow.h" />
     <ClInclude Include="Source\InspectorContentPlayer.h" />
     <ClInclude Include="Source\Inspector.h" />
+    <ClInclude Include="Source\ISeason.h" />
     <ClInclude Include="Source\Item.h" />
     <ClInclude Include="Source\ObjectExplorer.h" />
     <ClInclude Include="Source\NagaiSceneTest.h" />
-    <ClInclude Include="Source\Hukidashi.h" />
     <ClInclude Include="Source\Holdable.h" />
+    <ClInclude Include="Source\Hukidashi.h" />
     <ClInclude Include="Source\SceneExplorer.h" />
     <ClInclude Include="Source\SceneImGuiTest.h" />
     <ClInclude Include="Source\Imgui\imconfig.h" />
@@ -239,13 +244,11 @@
     <ClInclude Include="Source\Scene_Stage1.h" />
     <ClInclude Include="Source\SeasonManager.h" />
     <ClInclude Include="Source\SeasonModel.h" />
-    <ClInclude Include="Source\ISeason.h" />
     <ClInclude Include="Source\Sign.h" />
     <ClInclude Include="Source\Snapshot.h" />
     <ClInclude Include="Source\MapManager.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Library\tinyxml2.cpp" />
     <ClCompile Include="Source\Background.cpp" />
     <ClCompile Include="Source\CameraLimit.cpp" />
     <ClCompile Include="Source\CameraPlay.cpp" />
@@ -286,6 +289,7 @@
     <ClCompile Include="Source\Core\Shader.cpp" />
     <ClCompile Include="Source\Core\SkinnedModel.cpp" />
     <ClCompile Include="Source\Core\Sound.cpp" />
+    <ClCompile Include="Source\Core\SoundPlayer.cpp" />
     <ClCompile Include="Source\Core\StaticModel.cpp" />
     <ClCompile Include="Source\Core\System.cpp" />
     <ClCompile Include="Source\Core\Text.cpp" />
@@ -297,9 +301,11 @@
     <ClCompile Include="Source\DebugManager.cpp" />
     <ClCompile Include="Source\DebugMenu.cpp" />
     <ClCompile Include="Source\FadeScreen.cpp" />
+    <ClCompile Include="Source\FallingSnow.cpp" />
     <ClCompile Include="Source\FreeCamera.cpp" />
     <ClCompile Include="Source\Holdable.cpp" />
     <ClCompile Include="Source\InspectorContentCamera.cpp" />
+    <ClCompile Include="Source\InspectorContentFallingSnow.cpp" />
     <ClCompile Include="Source\InspectorContentPlayer.cpp" />
     <ClCompile Include="Source\Hukidashi.cpp" />
     <ClCompile Include="Source\Imgui\imgui.cpp" />
@@ -325,14 +331,20 @@
     <ClCompile Include="Source\SceneYangTest.cpp" />
     <ClCompile Include="Source\Scene_Stage1.cpp" />
     <ClCompile Include="Source\SeasonManager.cpp" />
-    <ClCompile Include="Source\Sign.cpp" />
     <ClCompile Include="Source\SeasonModel.cpp" />
+    <ClCompile Include="Source\Sign.cpp" />
     <ClCompile Include="Source\ISeason.cpp" />
     <ClCompile Include="Source\Snapshot.cpp" />
     <ClCompile Include="Source\MapManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="Sign_txt" />
+    <None Include="Shader\InstancingVS.hlsl">
+      <FileType>Document</FileType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">3.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">3.0</ShaderModel>
+    </None>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

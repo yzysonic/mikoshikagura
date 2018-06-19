@@ -1,5 +1,3 @@
-#ifdef IMGUI
-
 #include "SceneExplorer.h"
 #include "DebugManager.h"
 #include "FadeScreen.h"
@@ -10,6 +8,7 @@
 #include "SceneYangTest.h"
 #include "SceneStackSample.h"
 #include "Scene_Stage1.h"
+
 void SceneExplorer::Init(void)
 {
 	columns = 3;
@@ -87,5 +86,3 @@ void SceneExplorer::Uninit(void)
 	}
 	sceneList.clear();
 }
-
-#endif

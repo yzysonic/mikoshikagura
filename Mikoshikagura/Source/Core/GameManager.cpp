@@ -5,14 +5,15 @@
 #include "../Imgui/ImGuiImpl.h"
 #endif
 
-void GameManager::Create(void)
-{
-	Singleton<GameManager>::Create();
-	m_pInstance->scene_stack_num = 0;
-}
-
 void GameManager::Update(void)
 {
+	if (m_pInstance->set_scene_event)
+	{
+		auto set_scene = m_pInstance->set_scene_event;
+		m_pInstance->set_scene_event = Event();
+		set_scene();
+	}
+
 	if (m_pInstance->scene[0] != nullptr)
 	{
 		m_pInstance->scene[0]->Update();
@@ -26,21 +27,6 @@ void GameManager::Update(void)
 	}
 }
 
-
-
-void GameManager::Destroy(void)
-{
-	ClearSceneStack();
-
-	for (auto& scene : m_pInstance->scene)
-	{
-		if (scene != nullptr)
-			scene->Uninit();
-	}
-
-	Singleton<GameManager>::Destroy();
-}
-
 void GameManager::SetGlobalScene(Scene * scene)
 {
 	SetScene(scene, 0);
@@ -48,8 +34,11 @@ void GameManager::SetGlobalScene(Scene * scene)
 
 void GameManager::SetScene(Scene* scene)
 {
-	ClearSceneStack();
-	SetScene(scene, 1);
+	m_pInstance->set_scene_event = [scene]
+	{
+		ClearSceneStack();
+		SetScene(scene, 1);
+	};
 }
 
 void GameManager::PushScene(Scene * scene)
@@ -97,6 +86,22 @@ Scene * GameManager::GetScene(void)
 Scene * GameManager::GetGlobalScene(void)
 {
 	return m_pInstance->scene[0].get();
+}
+
+GameManager::GameManager(void)
+{
+	scene_stack_num = 0;
+}
+
+GameManager::~GameManager(void)
+{
+	ClearSceneStack();
+
+	for (auto& scene : m_pInstance->scene)
+	{
+		if (scene != nullptr)
+			scene->Uninit();
+	}
 }
 
 void GameManager::SetScene(Scene * scene, int no)

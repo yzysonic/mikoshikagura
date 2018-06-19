@@ -5,6 +5,7 @@
 #include "InspectorContentCamera.h"
 #include "Inspector.h"
 #include "DebugManager.h"
+#include "FallingSnow.h"
 
 #pragma region SceneYangTest
 
@@ -16,10 +17,12 @@ void SceneYangTest::Init(void)
 	Texture::Load("body_sum.tga");
 	Texture::Load("misaki_head.tga");
 	Texture::Load("mushroom");
+	Texture::Load("particle");
+	VertexShader::Load("InstancingVS.hlsl");
+	Sound::Load("bgm_demo");
 
 	// 季節初期化
-	SeasonManager::Create();
-	SeasonManager::SetSeason(SeasonType::Summer);
+	SeasonManager::Create(SeasonType::Summer);
 
 	// オブジェクト初期化
 	player	= new Player;
@@ -28,9 +31,14 @@ void SceneYangTest::Init(void)
 	item = new Item("mushroom", Texture::Get("mushroom")->size*0.1f);
 	item->transform.position = Vector3(30.f, 15.f+ 0.5f*item->GetSize().y, 0.f);
 
+	bgm_player = new SeasonBgmPlayerTest;
+	bgm_player->Play();
+
 	// カメラ初期化
 	camera = new MainCamera;
 	camera->SetTarget(&player->transform);
+	camera->setBackColor(0xC1CED3);
+	camera->GetComponent<CameraLimit>()->SetActive(false);
 
 	// レンダリング設定
 	Renderer::GetInstance()->setCamera(camera);
@@ -50,7 +58,9 @@ void SceneYangTest::Init(void)
 			i++;
 		}
 	}
-	
+
+	snow = new FallingSnow;
+
 	debug	= DebugManager::GetInstance()->GetComponent<DebugMenu>();
 	DebugManager::OpenInspector(player);
 }
@@ -95,6 +105,8 @@ void SceneYangTest::Uninit(void)
 	Texture::Release("body_sum.tga");
 	Texture::Release("misaki_head.tga");
 	Texture::Release("mushroom");
+	Texture::Release("snow");
+	Sound::Release("bgm_demo");
 
 	SeasonManager::Destroy();
 }
@@ -149,3 +161,23 @@ void SeasonTestObject::SwitchModel(void)
 		model->SetSummer();
 }
 #pragma endregion
+
+SeasonBgmPlayerTest::SeasonBgmPlayerTest(void)
+{
+	player = AddComponent<SoundPlayer>("bgm_demo");
+}
+
+void SeasonBgmPlayerTest::SetSummer(void)
+{
+	player->FadeVolume(1.0f, 1.5f);
+}
+
+void SeasonBgmPlayerTest::SetWinter(void)
+{
+	player->FadeVolume(0.3f, 1.5f);
+}
+
+void SeasonBgmPlayerTest::Play(void)
+{
+	player->Play();
+}

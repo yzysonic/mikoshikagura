@@ -66,7 +66,6 @@ void ParticleSystem::Update(void)
 			this->behavior->Update(*element);
 			if (element->active == false)
 			{
-				element->transform.scale = Vector3::zero;
 				this->particle_num--;
 			}
 		}
@@ -80,18 +79,15 @@ void ParticleSystem::Draw(void)
 {
 	LPDIRECT3DDEVICE9 pDevice = Direct3D::GetDevice();
 	VtxParticleInstance* pInstance;
-	D3DXHANDLE const_handle;
 
 	// 更新処理
 	Update();
 
 	// ビューマトリクスの設定
-	const_handle = this->vshader->pConstantTable->GetConstantByName(NULL, "mtxView");
-	this->vshader->pConstantTable->SetMatrix(pDevice, const_handle, &Renderer::GetInstance()->getCamera()->getViewMatrix(false));
+	this->vshader->SetMatrix("mtxView", Renderer::GetInstance()->getCamera()->getViewMatrix(false));
 
 	// プロジェクションマトリクスの設定
-	const_handle = this->vshader->pConstantTable->GetConstantByName(NULL, "mtxProjection");
-	this->vshader->pConstantTable->SetMatrix(pDevice, const_handle, &Renderer::GetInstance()->getCamera()->getProjectionMatrix(false));
+	this->vshader->SetMatrix("mtxProjection", Renderer::GetInstance()->getCamera()->getProjectionMatrix(false));
 	
 	// インスタンスバッファの更新
 	this->pInstanceBuff->Lock(0, 0, (void**)&pInstance, D3DLOCK_DISCARD);

@@ -58,6 +58,9 @@
     <Filter Include="Interface">
       <UniqueIdentifier>{43234f2e-df38-4834-81ce-029b7cc680ec}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shader">
+      <UniqueIdentifier>{3bca47e7-985d-41d3-8c09-1a58707f88e6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Core\AllocateHirerachy.h">
@@ -322,9 +325,6 @@
     <ClInclude Include="Source\SeasonModel.h">
       <Filter>Component</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ISeason.h">
-      <Filter>Interface</Filter>
-    </ClInclude>
     <ClInclude Include="Source\CameraLimit.h">
       <Filter>Script</Filter>
     </ClInclude>
@@ -333,6 +333,21 @@
     </ClInclude>
     <ClInclude Include="Source\CameraSmoothFollow.h">
       <Filter>Script</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GoalObject.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Core\SoundPlayer.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ISeason.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\FallingSnow.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\InspectorContentFallingSnow.h">
+      <Filter>Script\Debug</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -569,7 +584,6 @@
     <ClCompile Include="Source\ISeason.cpp">
       <Filter>Interface</Filter>
     </ClCompile>
-    <ClCompile Include="Library\tinyxml2.cpp" />
     <ClCompile Include="Source\Core\Sound.cpp">
       <Filter>Core\Resource</Filter>
     </ClCompile>
@@ -591,8 +605,19 @@
     <ClCompile Include="Source\CameraSmoothFollow.cpp">
       <Filter>Script</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Core\SoundPlayer.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\FallingSnow.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\InspectorContentFallingSnow.cpp">
+      <Filter>Script\Debug</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="Sign_txt" />
+    <None Include="Shader\InstancingVS.hlsl">
+      <Filter>Shader</Filter>
+    </None>
   </ItemGroup>
 </Project>

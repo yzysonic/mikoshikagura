@@ -9,15 +9,18 @@
 #include "player.h"
 #include "ISeason.h"
 #include "sign.h"
+#include "Maincamera.h"
 enum class LayerType :int				//レイヤータイプ
 {
-	Field = 0,
+	None = 0,
+	Field,
 	Accessory,
 	Gimmick_Object
 };
 enum class GroupType :int				//グループタイプ
 {
-	Static = 0,
+	None = 0,
+	Static,
 	Season,
 	Summer,
 	Winter,
@@ -66,7 +69,7 @@ class MapManager :public Object ,ISeason{
 	std::vector<Object *> winterobjectlist;			//冬用
 	std::vector<Object *> allobjectlist;
 	std::vector<Object *> signobjectlist;
-
+	std::vector<Object *> smoothobjectlist;
 public:
 	MapManager();									//コンストラクタ
 	virtual ~MapManager();									//デストラクタ
@@ -83,7 +86,7 @@ public:
 	void SetActiveCollider(std::pair<int, int> cell, bool state);	//コライダーの更新
 	void SetPlayerpointer(Player *player);			//プレイヤーポインタの設定
 	void SetSignText(Hukidashi * hukidasi);
-
+	void SetSmoothPoint(MainCamera *camera);
 private:
 
 	std::vector<std::vector<int>> MapManager::Perse(std::string csvdata);

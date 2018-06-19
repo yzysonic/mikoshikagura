@@ -15,9 +15,7 @@
 
 class Player : public Object
 {
-#ifdef _DEBUG
 	friend class InspectorContentPlayer;
-#endif
 public:
 	// 定数定義
 
@@ -32,6 +30,7 @@ public:
 		Move,
 		Air,
 		Action,
+		Whistle,
 		Max
 	};
 
@@ -95,7 +94,7 @@ public:
 		inline const char* ToString(void) override { return "Air"; }
 	};
 
-	// 攻撃状態
+	// 行動状態
 	class StateAction : public State
 	{
 	public:
@@ -108,11 +107,24 @@ public:
 		FrameTimer timer;
 	};
 
+	// 吹笛状態
+	class StateWhistle : public State
+	{
+	public:
+		StateWhistle(Player* player) : State(player) {}
+		void OnEnter(void) override;
+		void SetState(StateName state) override;
+		inline const char* ToString(void) override { return "Whistle"; }
+	private:
+		FrameTimer timer;
+	};
+
 #pragma endregion
 
 
 	// 状態インスタンスリスト
 	std::vector<smart_ptr<State>> state;
+	Event whistle;
 
 	// メンバー関数定義
 
@@ -138,14 +150,14 @@ private:
 	float speed;
 	bool is_grounded;
 	bool is_holding_item;
-	std::function<void(void)> action;
-
+	Event action;
 
 	// メンバー関数定義
 
 	void SetAnime(AnimeSet anime, bool loop = true);
 	void MoveControl(void);
 	void ActionControl(void);
+	void WhistleControl(void);
 	bool JumpControl(void);
 	void Move(void);
 };

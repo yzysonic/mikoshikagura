@@ -1,7 +1,6 @@
 #pragma once
-#ifdef IMGUI
-
 #include "Core\Core.h"
+#include "Imgui/ImGuiImpl.h"
 
 class SceneImGuiTest : public Scene
 {
@@ -16,5 +15,3 @@ private:
 	bool show_demo_window;
 	bool show_another_window;
 };
-
-#endif

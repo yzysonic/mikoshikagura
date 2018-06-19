@@ -9,8 +9,9 @@
 #include "Core/Game.h"
 #include "Core/GameManager.h"
 #include "SceneGlobal.h"
+
 #ifndef _DEBUG
-#include "Scene_Stage1.h"
+#include "SceneTitle.h"
 #else
 #include "SceneExplorer.h"
 #endif
@@ -43,10 +44,10 @@ int APIENTRY WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		return 1;
 
 	// システムカーソルを隠す
-	ShowCursor(true);
+	//ShowCursor(false);
 
 #ifndef _DEBUG
-	Window::SetWindowMode(false);
+	//Window::SetWindowMode(false);
 #endif
 
 #ifdef IMGUI
@@ -60,7 +61,7 @@ int APIENTRY WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	// シーン初期化
 	GameManager::GetInstance()->SetGlobalScene(new SceneGlobal);
 #ifndef _DEBUG
-	GameManager::GetInstance()->SetScene(new Scene_Stage1);
+	GameManager::GetInstance()->SetScene(new SceneTitle);
 #else
 	GameManager::GetInstance()->SetScene(new SceneExplorer);
 #endif
