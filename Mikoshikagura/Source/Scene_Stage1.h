@@ -24,7 +24,7 @@ private:
 	MapManager		*mapdata;
 	Hukidashi		*hukidashi;
 	Player			*player;
-	GoalObject<SceneTitle> *goal;
+	GoalObject<Scene_Stage1> *goal;
 
 	//テスト用壁
 	Object *wall;
