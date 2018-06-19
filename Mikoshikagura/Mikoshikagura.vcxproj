@@ -247,6 +247,7 @@
     <ClInclude Include="Source\Sign.h" />
     <ClInclude Include="Source\Snapshot.h" />
     <ClInclude Include="Source\MapManager.h" />
+    <ClInclude Include="Source\SunLight.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Background.cpp" />

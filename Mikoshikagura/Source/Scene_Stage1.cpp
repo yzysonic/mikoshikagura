@@ -3,7 +3,6 @@
 #include "Core/Game.h"
 #include "Light.h"
 
-
 void Scene_Stage1::Init(void)
 {
 	// リソースのロード
@@ -14,6 +13,8 @@ void Scene_Stage1::Init(void)
 	Texture::Load("particle");
 	Texture::Load("hukidashi");
 	Texture::Load("Maptip/45");
+	Texture::Load("sun_light");
+	Texture::Load("sun_light2");
 
 	ModelData::Load("Maptip/20_summer");
 	ModelData::Load("Maptip/20_winter");
@@ -36,6 +37,8 @@ void Scene_Stage1::Init(void)
 
 	background = new Background;
 	falling_snow = new FallingSnow;
+	for(auto & light : sun_light)
+		light = new SunLight;
 
 	mapdata = new MapManager();
 	mapdata->Load("Data/Map/prototype_map1.tmx");
@@ -81,6 +84,8 @@ void Scene_Stage1::Uninit(void)
 	Texture::Release("background");
 	Texture::Release("particle");
 	Texture::Release("hukidashi");
+	Texture::Release("sun_light");
+	Texture::Release("sun_light2");
 	ModelData::Release("Maptip/23");
 	ModelData::Release("Maptip/37");
 	ModelData::Release("Maptip/20_summer");

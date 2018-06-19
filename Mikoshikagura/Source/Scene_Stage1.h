@@ -8,6 +8,8 @@
 #include "GoalObject.h"
 #include "SceneTitle.h"
 #include "FallingSnow.h"
+#include "SunLight.h"
+
 
 class Scene_Stage1 : public Scene
 {
@@ -25,6 +27,7 @@ private:
 	Hukidashi		*hukidashi;
 	Player			*player;
 	GoalObject<SceneTitle> *goal;
+	SunLight		*sun_light[5];
 
 	//テスト用壁
 	Object *wall;
