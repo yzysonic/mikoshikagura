@@ -473,6 +473,10 @@ float MapManager::GetGroundPosition(float x) {
 	{
 		celltemp.second--;
 		itr = fieldobjectmap.find(celltemp);
+
+		if (celltemp.second < 0) {
+			return 0.0f;
+		}
 	}
 
 	while (itr != fieldobjectmap.end()) {
