@@ -205,7 +205,7 @@ Object* MapManager::CreateMapObject(int id , MapLayer layer) {
 				model_name = "field_summer";
 			}
 
-			objtemp->AddComponent<SeasonModel>(model_name.c_str());
+			objtemp->AddComponent<SeasonModel>(model_name.c_str(),false);
 			break;
 		default:
 			if (!(ModelData::Get(model_name))) {
@@ -337,6 +337,12 @@ void MapManager::Update()
 
 void MapManager::SetSummer()
 {
+	//季節変更での
+
+	for (auto itr : seasonobjectlist) {
+		itr->GetComponent<SeasonModel>()->SetSummer();
+	}
+
 	for (auto itr :summerobjectlist) {
 		itr->SetActive(true);
 	}
@@ -344,16 +350,60 @@ void MapManager::SetSummer()
 	for (auto itr : winterobjectlist) {
 		itr->SetActive(false);
 	}
+
+	/////プレイヤーを上に押し出す処理
+
+	Vector3  playerpos = playerobj->transform.position;
+	std::pair<int, int> celltemp = WorldtoCell(playerpos);
+
+	while (fieldobjectmap.find(celltemp) != fieldobjectmap.end()) {
+		if (fieldobjectmap[celltemp]->GetActive())
+		{
+			playerpos.y += 10;
+			playerobj->SetPosition(playerpos);
+			celltemp.second++;
+		}
+		else
+		{
+			break;
+		}
+
+	}
 }
 
 void MapManager::SetWinter()
 {
+
+	for (auto itr : seasonobjectlist) {
+		itr->GetComponent<SeasonModel>()->SetWinter();
+	}
+
+
 	for (auto itr : winterobjectlist) {
 		itr->SetActive(true);
 	}
 
 	for (auto itr : summerobjectlist) {
 		itr->SetActive(false);
+	}
+
+	/////プレイヤーを上に押し出す処理
+
+	Vector3  playerpos = playerobj->transform.position;
+	std::pair<int, int> celltemp = WorldtoCell(playerpos);
+
+	while (fieldobjectmap.find(celltemp) != fieldobjectmap.end()) {
+		if (fieldobjectmap[celltemp]->GetActive())
+		{
+			playerpos.y += 10;
+			playerobj->SetPosition(playerpos);
+			celltemp.second--;
+		}
+		else
+		{
+			break;
+		}
+
 	}
 }
 
@@ -363,8 +413,18 @@ std::pair<int, int> MapManager::WorldtoCell(Vector3 worldpos)
 	worldpos.x += BlockSize / 2;
 	x = (int)(worldpos.x / (transform.scale.x * BlockSize));
 	y = (int)((height *  BlockSize - worldpos.y) / (transform.scale.y * BlockSize));
-
+	
 	return std::pair<int, int>(x, y);
+}
+
+Vector3 MapManager::CelltoWorld(std::pair<int, int> cell)
+{
+
+	Vector3 worldpos;
+	worldpos.x = cell.first * BlockSize;
+	worldpos.y = (height - cell.second) * BlockSize;
+	worldpos.z = 0;
+	return worldpos;
 }
 
 
@@ -394,4 +454,28 @@ void MapManager::SetSmoothPoint(MainCamera *camera)
 		camera->AddSnapper(&(itr->transform));
 	}
 
+}
+
+float MapManager::GetGroundPosition(float x) {
+
+	std::pair <int, int> celltemp = WorldtoCell(Vector3(x,0,0));
+	auto itr = fieldobjectmap.find(celltemp);
+
+	while (itr == fieldobjectmap.end())
+	{
+		celltemp.second--;
+		itr = fieldobjectmap.find(celltemp);
+	}
+
+	while (itr != fieldobjectmap.end()) {
+		if (itr->second->GetActive()) {
+			celltemp.second--;
+			itr = fieldobjectmap.find(celltemp);
+		}
+		else {
+			break;
+		}
+	}
+
+	return CelltoWorld(celltemp).y - 5.0f;
 }

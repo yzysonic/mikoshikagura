@@ -277,9 +277,6 @@
     <ClInclude Include="Source\InspectorContentPlayer.h">
       <Filter>Script\Debug</Filter>
     </ClInclude>
-    <ClInclude Include="Source\NagaiSceneTest.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
     <ClInclude Include="Source\SceneStackSample.h" />
     <ClInclude Include="Source\SceneStackSampleGame.h" />
     <ClInclude Include="Source\SceneStackSampleOp.h" />
@@ -348,6 +345,12 @@
     </ClInclude>
     <ClInclude Include="Source\InspectorContentFallingSnow.h">
       <Filter>Script\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Sunlight.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneNagaiTest.h">
+      <Filter>Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -545,9 +548,6 @@
     <ClCompile Include="Source\InspectorContentPlayer.cpp">
       <Filter>Script\Debug</Filter>
     </ClCompile>
-    <ClCompile Include="Source\NagaiSceneTest.cpp">
-      <Filter>Scene</Filter>
-    </ClCompile>
     <ClCompile Include="Source\SceneStackSample.cpp" />
     <ClCompile Include="Source\SceneStackSampleGame.cpp" />
     <ClCompile Include="Source\SceneStackSampleOp.cpp" />
@@ -613,6 +613,12 @@
     </ClCompile>
     <ClCompile Include="Source\InspectorContentFallingSnow.cpp">
       <Filter>Script\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Sunlight.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneNagaiTest.cpp">
+      <Filter>Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

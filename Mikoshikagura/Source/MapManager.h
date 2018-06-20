@@ -87,6 +87,7 @@ public:
 	void SetPlayerpointer(Player *player);			//プレイヤーポインタの設定
 	void SetSignText(Hukidashi * hukidasi);
 	void SetSmoothPoint(MainCamera *camera);
+	float GetGroundPosition(float x);
 private:
 
 	std::vector<std::vector<int>> MapManager::Perse(std::string csvdata);
@@ -95,7 +96,7 @@ private:
 	Object * CreateMapObject(int id,MapLayer layer);
 	std::pair<int, int> WorldtoCell(Vector3 worldpos);					//ワールドとセルの変換
 
-	std::pair<float, float> CelltoWorld(int valuex, int valuey) {};		//セルとワールドの変換(未実装)
+	Vector3 CelltoWorld(std::pair<int,int> cell);		//セルとワールドの変換(未実装)
 
 
 };
