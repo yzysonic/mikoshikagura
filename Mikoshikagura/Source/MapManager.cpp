@@ -459,6 +459,14 @@ void MapManager::SetSmoothPoint(MainCamera *camera)
 float MapManager::GetGroundPosition(float x) {
 
 	std::pair <int, int> celltemp = WorldtoCell(Vector3(x,0,0));
+
+	if (celltemp.first < 0) {
+		return 0.0f;
+	}
+	else if(celltemp.first>=width){
+		return 0.0f;
+	}
+
 	auto itr = fieldobjectmap.find(celltemp);
 
 	while (itr == fieldobjectmap.end())
