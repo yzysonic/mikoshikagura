@@ -349,6 +349,12 @@
     <ClInclude Include="Source\InspectorContentFallingSnow.h">
       <Filter>Script\Debug</Filter>
     </ClInclude>
+    <ClInclude Include="Source\InspectorContentParticleOfLight.h">
+      <Filter>Script\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ParticleOfLight.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Core\AllocateHirerachy.cpp">
@@ -613,6 +619,12 @@
     </ClCompile>
     <ClCompile Include="Source\InspectorContentFallingSnow.cpp">
       <Filter>Script\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\InspectorContentParticleOfLight.cpp">
+      <Filter>Script\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ParticleOfLight.cpp">
+      <Filter>GameObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

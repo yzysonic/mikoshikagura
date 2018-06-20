@@ -8,6 +8,7 @@
 #include "GoalObject.h"
 #include "SceneTitle.h"
 #include "FallingSnow.h"
+#include "ParticleOfLight.h"
 
 class Scene_Stage1 : public Scene
 {
@@ -21,6 +22,7 @@ private:
 	SeasonManager	*seasonmanager;
 	Background		*background;
 	FallingSnow		*falling_snow;
+	ParticleOfLight	*light_particle;
 	MapManager		*mapdata;
 	Hukidashi		*hukidashi;
 	Player			*player;

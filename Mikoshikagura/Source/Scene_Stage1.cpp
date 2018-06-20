@@ -12,6 +12,7 @@ void Scene_Stage1::Init(void)
 	Texture::Load("misaki_head.tga");
 	Texture::Load("background");
 	Texture::Load("particle");
+	Texture::Load("particle_light");
 	Texture::Load("hukidashi");
 	Texture::Load("Maptip/45");
 
@@ -36,6 +37,7 @@ void Scene_Stage1::Init(void)
 
 	background = new Background;
 	falling_snow = new FallingSnow;
+	light_particle = new ParticleOfLight;
 
 	mapdata = new MapManager();
 	mapdata->Load("Data/Map/prototype_map1.tmx");
@@ -80,6 +82,7 @@ void Scene_Stage1::Uninit(void)
 	Texture::Release("misaki_head.tga");
 	Texture::Release("background");
 	Texture::Release("particle");
+	Texture::Release("particle_light");
 	Texture::Release("hukidashi");
 	ModelData::Release("Maptip/23");
 	ModelData::Release("Maptip/37");
