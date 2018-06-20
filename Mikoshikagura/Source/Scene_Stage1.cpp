@@ -66,7 +66,6 @@ void Scene_Stage1::Init(void)
 
 void Scene_Stage1::Update(void)
 {
-	mapdata->GetGroundPosition(player->transform.position.x);
 }
 
 void Scene_Stage1::Uninit(void)
