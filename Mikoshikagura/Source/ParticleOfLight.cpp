@@ -17,7 +17,7 @@ ParticleOfLight::ParticleOfLight(MapManager *map) :behavior(map)
 	particle->SetBehavior(&behavior);
 	particle->loop = true;
 	particle->pTexture = Texture::Get("particle_light");
-	particle->emission_rate = 10.0f;
+	particle->emission_rate = 3.0f;
 
 	if (SeasonManager::GetSeason() == SeasonType::Winter)
 		SetActive(false);
@@ -60,7 +60,7 @@ void LightParticleBehavior::Init(ParticleElement & element)
 {
 	element.timer.Reset(Randomf(3, 5));
 	element.transform.scale = Vector3::one*Randomf(0.6f, 1.4f);
-	element.color = Color(255, 255, 255, (int)((element.timer.interval - element.timer.Elapsed()) * 20));
+	element.color = Color(255, 255, 0, (int)((element.timer.interval - element.timer.Elapsed()) * 20));
 	do
 		element.init_pos.x = camera->position.x + Randomf(-camera_range, camera_range);
 	while (element.init_pos.x < 0);
@@ -72,7 +72,7 @@ void LightParticleBehavior::Init(ParticleElement & element)
 void LightParticleBehavior::Update(ParticleElement & element)
 {
 	element.timer++;
-	element.color = Color(255, 255, 255, (int)((element.timer.interval - element.timer.Elapsed()) * 20));
+	element.color = Color(255, 255, 0, (int)((element.timer.interval - element.timer.Elapsed()) * 20));
 	element.transform.position.y += rise_speed*Time::DeltaTime();
 	element.transform.position.x = element.init_pos.x + noise_scale*PerlinNoise(element.random_seed + element.transform.position.y*noise_frequency, noise_octavers);
 

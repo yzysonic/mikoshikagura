@@ -6,11 +6,11 @@
 class LightParticleBehavior : public IParticleBehavior
 {
 public:
-	int		noise_octavers = 2;
-	float	rise_speed = 5.0f;
-	float	noise_scale = 9.0f;
-	float	noise_frequency = 0.05f;
-	float	camera_range = 100.0f;
+	int		noise_octavers	= 2;
+	float	rise_speed		= 3.0f;
+	float	noise_scale		= 9.0f;
+	float	noise_frequency	= 0.05f;
+	float	camera_range	= 100.0f;
 
 	LightParticleBehavior(MapManager* map);
 	void Init(ParticleElement & element) override;

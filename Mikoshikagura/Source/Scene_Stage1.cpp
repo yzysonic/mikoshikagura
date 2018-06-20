@@ -41,7 +41,7 @@ void Scene_Stage1::Init(void)
 	mapdata->SetSmoothPoint(camera);
 
 	background = new Background;
-	falling_snow = new FallingSnow;
+	falling_snow = new FallingSnow(mapdata);
 	light_particle = new ParticleOfLight(mapdata);
 	hukidashi = new Hukidashi;
 
