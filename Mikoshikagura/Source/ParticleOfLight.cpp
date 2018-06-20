@@ -58,10 +58,11 @@ LightParticleBehavior::LightParticleBehavior(void)
 void LightParticleBehavior::Init(ParticleElement & element)
 {
 	element.timer.Reset(Randomf(3, 5));
+	element.transform.scale = Vector3::one*Randomf(0.6, 1.4);
 	element.color = Color(255, 255, 255, (int)((element.timer.interval - element.timer.Elapsed()) * 20));
 	element.init_pos.x = camera->position.x + Randomf(-camera_range, camera_range);
 	element.transform.position.y = camera->position.y - 40.f - Randomf(0.0f, 10.0f);
-	element.transform.position.z = Randomf(-5.f, 5.f);
+	element.transform.position.z = Randomf(-4.9f, 5.f);
 	element.random_seed = Randomf(0.0f, 10.0f);
 }
 
