@@ -41,7 +41,7 @@ public:
 			{
 				transform.position.x = RenderSpace::Get("default")->GetCamera(0)->transform.position.x + (Randomf(-50.0f, 50.0f));
 				transform.position.z = Randomf(0.0f, 20.0f);
-				polygon->SetSize(Vector2(Randomf(3.0f, 6.0f), 200.0f));
+				polygon->SetSize(Vector2(Randomf(3.0f, 20.0f), 200.0f));
 				display = true;
 				timer.Reset(display_interval);
 			}
