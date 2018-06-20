@@ -1,6 +1,7 @@
 #pragma once
 #include "Core\Core.h"
 #include "ISeason.h"
+#include "MapManager.h"
 
 class LightParticleBehavior : public IParticleBehavior
 {
@@ -11,19 +12,19 @@ public:
 	float	noise_frequency = 0.05f;
 	float	camera_range = 100.0f;
 
-	LightParticleBehavior(void);
+	LightParticleBehavior(MapManager* map);
 	void Init(ParticleElement & element) override;
 	void Update(ParticleElement & element) override;
-
 private:
 	Transform* camera;
+	MapManager* map;
 };
 
 class ParticleOfLight : public Object, public ISeason
 {
 public:
 	LightParticleBehavior behavior;
-	ParticleOfLight(void);
+	ParticleOfLight(MapManager* map);
 	void OnDraw() override;
 	void AfterDraw() override;
 	void SetSummer(void);

@@ -4,7 +4,7 @@
 #include "InspectorContentParticleOfLight.h"
 #endif
 
-ParticleOfLight::ParticleOfLight(void)
+ParticleOfLight::ParticleOfLight(MapManager *map) :behavior(map)
 {
 #ifdef _DEBUG
 	AddComponent<InspectorExtension>(new InspectorContentParticleOfLight);
@@ -50,18 +50,21 @@ void ParticleOfLight::SetWinter(void)
 }
 
 
-LightParticleBehavior::LightParticleBehavior(void)
+LightParticleBehavior::LightParticleBehavior(MapManager* map)
 {
 	camera = &RenderSpace::Get("default")->GetCamera(0)->transform;
+	this->map = map;
 }
 
 void LightParticleBehavior::Init(ParticleElement & element)
 {
 	element.timer.Reset(Randomf(3, 5));
-	element.transform.scale = Vector3::one*Randomf(0.6, 1.4);
+	element.transform.scale = Vector3::one*Randomf(0.6f, 1.4f);
 	element.color = Color(255, 255, 255, (int)((element.timer.interval - element.timer.Elapsed()) * 20));
-	element.init_pos.x = camera->position.x + Randomf(-camera_range, camera_range);
-	element.transform.position.y = camera->position.y - 40.f - Randomf(0.0f, 10.0f);
+	do
+		element.init_pos.x = camera->position.x + Randomf(-camera_range, camera_range);
+	while (element.init_pos.x < 0);
+	element.transform.position.y = map->GetGroundPosition(element.init_pos.x);
 	element.transform.position.z = Randomf(-4.9f, 5.f);
 	element.random_seed = Randomf(0.0f, 10.0f);
 }

@@ -223,7 +223,7 @@
     <ClInclude Include="Source\ISeason.h" />
     <ClInclude Include="Source\Item.h" />
     <ClInclude Include="Source\ObjectExplorer.h" />
-    <ClInclude Include="Source\NagaiSceneTest.h" />
+    <ClInclude Include="Source\SceneNagaiTest.h" />
     <ClInclude Include="Source\Holdable.h" />
     <ClInclude Include="Source\Hukidashi.h" />
     <ClInclude Include="Source\ParticleOfLight.h" />
@@ -249,6 +249,7 @@
     <ClInclude Include="Source\Sign.h" />
     <ClInclude Include="Source\Snapshot.h" />
     <ClInclude Include="Source\MapManager.h" />
+    <ClInclude Include="Source\Sunlight.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Background.cpp" />
@@ -321,7 +322,7 @@
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\MainCamera.cpp" />
     <ClCompile Include="Source\ObjectExplorer.cpp" />
-    <ClCompile Include="Source\NagaiSceneTest.cpp" />
+    <ClCompile Include="Source\SceneNagaiTest.cpp" />
     <ClCompile Include="Source\ParticleOfLight.cpp" />
     <ClCompile Include="Source\Player.cpp" />
     <ClCompile Include="Source\SceneExplorer.cpp" />
@@ -340,6 +341,7 @@
     <ClCompile Include="Source\ISeason.cpp" />
     <ClCompile Include="Source\Snapshot.cpp" />
     <ClCompile Include="Source\MapManager.cpp" />
+    <ClCompile Include="Source\Sunlight.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shader\InstancingVS.hlsl">

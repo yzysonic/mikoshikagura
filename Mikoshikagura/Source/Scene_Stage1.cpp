@@ -35,14 +35,14 @@ void Scene_Stage1::Init(void)
 	camera->setBackColor(Color(250, 250, 250, 255));
 	Renderer::GetInstance()->setCamera(camera);
 
-	background = new Background;
-	falling_snow = new FallingSnow;
-	light_particle = new ParticleOfLight;
-
 	mapdata = new MapManager();
 	mapdata->Load("Data/Map/prototype_map1.tmx");
 	mapdata->SetPlayerpointer(player);
 	mapdata->SetSmoothPoint(camera);
+
+	background = new Background;
+	falling_snow = new FallingSnow;
+	light_particle = new ParticleOfLight(mapdata);
 	hukidashi = new Hukidashi;
 
 	mapdata->SetSignText(hukidashi);
@@ -68,7 +68,6 @@ void Scene_Stage1::Init(void)
 
 void Scene_Stage1::Update(void)
 {
-
 }
 
 void Scene_Stage1::Uninit(void)
