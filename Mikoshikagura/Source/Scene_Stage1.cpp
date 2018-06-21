@@ -44,8 +44,7 @@ void Scene_Stage1::Init(void)
 
 	background = new Background;
 	falling_snow = new FallingSnow;
-	for(auto & light : sun_light)
-		light = new SunLight;
+	sun_light = new SunLight(40);
 
 	mapdata = new MapManager();
 	mapdata->Load("Data/Map/prototype_map1.tmx");
