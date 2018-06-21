@@ -8,6 +8,8 @@
 #include "GoalObject.h"
 #include "SceneTitle.h"
 #include "FallingSnow.h"
+#include "SunLight.h"
+
 #include "ParticleOfLight.h"
 
 class Scene_Stage1 : public Scene
@@ -26,7 +28,8 @@ private:
 	MapManager		*mapdata;
 	Hukidashi		*hukidashi;
 	Player			*player;
-	GoalObject<Scene_Stage1> *goal;
+	GoalObject<SceneTitle> *goal;
+	SunLight		*sun_light[20];
 
 	//テスト用壁
 	Object *wall;

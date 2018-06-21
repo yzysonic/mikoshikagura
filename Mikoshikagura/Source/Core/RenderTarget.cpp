@@ -37,7 +37,7 @@ HRESULT RenderTarget::Create(void)
 		(UINT)size.x, (UINT)size.y,
 		1,
 		D3DUSAGE_RENDERTARGET,
-		D3DFMT_A8R8G8B8,
+		D3DFMT_X8R8G8B8,
 		D3DPOOL_DEFAULT,
 		&pDXTex,
 		NULL

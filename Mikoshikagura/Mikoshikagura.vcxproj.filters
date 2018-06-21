@@ -346,12 +346,10 @@
     <ClInclude Include="Source\InspectorContentFallingSnow.h">
       <Filter>Script\Debug</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Sunlight.h">
+    <ClInclude Include="Source\SunLight.h">
       <Filter>GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="Source\SceneNagaiTest.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
+
     <ClInclude Include="Source\InspectorContentParticleOfLight.h">
       <Filter>Script\Debug</Filter>
     </ClInclude>
@@ -620,12 +618,10 @@
     <ClCompile Include="Source\InspectorContentFallingSnow.cpp">
       <Filter>Script\Debug</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Sunlight.cpp">
+    <ClCompile Include="Source\SunLight.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="Source\SceneNagaiTest.cpp">
-      <Filter>Scene</Filter>
-    </ClCompile>
+
     <ClCompile Include="Source\InspectorContentParticleOfLight.cpp">
       <Filter>Script\Debug</Filter>
     </ClCompile>
@@ -635,6 +631,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Shader\InstancingVS.hlsl">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\NormalVS.hlsl">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\OverlayPS.hlsl">
       <Filter>Shader</Filter>
     </None>
   </ItemGroup>
