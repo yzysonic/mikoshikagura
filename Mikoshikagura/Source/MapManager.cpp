@@ -371,6 +371,13 @@ void MapManager::SetSummer()
 		}
 
 	}
+
+
+	//マップ表面の初期化
+	for (auto x :groundheightlist)
+	{
+		x = 0.0f;
+	}
 }
 
 void MapManager::SetWinter()
@@ -407,6 +414,13 @@ void MapManager::SetWinter()
 		}
 
 	}
+
+	//マップ表面の初期化
+	for (auto x : groundheightlist)
+	{
+		x = 0.0f;
+	}
+
 }
 
 std::pair<int, int> MapManager::WorldtoCell(Vector3 worldpos)
@@ -466,11 +480,11 @@ float MapManager::GetGroundPosition(float x) {
 	if (celltemp.first < 0) {
 		return 0.0f;
 	}
-	else if(celltemp.first>=width){
+	else if(celltemp.first >= width){
 		return 0.0f;
 	}
 
-
+		
 	if (groundheightlist[celltemp.first] != -1.0f) {
 		return groundheightlist[celltemp.first];
 	}
@@ -483,6 +497,7 @@ float MapManager::GetGroundPosition(float x) {
 		itr = fieldobjectmap.find(celltemp);
 
 		if (celltemp.second < 0) {
+			groundheightlist[celltemp.first] = 0.0f;
 			return 0.0f;
 		}
 	}
