@@ -277,9 +277,6 @@
     <ClInclude Include="Source\InspectorContentPlayer.h">
       <Filter>Script\Debug</Filter>
     </ClInclude>
-    <ClInclude Include="Source\NagaiSceneTest.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
     <ClInclude Include="Source\SceneStackSample.h" />
     <ClInclude Include="Source\SceneStackSampleGame.h" />
     <ClInclude Include="Source\SceneStackSampleOp.h" />
@@ -547,9 +544,6 @@
     </ClCompile>
     <ClCompile Include="Source\InspectorContentPlayer.cpp">
       <Filter>Script\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\NagaiSceneTest.cpp">
-      <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="Source\SceneStackSample.cpp" />
     <ClCompile Include="Source\SceneStackSampleGame.cpp" />
