@@ -4,7 +4,7 @@ Background::Background(void)
 {
 	transform.position.y -= 20.0f;
 	image = AddComponent<RectPolygon2D>("background", Layer::BG_00);
-	image->SetSize(1300.0f, 975.0f);
+	image->SetSize(1500.0f, 1125.0f);
 	camera = &RenderSpace::Get("default")->GetCamera(0)->transform;
 }
 

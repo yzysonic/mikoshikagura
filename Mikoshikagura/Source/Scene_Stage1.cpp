@@ -17,6 +17,7 @@ void Scene_Stage1::Init(void)
 	Texture::Load("misaki_head.tga");
 	Texture::Load("background");
 	Texture::Load("particle");
+	Texture::Load("particle_light");
 	Texture::Load("hukidashi");
 	Texture::Load("Maptip/45");
 	Texture::Load("sun_light");
@@ -42,8 +43,6 @@ void Scene_Stage1::Init(void)
 	camera->setBackColor(Color(250, 250, 250, 255));
 	RenderSpace::Get("default")->SetCamera(0, camera);
 
-	background = new Background;
-	falling_snow = new FallingSnow;
 	for(auto & light : sun_light)
 		light = new SunLight;
 
@@ -51,6 +50,10 @@ void Scene_Stage1::Init(void)
 	mapdata->Load("Data/Map/prototype_map1.tmx");
 	mapdata->SetPlayerpointer(player);
 	mapdata->SetSmoothPoint(camera);
+
+	background = new Background;
+	falling_snow = new FallingSnow(mapdata);
+	light_particle = new ParticleOfLight(mapdata);
 	hukidashi = new Hukidashi;
 
 	mapdata->SetSignText(hukidashi);
@@ -89,6 +92,7 @@ void Scene_Stage1::Uninit(void)
 	Texture::Release("misaki_head.tga");
 	Texture::Release("background");
 	Texture::Release("particle");
+	Texture::Release("particle_light");
 	Texture::Release("hukidashi");
 	Texture::Release("sun_light");
 	Texture::Release("sun_light2");

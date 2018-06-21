@@ -59,7 +59,7 @@ void SceneYangTest::Init(void)
 		}
 	}
 
-	snow = new FallingSnow;
+	//snow = new FallingSnow;
 
 	debug	= DebugManager::GetInstance()->GetComponent<DebugMenu>();
 	DebugManager::OpenInspector(player);

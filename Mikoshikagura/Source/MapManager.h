@@ -54,7 +54,6 @@ class MapManager :public Object ,ISeason{
 
 	static constexpr int BlockSize = 10;			//ブロックサイズ
 
-	int layermax;									//レイヤー数
 	int width;										//幅
 	int height;										//高さ
 	Vector3 objscale;								//マップオブジェクトスケール

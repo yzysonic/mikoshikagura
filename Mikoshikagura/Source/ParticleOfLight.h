@@ -3,29 +3,30 @@
 #include "ISeason.h"
 #include "MapManager.h"
 
-class SnowParticleBehavior : public IParticleBehavior
+class LightParticleBehavior : public IParticleBehavior
 {
 public:
 	int		noise_octavers	= 2;
-	float	falling_speed	= 10.0f;
+	float	rise_speed		= 3.0f;
 	float	noise_scale		= 9.0f;
-	float	noise_frequency = 0.05f;
+	float	noise_frequency	= 0.05f;
 	float	camera_range	= 100.0f;
 
-	SnowParticleBehavior(MapManager* map);
+	LightParticleBehavior(MapManager* map);
 	void Init(ParticleElement & element) override;
 	void Update(ParticleElement & element) override;
-
 private:
 	Transform* camera;
 	MapManager* map;
 };
 
-class FallingSnow : public Object, public ISeason
+class ParticleOfLight : public Object, public ISeason
 {
 public:
-	SnowParticleBehavior behavior;
-	FallingSnow(MapManager* map);
+	LightParticleBehavior behavior;
+	ParticleOfLight(MapManager* map);
+	void OnDraw() override;
+	void AfterDraw() override;
 	void SetSummer(void);
 	void SetWinter(void);
 

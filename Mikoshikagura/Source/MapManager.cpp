@@ -423,8 +423,8 @@ Vector3 MapManager::CelltoWorld(std::pair<int, int> cell)
 {
 
 	Vector3 worldpos;
-	worldpos.x = cell.first * BlockSize;
-	worldpos.y = (height - cell.second) * BlockSize;
+	worldpos.x = (float)cell.first * BlockSize;
+	worldpos.y = (float)(height - cell.second) * BlockSize;
 	worldpos.z = 0;
 	return worldpos;
 }
@@ -479,6 +479,10 @@ float MapManager::GetGroundPosition(float x) {
 	{
 		celltemp.second--;
 		itr = fieldobjectmap.find(celltemp);
+
+		if (celltemp.second < 0) {
+			return 0.0f;
+		}
 	}
 
 	while (itr != fieldobjectmap.end()) {
