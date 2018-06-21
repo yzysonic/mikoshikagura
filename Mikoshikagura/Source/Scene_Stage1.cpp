@@ -2,10 +2,16 @@
 #include "FadeScreen.h"
 #include "Core/Game.h"
 #include "Light.h"
+#include "SceneGlobal.h"
 
 void Scene_Stage1::Init(void)
 {
+	((SceneGlobal*)GameManager::GetInstance()->GetGlobalScene())->SetCameraActive(true);
+
 	// リソースのロード
+	VertexShader::Load("NormalVS.hlsl");
+	PixelShader::Load("OverlayPS.hlsl");
+
 	Texture::Load("map");
 	Texture::Load("body_sum.tga");
 	Texture::Load("misaki_head.tga");
@@ -31,9 +37,10 @@ void Scene_Stage1::Init(void)
 	player->SetPosition(Vector3(10, 70, 0));
 
 	camera = new MainCamera;
+	camera->render_target = RenderTarget::Get("rt_main");
 	camera->SetTarget(&player->transform);
 	camera->setBackColor(Color(250, 250, 250, 255));
-	Renderer::GetInstance()->setCamera(camera);
+	RenderSpace::Get("default")->SetCamera(0, camera);
 
 	background = new Background;
 	falling_snow = new FallingSnow;
@@ -92,4 +99,6 @@ void Scene_Stage1::Uninit(void)
 	ModelData::Release("Maptip/20_winter");
 	ModelData::Release("field_summer");
 	Sound::Release("bgm_demo");
+
+	((SceneGlobal*)GameManager::GetInstance()->GetGlobalScene())->SetCameraActive(false);
 }

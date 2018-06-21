@@ -27,7 +27,7 @@ private:
 	Hukidashi		*hukidashi;
 	Player			*player;
 	GoalObject<SceneTitle> *goal;
-	SunLight		*sun_light[5];
+	SunLight		*sun_light[20];
 
 	//テスト用壁
 	Object *wall;
