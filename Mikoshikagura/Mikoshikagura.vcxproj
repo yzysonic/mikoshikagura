@@ -337,6 +337,7 @@
     <ClCompile Include="Source\ISeason.cpp" />
     <ClCompile Include="Source\Snapshot.cpp" />
     <ClCompile Include="Source\MapManager.cpp" />
+    <ClCompile Include="Source\SunLight.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shader\InstancingVS.hlsl">

@@ -617,6 +617,9 @@
     <ClCompile Include="Source\InspectorContentFallingSnow.cpp">
       <Filter>Script\Debug</Filter>
     </ClCompile>
+    <ClCompile Include="Source\SunLight.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shader\InstancingVS.hlsl">
