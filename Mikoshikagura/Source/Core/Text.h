@@ -2,8 +2,9 @@
 #include "Core.h"
 #include "Common.h"
 #include "Drawable.h"
+#include "Component.h"
 
-class Text : public Drawable
+class Text : public Drawable, public ILostAndReset
 {
 public:
 	static constexpr char* BasePath = "Data/Font/";
@@ -12,6 +13,8 @@ public:
 public:
 	Text(void);
 	~Text(void);
+	HRESULT OnLostDevice(void) override;
+	HRESULT OnResetDevice(void) override;
 	void Draw(void) override;
 	void SetText(std::string string);
 	void AddText(char c);
@@ -21,5 +24,5 @@ public:
 
 private:
 	LPD3DXFONT	Font = NULL;
-	std::string text, path;
+	std::string text, name;
 };

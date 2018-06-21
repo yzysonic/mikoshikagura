@@ -17,6 +17,8 @@ class Drawable : public Component
 
 public:
 	RendererType rendType;	// 描画方法指定
+	VertexShader* vshader;
+	PixelShader* pshader;
 
 	Drawable(Layer layer, std::string render_space_name);
 	virtual ~Drawable(void);
@@ -32,8 +34,6 @@ public:
 	void SetOpacity(float opacity);
 
 protected:
-	VertexShader* vshader;
-	PixelShader* pshader;
 	Layer layer;	// 描画のレイヤー
 	Color color;	// 色
 	std::string render_space;

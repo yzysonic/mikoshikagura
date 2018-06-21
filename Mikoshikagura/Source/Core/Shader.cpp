@@ -36,7 +36,7 @@ void VertexShader::Load(std::string file_name)
 		NULL,
 		NULL,
 		name.c_str(),
-		"vs_2_0",
+		"vs_3_0",
 		0,
 		&pCode,
 		NULL,

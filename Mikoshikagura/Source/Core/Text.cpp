@@ -17,10 +17,30 @@ Text::~Text(void)
 		Font->Release();
 		Font = NULL;
 	}
-	if (!path.empty())
+	if (!name.empty())
 	{
-		RemoveFontResource(path.c_str());
+		RemoveFontResource(std::string(BasePath + name + DefaultExtension).c_str());
 	}
+}
+
+HRESULT Text::OnLostDevice(void)
+{
+	SafeRelease(this->Font);
+	return S_OK;
+}
+
+HRESULT Text::OnResetDevice(void)
+{
+	auto pDevice = Direct3D::GetDevice();
+
+	if (!name.empty())
+		D3DXCreateFont(pDevice, 36, 0, 0, 0, FALSE, SHIFTJIS_CHARSET,
+			OUT_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH, name.c_str(), &Font);
+	else
+		D3DXCreateFont(pDevice, 36, 0, 0, 0, FALSE, SHIFTJIS_CHARSET,
+			OUT_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH, "Terminal", &Font);
+
+	return S_OK;
 }
 
 void Text::Draw(void)
@@ -54,23 +74,23 @@ void Text::LoadFont(std::string filename)
 		Font = NULL;
 	}
 
-	if (!path.empty())
+	if (!name.empty())
 	{
-		RemoveFontResource(path.c_str());
+		RemoveFontResource(name.c_str());
 	}
 	std::string tmp = BasePath + filename + DefaultExtension;
 	if (AddFontResource(tmp.c_str()) != 0)
 	{
-		path = tmp;
+		name = filename;
 		D3DXCreateFont(pDevice, 36, 0, 0, 0, FALSE, SHIFTJIS_CHARSET,
-			OUT_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH, filename.c_str(), &Font);
+			OUT_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH, name.c_str(), &Font);
 	}
 	else
 	{
 		D3DXCreateFont(pDevice, 36, 0, 0, 0, FALSE, SHIFTJIS_CHARSET,
 			OUT_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH, "Terminal", &Font);
 
-		path.clear();
+		name.clear();
 	}
 }
 
