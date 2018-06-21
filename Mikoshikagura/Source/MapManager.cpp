@@ -81,6 +81,8 @@ void MapManager::Load(std::string str)
 
 	}
 
+	std::vector<float> groundheightlist(width,-1.0f);
+
 }
 //csvデータのパース
 std::vector<std::vector<int>> MapManager::Perse(std::string csvdata) {
@@ -460,6 +462,10 @@ float MapManager::GetGroundPosition(float x) {
 
 	std::pair <int, int> celltemp = WorldtoCell(Vector3(x,0,0));
 
+	if (groundheightlist[celltemp.first] != 1.0f) {
+		return groundheightlist[celltemp.first];
+	}
+
 	if (celltemp.first < 0) {
 		return 0.0f;
 	}
@@ -484,6 +490,6 @@ float MapManager::GetGroundPosition(float x) {
 			break;
 		}
 	}
-
-	return CelltoWorld(celltemp).y - 5.0f;
+	groundheightlist[celltemp.first] = CelltoWorld(celltemp).y - 5.0f;
+	return groundheightlist[celltemp.first];
 }

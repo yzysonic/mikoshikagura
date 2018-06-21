@@ -90,6 +90,7 @@ public:
 	float GetGroundPosition(float x);
 private:
 
+	std::vector<int> groundheightlist;					//地表の高さリスト
 	std::vector<std::vector<int>> MapManager::Perse(std::string csvdata);
 	LayerType SetLayerType(std::string layertype);
 	GroupType SetGroupType(std::string grouptype);
