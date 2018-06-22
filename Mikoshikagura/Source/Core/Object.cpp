@@ -36,25 +36,30 @@ Object::Object(Vector3 position, Vector3 rotation) : Object()
 
 Object::~Object()
 {
-
-	//this->SetActive(false);
-	if (this->components.size() > 0)
+	if (this->component_map.size() > 0)
 	{
-		for (auto &component : this->components)
-			component.second.reset();
+		for (auto &components : this->component_map)
+		{
+			for (auto &component : components.second)
+			{
+				component.reset();
+			}
+		}
 	}
 
 	if (this->scene)
 		this->scene->RemoveObject(this);
-
 }
 
 std::vector<Component*> Object::GetComponents(void)
 {
 	std::vector<Component*> list;
-	for (auto& component : components)
+	for (auto& components : component_map)
 	{
-		list.emplace_back(component.second.get());
+		for (auto& component : components.second)
+		{
+			list.emplace_back(component.get());
+		}
 	}
 	return list;
 }
@@ -74,17 +79,25 @@ void Object::SetActive(bool value)
 	if (value)
 	{
 		int i = 0;
-		for (auto &component : this->components)
-			component.second->SetActive(this->component_actives[i++]);
+		for (auto &components : this->component_map)
+		{
+			for (auto &component : components.second)
+			{
+				component->SetActive(this->component_actives[i++]);
+			}
+		}
 	}
 	else
 	{
 		this->component_actives.clear();
 
-		for (auto &component : this->components)
+		for (auto &components : this->component_map)
 		{
-			this->component_actives.push_back(component.second->active);
-			component.second->SetActive(false);
+			for (auto &component : components.second)
+			{
+				this->component_actives.push_back(component->active);
+				component->SetActive(false);
+			}
 		}
 	}
 	
