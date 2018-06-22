@@ -16,6 +16,8 @@ void Scene_Stage1::Init(void)
 	Texture::Load("body_sum.tga");
 	Texture::Load("misaki_head.tga");
 	Texture::Load("background");
+	Texture::Load("background_summer");
+	Texture::Load("background_winter");
 	Texture::Load("particle");
 	Texture::Load("particle_light");
 	Texture::Load("hukidashi");
@@ -91,6 +93,8 @@ void Scene_Stage1::Uninit(void)
 	Texture::Release("body_sum.tga");
 	Texture::Release("misaki_head.tga");
 	Texture::Release("background");
+	Texture::Release("background_summer");
+	Texture::Release("background_winter");
 	Texture::Release("particle");
 	Texture::Release("particle_light");
 	Texture::Release("hukidashi");
