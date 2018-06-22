@@ -76,19 +76,21 @@ void SnowParticleBehavior::Update(ParticleElement & element)
 	}
 	else
 	{
-		element.timer++;
-		element.color = Color(255, 255, 255, (int)(255 * (1 - element.timer.Progress())));
-
 		if (element.transform.position.z < -5.f)
 		{
 			element.transform.position.y -= falling_speed*Time::DeltaTime();
 			element.transform.position.x = element.init_pos.x + noise_scale*PerlinNoise(element.random_seed + element.transform.position.y*noise_frequency, noise_octavers);
 		}
 
+		if (element.transform.position.x > camera->position.x + camera_range)
+			element.transform.position.x -= 2.0f*camera_range;
+		if (element.transform.position.x < camera->position.x - camera_range)
+			element.transform.position.x += 2.0f*camera_range;
+
+		element.color = Color(255, 255, 255, (int)(255 * (1 - element.timer.Progress())));
+		element.timer++;
+
 		if (element.timer.TimeUp())
-		{
-			element.color = Color(255, 255, 255, 0);
 			element.active = false;
-		}
 	}
 }
