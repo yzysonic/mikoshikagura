@@ -14,8 +14,11 @@ public:
 	static constexpr char* BasePath = "Data/";
 
 	static T* Get(std::string name);
+	static std::vector<T*> GetSerial(std::string name);
 	static T* Load(std::string path);
+	static void LoadSerial(std::string path, int count);
 	static void Release(std::string name);
+	static void ReleaseSerial(std::string name);
 
 protected:
 	static void InsertToMap(T* ptr);
@@ -73,6 +76,17 @@ inline T* Resource<T>::Load(std::string path)
 }
 
 template<class T>
+inline void Resource<T>::LoadSerial(std::string path, int count)
+{
+	char fullpath[32];
+	for (int i = 0; i < count; i++)
+	{
+		sprintf(fullpath, "%s_%02d", path.c_str(), i);
+		Load(fullpath);
+	}
+}
+
+template<class T>
 inline T * Resource<T>::Get(std::string name)
 {
 	auto it = name_map.find(name);
@@ -83,9 +97,40 @@ inline T * Resource<T>::Get(std::string name)
 }
 
 template<class T>
+inline std::vector<T*> Resource<T>::GetSerial(std::string name)
+{
+	std::vector<T*> list;
+	T* resource = nullptr;
+	char fullpath[32];
+	auto i = 0;
+
+	while (true)
+	{
+		sprintf(fullpath, "%s_%02d", name.c_str(), i++);
+		resource = Get(fullpath);
+		if (resource)
+			list.emplace_back(resource);
+		else
+			break;
+	}
+
+	return list;
+}
+
+template<class T>
 inline void Resource<T>::Release(std::string name)
 {
 	name_map.erase(name);
+}
+
+template<class T>
+inline void Resource<T>::ReleaseSerial(std::string name)
+{
+	auto list = GetSerial(name);
+	for (auto resource : list)
+	{
+		resource->Release();
+	}
 }
 
 template<class T>

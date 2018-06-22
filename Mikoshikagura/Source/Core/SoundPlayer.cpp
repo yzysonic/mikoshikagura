@@ -28,7 +28,7 @@ void SoundPlayer::Update(void)
 
 void SoundPlayer::Uninit(void)
 {
-	if(Sound::Get(sound_name))
+	if (Sound::Get(sound_name))
 		Stop();
 }
 
@@ -50,8 +50,11 @@ void SoundPlayer::SetSound(Sound * sound)
 
 void SoundPlayer::SetVolume(float value)
 {
-	this->pSound->SetVolume(value);
 	this->volume = value;
+	if (this->pSound)
+	{
+		this->pSound->SetVolume(value);
+	}
 }
 
 void SoundPlayer::Play(void)
@@ -79,7 +82,10 @@ void SoundPlayer::FadeVolume(float target_value, float time, std::function<void(
 	{
 		this->timer++;
 
-		this->pSound->SetVolume(Lerpf(current_value, target_value, timer.Progress()));
+		if (this->pSound)
+		{
+			this->pSound->SetVolume(Lerpf(current_value, target_value, timer.Progress()));
+		}
 
 		if (this->timer.TimeUp())
 		{
@@ -88,7 +94,6 @@ void SoundPlayer::FadeVolume(float target_value, float time, std::function<void(
 			this->update = nullptr;
 		}
 	};
-
 }
 
 void SoundPlayer::FadeIn(float time)

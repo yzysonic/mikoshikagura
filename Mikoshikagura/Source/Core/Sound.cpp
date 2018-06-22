@@ -41,6 +41,7 @@ Sound * Sound::InternalLoad(std::string name, std::string ext)
 		hMmio = mmioOpen((LPSTR)fullpath.c_str(), &mmioInfo, MMIO_READ);
 		if (!hMmio)
 		{
+			return false;
 		}
 
 		// 2.ファイル解析① RIFFチャンク検索

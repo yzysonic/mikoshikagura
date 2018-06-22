@@ -21,6 +21,7 @@ void Scene_Stage1::Init(void)
 	ModelData::Load("Maptip/37");
 	ModelData::Load("field_summer");
 	Sound::Load("bgm_demo");
+	Sound::LoadSerial("foot_mud", 7);
 	
 	Light::Init();
 	SeasonManager::Create(SeasonType::Summer);
@@ -87,4 +88,5 @@ void Scene_Stage1::Uninit(void)
 	ModelData::Release("Maptip/20_winter");
 	ModelData::Release("field_summer");
 	Sound::Release("bgm_demo");
+	Sound::ReleaseSerial("foot_mud");
 }

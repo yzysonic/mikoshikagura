@@ -29,8 +29,16 @@ Player::Player(void)
 	this->collider->size = Vector2(4.0f, 9.0f);
 	this->collider->offset.y += 0.5f*this->collider->size.y;
 
+	// Rigidbody初期化
 	this->rigidbody = AddComponent<Rigidbody>();
 	this->rigidbody->useGravity = true;
+
+	// 足音初期化
+	Foot::player = this;
+	this->foot[0] = new Foot("Armature_Foot_L");
+	this->foot[1] = new Foot("Armature_Foot_R");
+	this->foot_sounds = Sound::GetSerial("foot_mud");
+	this->sound_player = AddComponent<SoundPlayer>();
 
 	// ステート初期化
 	this->state.resize((int)StateName::Max);
@@ -59,6 +67,7 @@ void Player::Update(void)
 
 void Player::Uninit(void)
 {
+
 }
 
 void Player::OnCollisionEnter(Object * other)
@@ -171,6 +180,7 @@ void Player::OnCollisionExit(Object * other)
 
 void Player::SetPosition(Vector3 pos)
 {
+	this->transform.position = pos;
 	this->rigidbody->position = pos;
 }
 
@@ -436,6 +446,7 @@ void Player::StateAir::SetState(StateName state)
 
 #pragma endregion
 
+#pragma region StateWhistle
 void Player::StateWhistle::OnEnter(void)
 {
 	SeasonManager::SwitchSeason([this] 
@@ -451,3 +462,44 @@ void Player::StateWhistle::SetState(StateName state)
 	if(state == StateName::Idle)
 		State::SetState(state);
 }
+#pragma endregion
+
+#pragma region Foot
+
+Player* Player::Foot::player;
+
+Player::Foot::Foot(const char* name)
+{
+	this->name = name;
+	frame = (BoneFrame*)player->model->FindFrameByName(name);
+	collider = AddComponent<BoxCollider2D>();
+	collider->size = Vector2::one*0.5f;
+	last_ground = nullptr;
+	Update();
+}
+
+void Player::Foot::Update(void)
+{
+	D3DXVECTOR4 vec4;
+	D3DXVec3Transform(&vec4, &D3DXVECTOR3(0.0f, 0.0f, 0.0f), &frame->mtxCombined);
+	transform.position.x = vec4.x;
+	transform.position.y = vec4.y;
+}
+
+void Player::Foot::OnCollisionEnter(Object * other)
+{
+	if (other->type == ObjectType::Field && !last_ground)
+	{
+		player->sound_player->SetSound(player->foot_sounds[Random(0, player->foot_sounds.size() - 1)]);
+		player->sound_player->Play();
+		last_ground = other;
+	}
+}
+void Player::Foot::OnCollisionExit(Object * other)
+{
+	if (other->type == ObjectType::Field && last_ground == other)
+	{
+		last_ground = nullptr;
+	}
+}
+#pragma endregion

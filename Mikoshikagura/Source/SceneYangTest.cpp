@@ -20,6 +20,7 @@ void SceneYangTest::Init(void)
 	Texture::Load("particle");
 	VertexShader::Load("InstancingVS.hlsl");
 	Sound::Load("bgm_demo");
+	Sound::LoadSerial("foot_mud", 7);
 
 	// ‹Gß‰Šú‰»
 	SeasonManager::Create(SeasonType::Summer);
@@ -107,6 +108,7 @@ void SceneYangTest::Uninit(void)
 	Texture::Release("mushroom");
 	Texture::Release("snow");
 	Sound::Release("bgm_demo");
+	Sound::ReleaseSerial("foot_mud");
 
 	SeasonManager::Destroy();
 }

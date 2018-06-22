@@ -186,6 +186,11 @@ float SkinnedModel::GetAnimePeriod(int n)
 		return 0.0f;
 }
 
+D3DXFRAME * SkinnedModel::FindFrameByName(const char * name)
+{
+	return FindFrameByName(name, rootFrame);
+}
+
 
 D3DXFRAME * SkinnedModel::FindFrameByName(const char * name, D3DXFRAME * frame)
 {
