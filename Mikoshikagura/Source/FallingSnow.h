@@ -26,8 +26,8 @@ class FallingSnow : public Object, public ISeason
 public:
 	SnowParticleBehavior behavior;
 	FallingSnow(MapManager* map);
-	void SetSummer(void);
-	void SetWinter(void);
+	void SetSummer(void) override;
+	void SetWinter(void) override;
 
 private:
 	ParticleSystem* particle;
