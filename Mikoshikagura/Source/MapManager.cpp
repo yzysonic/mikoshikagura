@@ -135,9 +135,8 @@ LayerType MapManager::SetLayerType(std::string layertype) {
 	else if (layertype == "Gimmick_Object") {
 		return LayerType::Gimmick_Object;
 	}
-	else
-	{
-		LayerType::None;
+	else{
+		return LayerType::None;
 	}
 }
 
@@ -376,7 +375,7 @@ void MapManager::SetSummer()
 	//マップ表面の初期化
 	for (auto x :groundheightlist)
 	{
-		x = 0.0f;
+		x = -1.0f;
 	}
 }
 
@@ -418,7 +417,7 @@ void MapManager::SetWinter()
 	//マップ表面の初期化
 	for (auto x : groundheightlist)
 	{
-		x = 0.0f;
+		x = -1.0f;
 	}
 
 }
