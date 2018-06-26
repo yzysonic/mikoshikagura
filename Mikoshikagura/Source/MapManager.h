@@ -54,7 +54,6 @@ class MapManager :public Object ,ISeason{
 
 	static constexpr int BlockSize = 10;			//ブロックサイズ
 
-	int layermax;									//レイヤー数
 	int width;										//幅
 	int height;										//高さ
 	Vector3 objscale;								//マップオブジェクトスケール
@@ -87,15 +86,17 @@ public:
 	void SetPlayerpointer(Player *player);			//プレイヤーポインタの設定
 	void SetSignText(Hukidashi * hukidasi);
 	void SetSmoothPoint(MainCamera *camera);
+	float GetGroundPosition(float x);
 private:
 
+	std::vector<float> groundheightlist;					//地表の高さリスト
 	std::vector<std::vector<int>> MapManager::Perse(std::string csvdata);
 	LayerType SetLayerType(std::string layertype);
 	GroupType SetGroupType(std::string grouptype);
 	Object * CreateMapObject(int id,MapLayer layer);
 	std::pair<int, int> WorldtoCell(Vector3 worldpos);					//ワールドとセルの変換
 
-	std::pair<float, float> CelltoWorld(int valuex, int valuey) {};		//セルとワールドの変換(未実装)
+	Vector3 CelltoWorld(std::pair<int,int> cell);		//セルとワールドの変換(未実装)
 
 
 };

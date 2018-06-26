@@ -247,7 +247,7 @@ bool Player::JumpControl(void)
 void Player::Move(void)
 {
 	// ˆÚ“®ˆ—
-	auto camera = Renderer::GetInstance()->getCamera();
+	auto camera = Renderer::GetInstance()->getCamera("default");
 	Vector3 offset = this->transform.position - camera->transform.position;
 	float phi = atan2f(offset.z, offset.x) - 0.5f*PI;
 

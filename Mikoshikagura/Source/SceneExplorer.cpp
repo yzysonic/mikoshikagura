@@ -33,6 +33,8 @@ void SceneExplorer::Init(void)
 	AddScene<SceneTitle>();
 
 	AddScene<Scene_Stage1>();
+
+
 	FadeScreen::FadeIn(Color::black, 0.0f);
 }
 

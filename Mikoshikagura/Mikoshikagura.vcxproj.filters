@@ -277,9 +277,6 @@
     <ClInclude Include="Source\InspectorContentPlayer.h">
       <Filter>Script\Debug</Filter>
     </ClInclude>
-    <ClInclude Include="Source\NagaiSceneTest.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
     <ClInclude Include="Source\SceneStackSample.h" />
     <ClInclude Include="Source\SceneStackSampleGame.h" />
     <ClInclude Include="Source\SceneStackSampleOp.h" />
@@ -348,6 +345,16 @@
     </ClInclude>
     <ClInclude Include="Source\InspectorContentFallingSnow.h">
       <Filter>Script\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SunLight.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+
+    <ClInclude Include="Source\InspectorContentParticleOfLight.h">
+      <Filter>Script\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ParticleOfLight.h">
+      <Filter>GameObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -545,9 +552,6 @@
     <ClCompile Include="Source\InspectorContentPlayer.cpp">
       <Filter>Script\Debug</Filter>
     </ClCompile>
-    <ClCompile Include="Source\NagaiSceneTest.cpp">
-      <Filter>Scene</Filter>
-    </ClCompile>
     <ClCompile Include="Source\SceneStackSample.cpp" />
     <ClCompile Include="Source\SceneStackSampleGame.cpp" />
     <ClCompile Include="Source\SceneStackSampleOp.cpp" />
@@ -614,9 +618,25 @@
     <ClCompile Include="Source\InspectorContentFallingSnow.cpp">
       <Filter>Script\Debug</Filter>
     </ClCompile>
+    <ClCompile Include="Source\SunLight.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+
+    <ClCompile Include="Source\InspectorContentParticleOfLight.cpp">
+      <Filter>Script\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ParticleOfLight.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shader\InstancingVS.hlsl">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\NormalVS.hlsl">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\OverlayPS.hlsl">
       <Filter>Shader</Filter>
     </None>
   </ItemGroup>
