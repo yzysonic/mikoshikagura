@@ -77,7 +77,7 @@ protected:
 #ifndef _DEBUG
 	std::unordered_map<size_t, std::unique_ptr<Component>> components;
 #else
-	std::unordered_map<std::string, std::unique_ptr<Component>> components;
+	std::unordered_map<std::string, std::vector<std::unique_ptr<Component>>> component_map;
 #endif
 	std::vector<Script*> scripts;
 
@@ -119,7 +119,7 @@ inline T * Object::AddComponent(Args&&... args)
 	this->components[typeid(T).hash_code()].reset(component);
 #else
 	component->name = TypeName<T>();
-	this->components[component->name].reset(component);
+	this->component_map[component->name].emplace_back(component);
 #endif
 
 	if (component->type == ComponentType::Script)
@@ -136,11 +136,11 @@ inline T * Object::GetComponent(void)
 #ifndef _DEBUG
 	auto it = this->components.find(typeid(T).hash_code());
 #else
-	auto it = this->components.find(TypeName<T>());
+	auto it = this->component_map.find(TypeName<T>());
 #endif
 
-	if (it == this->components.end())
+	if (it == this->component_map.end())
 		return nullptr;
 
-	return dynamic_cast<T*>(it->second.get());
+	return dynamic_cast<T*>(it->second.front().get());
 }
