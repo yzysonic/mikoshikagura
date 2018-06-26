@@ -10,7 +10,7 @@ public:
 	bool play_on_active;
 
 	SoundPlayer(const char* name, bool play_on_active = false);
-	SoundPlayer(Sound* sound, bool play_on_active = false);
+	SoundPlayer(Sound* sound = nullptr, bool play_on_active = false);
 
 	void Init(void) override;
 	void Update(void) override;

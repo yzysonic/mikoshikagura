@@ -32,6 +32,7 @@ public:
 	void SetAnime(int n);
 	void SetAnimeSpeedScale(float value);
 	float GetAnimePeriod(int n);
+	D3DXFRAME *FindFrameByName(const char * name);
 
 private:
 	static D3DXFRAME *FindFrameByName(const char* name, D3DXFRAME *frame);

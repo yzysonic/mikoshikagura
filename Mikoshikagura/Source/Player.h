@@ -10,7 +10,7 @@
 #define ButtonAction	BUTTON_CI
 #define ButtonWhistle	BUTTON_TR
 
-#define PlayerSpeed (20.0f)
+#define PlayerSpeed (40.0f)
 #define PlayerJumpSpeed (45.0f)
 
 class Player : public Object
@@ -121,6 +121,26 @@ public:
 
 #pragma endregion
 
+#pragma region Foot
+	class Foot : public Object
+	{
+		friend class InspectorContentPlayer;
+	public:
+		static Player* player;
+		BoxCollider2D* collider;
+
+		Foot(const char* name);
+		void Update(void) override;
+		void OnCollisionEnter(Object* other) override;
+		void OnCollisionExit(Object* other) override;
+
+	private:
+		BoneFrame * frame;
+		Object* last_ground;
+		float last_y;
+	};
+#pragma endregion
+
 
 	// 状態インスタンスリスト
 	std::vector<smart_ptr<State>> state;
@@ -144,6 +164,9 @@ private:
 	BoxCollider2D* collider;
 	std::set<Collider*> ground_colliders;
 	Rigidbody* rigidbody;
+	Foot* foot[2];
+	SoundPlayer* sound_player;
+	std::vector<Sound*> foot_sounds;
 	Vector3 control;
 	Vector3 last_position;
 	FrameTimer anime_timer;
