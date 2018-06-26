@@ -15,11 +15,9 @@ void Scene_Stage1::Init(void)
 	Texture::Load("map");
 	Texture::Load("body_sum.tga");
 	Texture::Load("misaki_head.tga");
-	Texture::Load("background_summer");
 	Texture::Load("background_summer_layer0");
 	Texture::Load("background_summer_layer1");
 	Texture::Load("background_summer_layer2");
-	Texture::Load("background_winter");
 	Texture::Load("background_winter_layer0");
 	Texture::Load("background_winter_layer1");
 	Texture::Load("background_winter_layer2");
@@ -98,12 +96,9 @@ void Scene_Stage1::Uninit(void)
 	Texture::Release("map");
 	Texture::Release("body_sum.tga");
 	Texture::Release("misaki_head.tga");
-	Texture::Release("background");
-	Texture::Release("background_summer");
 	Texture::Release("background_summer_layer0");
 	Texture::Release("background_summer_layer1");
 	Texture::Release("background_summer_layer2");
-	Texture::Release("background_winter");
 	Texture::Release("background_winter_layer0");
 	Texture::Release("background_winter_layer1");
 	Texture::Release("background_winter_layer2");
