@@ -4,22 +4,39 @@
 
 void CameraSnap::Update(void)
 {
-	float base_length = SnapDistance;
 	auto smooth = this->object->GetComponent<CameraSmoothFollow>();
-	for (auto snapper = this->snappers.begin(); snapper != this->snappers.end(); ++snapper)
+	
+	bool snapped = false;
+	for (auto snapper : snappers)
 	{
-		float distance = (this->target->position.toVector2() - (*snapper)->position.toVector2()).length();
-
-		if (distance < base_length)
+		if (snapper->snapping)
 		{
-			base_length = distance;
-			this->focus.position = Vector3::Lerp(this->target->position, (*snapper)->position, 0.5f);
+			this->focus.position = Vector3::Lerp(this->target->position, snapper->transform.position, 0.5f);
 			smooth->target = &this->focus;
+			snapped = true;
 		}
 	}
 
-	if (base_length == SnapDistance)
+	if (!snapped)
 	{
 		smooth->target = this->target;
 	}
+}
+
+Snapper::Snapper()
+{
+	name = "snapper";
+	snapping = false;
+}
+
+void Snapper::OnCollisionEnter(Object * object)
+{
+	if (object->type == ObjectType::Player)
+		snapping = true;
+}
+
+void Snapper::OnCollisionExit(Object * object)
+{
+	if (object->type == ObjectType::Player)
+		snapping = false;
 }

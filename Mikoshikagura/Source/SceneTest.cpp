@@ -54,7 +54,6 @@ void SceneTest::Init(void)
 	mapdata = new MapManager();
 	mapdata->Load("Data/Map/prototype_map2.tmx");
 	mapdata->SetPlayerpointer(player);
-	mapdata->SetSmoothPoint(camera);
 
 	background = new Background;
 	falling_snow = new FallingSnow(mapdata);
@@ -68,14 +67,18 @@ void SceneTest::Init(void)
 
 	wall = new Object;
 	wall->type = ObjectType::Field;
-	wall->AddComponent<BoxCollider2D>();
-	wall->GetComponent<BoxCollider2D>()->size = Vector2(10.0f, 1000.0f);
-	wall->GetComponent<BoxCollider2D>()->SetActive(true);
+	wall->AddComponent<BoxCollider2D>()->size = Vector2(10.0f, 1000.0f);
 
 	goal = new GoalObject<SceneTest>();
 	goal->transform.scale = Vector3::one*10.f;
 	goal->transform.position = Vector3(380, 0, 0);
 	goal->AddComponent<BoxCollider2D>()->size = Vector2(10, 1000);
+
+	snapper = new Snapper();
+	snapper->transform.position = Vector3(185, 95, 0);
+	snapper->AddComponent<BoxCollider2D>()->size = Vector2(40, 60);
+	snapper->GetComponent<BoxCollider2D>()->offset = Vector2(-20, -30);
+	camera->AddSnapper(snapper);
 
 	FadeScreen::FadeIn(Color::white, 1.0f);
 

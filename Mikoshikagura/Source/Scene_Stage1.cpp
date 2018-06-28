@@ -55,7 +55,7 @@ void Scene_Stage1::Init(void)
 	mapdata = new MapManager();
 	mapdata->Load("Data/Map/prototype_map1.tmx");
 	mapdata->SetPlayerpointer(player);
-	mapdata->SetSmoothPoint(camera);
+	//mapdata->SetSmoothPoint(camera);
 
 	background = new Background;
 	falling_snow = new FallingSnow(mapdata);

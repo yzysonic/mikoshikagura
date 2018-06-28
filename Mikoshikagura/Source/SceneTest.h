@@ -28,6 +28,7 @@ private:
 	Player			*player;
 	GoalObject<SceneTest> *goal;
 	SunLight		*sun_light[20];
+	Snapper			*snapper;
 
 	//テスト用壁
 	Object *wall;
