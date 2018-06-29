@@ -75,7 +75,7 @@ public:
 protected:
 	bool isActive;
 #ifndef _DEBUG
-	std::unordered_map<size_t, std::unique_ptr<Component>> components;
+	std::unordered_map<size_t, std::vector<std::unique_ptr<Component>>> component_map;
 #else
 	std::unordered_map<std::string, std::vector<std::unique_ptr<Component>>> component_map;
 #endif
@@ -116,7 +116,7 @@ inline T * Object::AddComponent(Args&&... args)
 		component->SetActive(true);
 
 #ifndef _DEBUG
-	this->components[typeid(T).hash_code()].reset(component);
+	this->component_map[typeid(T).hash_code()].emplace_back(component);
 #else
 	component->name = TypeName<T>();
 	this->component_map[component->name].emplace_back(component);
@@ -134,7 +134,7 @@ inline T * Object::GetComponent(void)
 	static_assert(std::is_base_of<Component, T>::value, "Not a subclass of Component.");
 
 #ifndef _DEBUG
-	auto it = this->components.find(typeid(T).hash_code());
+	auto it = this->component_map.find(typeid(T).hash_code());
 #else
 	auto it = this->component_map.find(TypeName<T>());
 #endif
