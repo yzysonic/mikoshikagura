@@ -9,6 +9,7 @@
 #include "SceneTitle.h"
 #include "FallingSnow.h"
 #include "SunLight.h"
+#include "FieldBgmPlayer.h"
 
 #include "ParticleOfLight.h"
 
@@ -28,6 +29,7 @@ private:
 	MapManager		*mapdata;
 	Hukidashi		*hukidashi;
 	Player			*player;
+	FieldBgmPlayer	*field_bgm_player;
 	GoalObject<SceneTitle> *goal;
 	SunLight		*sun_light[20];
 

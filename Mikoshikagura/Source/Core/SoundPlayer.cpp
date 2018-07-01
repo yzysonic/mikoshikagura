@@ -6,8 +6,10 @@ SoundPlayer::SoundPlayer(const char * name, bool play_on_active) : SoundPlayer(S
 
 SoundPlayer::SoundPlayer(Sound * pSound, bool play_on_active)
 {
-	this->play_on_active = false;
+	this->play_on_active = play_on_active;
 	this->volume = 1.0f;
+	this->playing = false;
+	this->pSound = nullptr;
 
 	SetSound(pSound);
 }
@@ -39,13 +41,25 @@ void SoundPlayer::SetSound(const char * name)
 
 void SoundPlayer::SetSound(Sound * sound)
 {
+	auto playing = false;
+
+	if (pSound)
+	{
+		playing = pSound->IsPlaying();
+		if (playing)
+			Stop();
+	}
+
 	this->pSound = sound;
 	
-	if (!sound)
-		return;
+	if (sound)
+	{
+		this->sound_name = sound->name;
+		sound->SetVolume(this->volume);
 
-	this->sound_name = sound->name;
-	sound->SetVolume(this->volume);
+		if (playing)
+			Play();
+	}
 }
 
 void SoundPlayer::SetVolume(float value)
@@ -62,6 +76,7 @@ void SoundPlayer::Play(void)
 	if (this->pSound)
 	{
 		this->pSound->Play();
+		this->playing = true;
 	}
 }
 
@@ -70,6 +85,7 @@ void SoundPlayer::Stop(void)
 	if (this->pSound)
 	{
 		this->pSound->Stop();
+		this->playing = false;
 	}
 }
 

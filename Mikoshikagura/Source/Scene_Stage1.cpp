@@ -33,7 +33,8 @@ void Scene_Stage1::Init(void)
 	ModelData::Load("Maptip/23");
 	ModelData::Load("Maptip/37");
 	ModelData::Load("field_summer");
-	Sound::Load("bgm_demo");
+	Sound::Load("field_summer");
+	Sound::Load("field_winter");
 	//Sound::LoadSerial("foot_mud", 7);
 	
 	Light::Init();
@@ -52,21 +53,6 @@ void Scene_Stage1::Init(void)
 	for(auto & light : sun_light)
 		light = new SunLight;
 
-	mapdata = new MapManager();
-	mapdata->Load("Data/Map/prototype_map1.tmx");
-	mapdata->SetPlayerpointer(player);
-	mapdata->SetSmoothPoint(camera);
-
-	background = new Background;
-	falling_snow = new FallingSnow(mapdata);
-	light_particle = new ParticleOfLight(mapdata);
-	hukidashi = new Hukidashi;
-
-	mapdata->SetSignText(hukidashi);
-
-	Light::Init();
-	FadeScreen::FadeIn(Color::black, 0.0f);
-
 	wall = new Object;
 	wall->type = ObjectType::Field;
 	wall->AddComponent<BoxCollider2D>();
@@ -78,12 +64,23 @@ void Scene_Stage1::Init(void)
 	goal->transform.position = Vector3(380, 0, 0);
 	goal->AddComponent<BoxCollider2D>()->size = Vector2(10, 1000);
 
-	FadeScreen::FadeIn(Color::white, 1.0f);
+	background = new Background;
+	hukidashi = new Hukidashi;
 
-	auto bgm = Sound::Get("bgm_demo");
-	bgm->loop = true;
-	bgm->SetVolume(0.5f);
-	bgm->Play();
+	field_bgm_player = new FieldBgmPlayer;
+
+	mapdata = new MapManager();
+	mapdata->Load("Data/Map/prototype_map1.tmx");
+	mapdata->SetPlayerpointer(player);
+	mapdata->SetSmoothPoint(camera);
+
+	falling_snow = new FallingSnow(mapdata);
+	light_particle = new ParticleOfLight(mapdata);
+
+	mapdata->SetSignText(hukidashi);
+
+	Light::Init();
+	FadeScreen::FadeIn(Color::white, 1.0f);
 }
 
 void Scene_Stage1::Update(void)
@@ -115,7 +112,8 @@ void Scene_Stage1::Uninit(void)
 	ModelData::Release("Maptip/20_summer");
 	ModelData::Release("Maptip/20_winter");
 	ModelData::Release("field_summer");
-	Sound::Release("bgm_demo");
+	Sound::Release("field_summer");
+	Sound::Release("field_winter");
 	//Sound::ReleaseSerial("foot_mud");
 
 	((SceneGlobal*)GameManager::GetInstance()->GetGlobalScene())->SetCameraActive(false);
