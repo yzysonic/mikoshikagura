@@ -34,7 +34,7 @@ void Scene_Stage1::Init(void)
 	ModelData::Load("Maptip/37");
 	ModelData::Load("field_summer");
 	Sound::Load("bgm_demo");
-	Sound::LoadSerial("foot_mud", 7);
+	//Sound::LoadSerial("foot_mud", 7);
 	
 	Light::Init();
 	SeasonManager::Create(SeasonType::Summer);
@@ -80,7 +80,10 @@ void Scene_Stage1::Init(void)
 
 	FadeScreen::FadeIn(Color::white, 1.0f);
 
-	Sound::Get("bgm_demo")->Play();
+	auto bgm = Sound::Get("bgm_demo");
+	bgm->loop = true;
+	bgm->SetVolume(0.5f);
+	bgm->Play();
 }
 
 void Scene_Stage1::Update(void)
@@ -113,7 +116,7 @@ void Scene_Stage1::Uninit(void)
 	ModelData::Release("Maptip/20_winter");
 	ModelData::Release("field_summer");
 	Sound::Release("bgm_demo");
-	Sound::ReleaseSerial("foot_mud");
+	//Sound::ReleaseSerial("foot_mud");
 
 	((SceneGlobal*)GameManager::GetInstance()->GetGlobalScene())->SetCameraActive(false);
 }
