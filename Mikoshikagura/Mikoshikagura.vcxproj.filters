@@ -637,11 +637,5 @@
     <None Include="Shader\InstancingVS.hlsl">
       <Filter>Shader</Filter>
     </None>
-    <None Include="Shader\NormalVS.hlsl">
-      <Filter>Shader</Filter>
-    </None>
-    <None Include="Shader\OverlayPS.hlsl">
-      <Filter>Shader</Filter>
-    </None>
   </ItemGroup>
 </Project>
