@@ -32,6 +32,9 @@ void SceneGlobal::Init(void)
 	//重力設定
 	Physics::GetInstance()->setGravity(Vector3(0.0f, -98.0f, 0.0f));
 
+	// サウンドボリューム設定
+	Sound::SetGlobalVolume(0.4f);
+
 
 #ifdef _DEBUG
 	DebugManager::Create();

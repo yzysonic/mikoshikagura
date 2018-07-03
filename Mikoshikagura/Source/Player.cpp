@@ -35,8 +35,8 @@ Player::Player(void)
 
 	// ‘«‰¹‰Šú‰»
 	Foot::player = this;
-	this->foot[0] = new Foot("Armature_Foot_L");
-	this->foot[1] = new Foot("Armature_Foot_R");
+	//this->foot[0] = new Foot("Armature_Foot_L");
+	//this->foot[1] = new Foot("Armature_Foot_R");
 	this->foot_sounds = Sound::GetSerial("foot_mud");
 	this->sound_player = AddComponent<SoundPlayer>();
 

@@ -11,7 +11,23 @@
 #pragma comment ( lib, "dsound.lib" )
 #pragma comment ( lib, "winmm.lib" )
 
+float Sound::global_volume = 1.0f;
 IDirectSound8 * Sound::pDirectSound = NULL; // サウンドインターフェース
+
+void Sound::SetGlobalVolume(float value)
+{
+	global_volume = clamp(value, 0.0f, 1.0f);
+	for (auto & pair : name_map)
+	{
+		auto sound = pair.second.get();
+		sound->SetVolume(sound->volume);
+	}
+}
+
+float Sound::GetGlobalVolume(void)
+{
+	return global_volume;
+}
 
 Sound * Sound::InternalLoad(std::string name, std::string ext)
 {
@@ -185,7 +201,8 @@ void Sound::Stop(void)
 void Sound::SetVolume(float value)
 {
 	volume = clamp(value, 0.0f, 1.0f);
-	pBuffer->SetVolume(volume > 0.0f ? (long)(2000.0f*log10f(volume)) : MinVolume);
+	auto final_volume = global_volume * volume;
+	pBuffer->SetVolume(final_volume > 0.0f ? (long)(2000.0f*log10f(final_volume)) : MinVolume);
 }
 
 float Sound::GetVolume(void)

@@ -15,8 +15,11 @@ public:
 	static constexpr char* BasePath = "Sound/";
 	static constexpr char* DefaultExtension = ".wav";
 	static constexpr long MinVolume = DSBVOLUME_MIN;
+	static void SetGlobalVolume(float value);
+	static float GetGlobalVolume(void);
 
 private:
+	static float global_volume;
 	static IDirectSound8 *pDirectSound; // サウンドインターフェース
 	static Sound* InternalLoad(std::string name, std::string ext);
 	static HRESULT Init(HWND hWnd);

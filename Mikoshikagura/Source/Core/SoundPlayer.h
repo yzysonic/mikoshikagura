@@ -31,6 +31,7 @@ private:
 	std::string sound_name;
 	float volume;
 	FrameTimer timer;
+	bool playing;
 	std::function<void(void)> update;
 
 };

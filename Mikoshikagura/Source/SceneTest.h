@@ -9,6 +9,7 @@
 #include "FallingSnow.h"
 #include "SunLight.h"
 #include "ParticleOfLight.h"
+#include "FieldBgmPlayer.h"
 
 class SceneTest : public Scene
 {
@@ -29,6 +30,7 @@ private:
 	GoalObject<SceneTest> *goal;
 	SunLight		*sun_light[20];
 	Snapper			*snapper;
+	FieldBgmPlayer	*field_bgm_player;
 
 	//テスト用壁
 	Object *wall;
