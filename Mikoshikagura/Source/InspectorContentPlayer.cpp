@@ -15,7 +15,7 @@ void InspectorContentPlayer::GuiContent(void)
 		{
 			ImGui::Text("Ground Collider: %x", ground_collider);
 		}
-		ImGui::Text("LeftFoot Ground Collider: %x", player->foot[0]->last_ground);
+		//ImGui::Text("LeftFoot Ground Collider: %x", player->foot[0]->last_ground);
 		//ImGui::Text("RightFoot Ground Collider: %x", player->foot[1]->last_ground);
 
 		ImGui::Spacing();

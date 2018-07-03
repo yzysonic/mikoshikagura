@@ -14,7 +14,7 @@ SunLight::SunLight(void)
 	camera = RenderSpace::Get("default")->GetCamera(0);
 	timer.Reset(Randomf(0.3f, 15.0f));
 	display = false;
-	opacity_max = 1.0f;
+	opacity_max = 0.4f;
 	opacity_min = 0.0f;
 	display_interval = 2.5f;
 }
@@ -54,33 +54,26 @@ void SunLight::Update(void)
 void SunLight::OnDraw(void)
 {
 	auto pDevice = Direct3D::GetDevice();
-	auto camera = RenderSpace::Get("default")->GetCamera(0);
-
-	transform.UpdateWorldMatrix();
-
-	polygon->vshader->SetMatrix("WorldViewProj", transform.mtx_world*camera->getViewMatrix(false)*camera->getProjectionMatrix(false));
-	pDevice->SetVertexShader(polygon->vshader->pD3DShader);
-	pDevice->SetPixelShader(polygon->pshader->pD3DShader);
-
-	pDevice->SetTexture(1, RenderTarget::Get("rt_main")->pDXTex);
 
 	// αブレンドなし
-	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+	//pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 
 	// Zバッファを無効
 	pDevice->SetRenderState(D3DRS_ZENABLE, FALSE);
 
+	// 加算合成
+	pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
+
+	// ライティングを無効
+	pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
 }
 
 void SunLight::AfterDraw(void)
 {
 	auto pDevice = Direct3D::GetDevice();
 
-	pDevice->SetVertexShader(NULL);
-	pDevice->SetPixelShader(NULL);
-	pDevice->SetTexture(1, NULL);
-	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
-
-	// Zバッファを有効
+	//pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 	pDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
+	pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+	pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
 }
