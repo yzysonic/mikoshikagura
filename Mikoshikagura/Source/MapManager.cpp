@@ -373,7 +373,7 @@ void MapManager::SetSummer()
 
 
 	//マップ表面の初期化
-	for (auto x :groundheightlist)
+	for (auto & x :groundheightlist)
 	{
 		x = -1.0f;
 	}
@@ -415,7 +415,7 @@ void MapManager::SetWinter()
 	}
 
 	//マップ表面の初期化
-	for (auto x : groundheightlist)
+	for (auto &x : groundheightlist)
 	{
 		x = -1.0f;
 	}
