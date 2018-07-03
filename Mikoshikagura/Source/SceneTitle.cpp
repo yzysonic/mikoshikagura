@@ -2,23 +2,40 @@
 #include "Scene_Stage1.h"
 #include "FadeScreen.h"
 #include "Light.h"
+#include "SceneGlobal.h"
 
 void SceneTitle::Init(void)
 {
-	FadeScreen::FadeIn(Color::black, 1.0f);
-	Light::Init();
-
+	((SceneGlobal*)GameManager::GetInstance()->GetGlobalScene())->SetCameraActive(true);
 	Texture::Load("mikoshikagura_rogo2");
+	Texture::Load("background_summer_layer0");
+	Texture::Load("background_summer_layer1");
+	Texture::Load("background_summer_layer2");
+	Texture::Load("background_winter_layer0");
+	Texture::Load("background_winter_layer1");
+	Texture::Load("background_winter_layer2");
 
-	RenderSpace::Get("default")->GetCamera(0)->setBackColor(Color::black);
+	Light::Init();
+	SeasonManager::Create(SeasonType::Summer);
 
 	title = new Object;
 	title->AddComponent<RectPolygon2D>("mikoshikagura_rogo2")->SetSize(960, 240);
 	title->transform.position = Vector3(0, 100, 0);
 	title->AddComponent<Text>()->LoadFont("‚¨‚Â‚Æ‚ßƒtƒHƒ“ƒg");
-	title->GetComponent<Text>()->area = { 475,400,1000,500 };
+	title->GetComponent<Text>()->area = { 475,450,1000,550 };
+
+	dummy_pos = Vector3(10.f, 70.f, 0.f);
+	dummy.position = dummy_pos;
+
+	camera = new MainCamera;
+	camera->render_target = RenderTarget::Get("rt_main");
+	camera->SetTarget(&dummy);
+	camera->setBackColor(Color(250, 250, 250, 255));
+	RenderSpace::Get("default")->SetCamera(0, camera);
+	background = new Background;
 
 	SceneEnd = false;
+	FadeScreen::FadeIn(Color::black, 1.0f);
 }
 
 void SceneTitle::Update(void)
@@ -41,4 +58,10 @@ void SceneTitle::Update(void)
 void SceneTitle::Uninit(void)
 {
 	Texture::Release("mikoshikagura_rogo2");
+	Texture::Release("background_summer_layer0");
+	Texture::Release("background_summer_layer1");
+	Texture::Release("background_summer_layer2");
+	Texture::Release("background_winter_layer0");
+	Texture::Release("background_winter_layer1");
+	Texture::Release("background_winter_layer2");
 }
