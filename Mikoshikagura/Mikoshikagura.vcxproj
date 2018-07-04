@@ -227,6 +227,7 @@
     <ClInclude Include="Source\Holdable.h" />
     <ClInclude Include="Source\Hukidashi.h" />
     <ClInclude Include="Source\ParticleOfLight.h" />
+    <ClInclude Include="Source\SceneClear.h" />
     <ClInclude Include="Source\SceneExplorer.h" />
     <ClInclude Include="Source\SceneImGuiTest.h" />
     <ClInclude Include="Source\Imgui\imconfig.h" />
@@ -325,6 +326,7 @@
     <ClCompile Include="Source\ObjectExplorer.cpp" />
     <ClCompile Include="Source\ParticleOfLight.cpp" />
     <ClCompile Include="Source\Player.cpp" />
+    <ClCompile Include="Source\SceneClear.cpp" />
     <ClCompile Include="Source\SceneExplorer.cpp" />
     <ClCompile Include="Source\SceneGlobal.cpp" />
     <ClCompile Include="Source\SceneImGuiTest.cpp" />
