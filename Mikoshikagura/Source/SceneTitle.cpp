@@ -22,7 +22,9 @@ void SceneTitle::Init(void)
 	title->AddComponent<RectPolygon2D>("mikoshikagura_rogo2")->SetSize(960, 240);
 	title->transform.position = Vector3(0, 100, 0);
 	title->AddComponent<Text>()->LoadFont("‚¨‚Â‚Æ‚ßƒtƒHƒ“ƒg");
-	title->GetComponent<Text>()->area = { 475,450,1000,550 };
+	title->GetComponent<Text>()->SetSize(60,0);
+	title->GetComponent<Text>()->area = { 0,450,SystemParameters::ResolutionX,550 };
+	title->GetComponent<Text>()->SetFormat(DT_SINGLELINE|DT_CENTER|DT_VCENTER);
 
 	dummy_pos = Vector3(10.f, 70.f, 0.f);
 	dummy.position = dummy_pos;
