@@ -26,8 +26,7 @@ void SceneTitle::Init(void)
 	title->GetComponent<Text>()->area = { 0,450,SystemParameters::ResolutionX,550 };
 	title->GetComponent<Text>()->SetFormat(DT_SINGLELINE|DT_CENTER|DT_VCENTER);
 
-	dummy_pos = Vector3(10.f, 70.f, 0.f);
-	dummy.position = dummy_pos;
+	dummy.position = Vector3(10.f, 70.f, 0.f);
 
 	camera = new MainCamera;
 	camera->render_target = RenderTarget::Get("rt_main");

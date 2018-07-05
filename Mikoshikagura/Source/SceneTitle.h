@@ -20,6 +20,5 @@ private:
 	Background		*background;
 	MainCamera		*camera;
 	Transform		dummy;
-	Vector3			dummy_pos;
 	float			radian;
 };
