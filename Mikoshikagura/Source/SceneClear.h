@@ -2,9 +2,6 @@
 #include "Core/Core.h"
 #include "Core/Text.h"
 #include "MainCamera.h"
-#include "Player.h"
-#include "Background.h"
-#include "SeasonManager.h"
 
 class SceneClear : public Scene
 {
@@ -14,11 +11,8 @@ public:
 	void Uninit(void) override;
 
 private:
-	bool SceneEnd;
-	Object *title;
-	SeasonManager	*seasonmanager;
-	Background		*background;
+	bool			SceneEnd;
+	Object			*title;
 	MainCamera		*camera;
 	Transform		dummy;
-	float			radian;
 };

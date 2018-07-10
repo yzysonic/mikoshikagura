@@ -7,24 +7,17 @@
 void SceneClear::Init(void)
 {
 	((SceneGlobal*)GameManager::GetInstance()->GetGlobalScene())->SetCameraActive(true);
-	Texture::Load("mikoshikagura_rogo2");
-	Texture::Load("background_summer_layer0");
-	Texture::Load("background_summer_layer1");
-	Texture::Load("background_summer_layer2");
-	Texture::Load("background_winter_layer0");
-	Texture::Load("background_winter_layer1");
-	Texture::Load("background_winter_layer2");
 
 	Light::Init();
-	SeasonManager::Create(SeasonType::Summer);
 
 	title = new Object;
-	title->AddComponent<RectPolygon2D>("mikoshikagura_rogo2")->SetSize(960, 240);
-	title->transform.position = Vector3(0, 100, 0);
 	title->AddComponent<Text>()->LoadFont("おつとめフォント");
 	title->GetComponent<Text>()->SetSize(60, 0);
-	title->GetComponent<Text>()->area = { 0,450,SystemParameters::ResolutionX,550 };
+	title->GetComponent<Text>()->area = { 0,0,SystemParameters::ResolutionX,SystemParameters::ResolutionY };
+	title->GetComponent<Text>()->SetSize(128, 0);
+	title->GetComponent<Text>()->SetColor(Color::black);
 	title->GetComponent<Text>()->SetFormat(DT_SINGLELINE | DT_CENTER | DT_VCENTER);
+	title->GetComponent<Text>()->SetText("ステージクリア！");
 
 	dummy.position = Vector3(10.f, 70.f, 0.f);
 
@@ -33,22 +26,17 @@ void SceneClear::Init(void)
 	camera->SetTarget(&dummy);
 	camera->setBackColor(Color(250, 250, 250, 255));
 	RenderSpace::Get("default")->SetCamera(0, camera);
-	background = new Background;
 
 	SceneEnd = false;
-	FadeScreen::FadeIn(Color::black, 1.0f);
+	FadeScreen::FadeIn(Color::white, 1.0f);
 }
 
 void SceneClear::Update(void)
 {
 	if (!SceneEnd && GetKeyboardTrigger(DIK_RETURN))
 	{
-		FadeScreen::FadeOut(Color::white, 1.0f);
+		FadeScreen::FadeOut(Color::black, 1.0f);
 		SceneEnd = true;
-	}
-	if (!SceneEnd && FadeScreen::Finished())
-	{
-		title->GetComponent<Text>()->SetText("ゲームクリア");
 	}
 	if (SceneEnd && FadeScreen::Finished())
 	{
@@ -58,11 +46,4 @@ void SceneClear::Update(void)
 
 void SceneClear::Uninit(void)
 {
-	Texture::Release("mikoshikagura_rogo2");
-	Texture::Release("background_summer_layer0");
-	Texture::Release("background_summer_layer1");
-	Texture::Release("background_summer_layer2");
-	Texture::Release("background_winter_layer0");
-	Texture::Release("background_winter_layer1");
-	Texture::Release("background_winter_layer2");
 }
