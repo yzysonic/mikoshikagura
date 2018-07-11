@@ -32,6 +32,7 @@ void Renderer::Create(void)
 	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);			// αブレンドを行う
 	pDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);		// αソースカラーの指定
 	pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);	// αデスティネーションカラーの指定
+	pDevice->SetRenderState(D3DRS_NORMALIZENORMALS, TRUE);
 	pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
 
 	// サンプラーステートパラメータの設定

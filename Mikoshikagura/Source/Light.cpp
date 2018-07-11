@@ -13,7 +13,6 @@ void Light::Init(void)
 		instance.reset(new Light);
 
 	LPDIRECT3DDEVICE9 pDevice = Direct3D::GetDevice();
-	D3DXVECTOR3 vecDir;
 
 	// D3DLIGHT9構造体を0でクリアする
 	ZeroMemory(&light[0], sizeof(D3DLIGHT9));
@@ -24,10 +23,9 @@ void Light::Init(void)
 	// ライト0の拡散光の設定
 	light[0].Diffuse = D3DXCOLOR(0xffffffff);
 	light[0].Ambient = D3DXCOLOR(0xffffffff);
-
+	
 	// ライト0の方向の設定
-	vecDir = D3DXVECTOR3(968.0f, -934.0f, 2689.0f);
-	D3DXVec3Normalize((D3DXVECTOR3*)&light[0].Direction, &vecDir);
+	light[0].Direction = Vector3(968.0f, -934.0f, 2689.0f).normalized();
 
 	// ライト0をレンダリングパイプラインに設定
 	pDevice->SetLight(0, &light[0]);

@@ -1,6 +1,5 @@
 #include "AllocateHirerachy.h"
 #include "Common.h"
-#include "BoneFrame.h"
 
 STDMETHODIMP AllocateHierarchy::CreateFrame(LPCSTR Name, LPD3DXFRAME * ppNewFrame)
 {

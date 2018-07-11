@@ -14,8 +14,11 @@ void SceneYangTest::Init(void)
 	// リソースのロード
 	ModelData::Load("field_summer");
 	ModelData::Load("field_winter");
-	Texture::Load("body_sum.tga");
-	Texture::Load("misaki_head.tga");
+	Texture::Load("00_Kuroko_face");
+	Texture::Load("00_Kuroko_Face_Eye");
+	Texture::Load("00_Kuroko_Fuku_BR");
+	Texture::Load("00_Kuroko_Fuku_BR_No_Sode");
+	Texture::Load("00_Kuroko_hair");
 	Texture::Load("mushroom");
 	Texture::Load("particle");
 	VertexShader::Load("InstancingVS.hlsl");
@@ -26,6 +29,10 @@ void SceneYangTest::Init(void)
 	SeasonManager::Create(SeasonType::Summer);
 
 	// オブジェクト初期化
+	//test_model = new Object;
+	////test_model->AddComponent<StaticModel>("player2");
+	//test_model->AddComponent<SkinnedModel>("player2");
+
 	player	= new Player;
 	player->SetPosition(Vector3(0.0f, 30.0f, 0.0f));
 
@@ -103,8 +110,11 @@ void SceneYangTest::Uninit(void)
 
 	ModelData::Release("field_summer");
 	ModelData::Release("field_winter");
-	Texture::Release("body_sum.tga");
-	Texture::Release("misaki_head.tga");
+	Texture::Release("00_Kuroko_face");
+	Texture::Release("00_Kuroko_Face_Eye");
+	Texture::Release("00_Kuroko_Fuku_BR");
+	Texture::Release("00_Kuroko_Fuku_BR_No_Sode");
+	Texture::Release("00_Kuroko_hair");
 	Texture::Release("mushroom");
 	Texture::Release("snow");
 	Sound::Release("bgm_demo");

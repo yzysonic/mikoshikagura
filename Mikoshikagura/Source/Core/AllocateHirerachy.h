@@ -2,12 +2,15 @@
 
 #include <d3dx9.h>
 #include "Texture.h"
+#include "BoneFrame.h"
 
 struct XMESHCONTAINER : public D3DXMESHCONTAINER {
 	DWORD maxFaceInfl;
 	DWORD numBoneCombinations;
-	ID3DXBuffer *boneCombinationTable;
-	Texture **pTextures;
+	ID3DXBuffer *boneCombinationTable	= NULL;
+	D3DXBONECOMBINATION *combs			= NULL;
+	BoneFrame			**boneMap		= NULL;
+	Texture **pTextures					= NULL;
 	XMESHCONTAINER() : maxFaceInfl(1), numBoneCombinations(0), boneCombinationTable(NULL) {}
 };
 

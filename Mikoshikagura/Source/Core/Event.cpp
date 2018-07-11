@@ -2,7 +2,9 @@
 
 void Event::operator()(void)
 {
-	for (auto callback : this->callback_list)
+	auto callback_list = this->callback_list;
+
+	for (auto callback : callback_list)
 		callback();
 
 }

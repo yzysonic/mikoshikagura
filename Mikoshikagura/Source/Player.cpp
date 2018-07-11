@@ -16,17 +16,17 @@ Player::Player(void)
 	this->type = ObjectType::Player;
 	this->name = "Player";
 	this->speed = PlayerSpeed;
-	this->anime = AnimeSet::Idle;
+	this->current_animation = "Idle";
 	this->is_grounded = false;
 	this->is_holding_item = false;
 
 	// モデル初期化
 	this->model = AddComponent<SkinnedModel>("player");
-	this->model->SetAnime((int)this->anime);
+	this->model->SetAnimation(this->current_animation);
 
 	// コライダー初期化
 	this->collider = AddComponent<BoxCollider2D>();
-	this->collider->size = Vector2(4.0f, 9.0f);
+	this->collider->size = Vector2(4.0f, 16.0f);
 	this->collider->offset.y += 0.5f*this->collider->size.y;
 
 	// Rigidbody初期化
@@ -46,7 +46,8 @@ Player::Player(void)
 	this->state[(int)StateName::Move	].reset(new StateMove(this));
 	this->state[(int)StateName::Air		].reset(new StateAir(this));
 	this->state[(int)StateName::Action	].reset(new StateAction(this));
-	this->state[(int)StateName::Whistle	].reset(new StateWhistle(this));
+	this->action_state = this->state[3].get();
+	this->state[(int)StateName::SeasonChange	].reset(new StateSeasonChange(this));
 	this->current_state = this->state[(int)StateName::Idle].get();
 
 #ifdef _DEBUG
@@ -59,7 +60,7 @@ void Player::Update(void)
 {
 	MoveControl();
 	ActionControl();
-	WhistleControl();
+	SeasonChangeControl();
 
 	this->current_state->Update();
 	this->last_position = this->transform.position;
@@ -72,20 +73,42 @@ void Player::Uninit(void)
 
 void Player::OnCollisionEnter(Object * other)
 {
-	if (other->type == ObjectType::Item && !this->action)
+	if (other->type == ObjectType::Item && !this->action_enter)
 	{
-		this->action = [other, this] {
-			auto item = other->GetComponent<Holdable>();
-			if (!this->is_holding_item)
-			{
-				item->offset_y = this->collider->size.y +0.5f*item->object->GetComponent<BoxCollider2D>()->size.y + 2.0f;
-				item->SetOwner(&this->transform);
-				this->is_holding_item = true;
-			}
-			else
+		auto item = other->GetComponent<Holdable>();
+
+		// ものを拾う
+		this->action_enter = [item, this]
+		{
+			SetAnimation("Pick", false);
+			this->rigidbody->velocity.x = 0.0f;
+
+			// ものを放つ
+			this->action_enter = [item, this]
 			{
 				item->SetOwner(nullptr);
 				this->is_holding_item = false;
+				this->action_enter = nullptr;
+				this->action_update = nullptr;
+				this->action_exit = nullptr;
+
+				this->current_state->SetState(StateName::Idle);
+			};
+
+		};
+
+		this->action_update = [item, this]
+		{
+			this->anime_timer++;
+			if (!this->is_holding_item && this->anime_timer.Elapsed() > 0.833f)
+			{
+				this->is_holding_item = true;
+				item->offset_y = this->collider->size.y + 0.5f*item->object->GetComponent<BoxCollider2D>()->size.y + 2.0f;
+				item->SetOwner(&this->transform);
+			}
+			if (this->anime_timer.TimeUp())
+			{
+				this->current_state->SetState(StateName::Idle);
 			}
 		};
 	}
@@ -172,7 +195,7 @@ void Player::OnCollisionExit(Object * other)
 	case ObjectType::Item:
 		if (!this->is_holding_item)
 		{
-			this->action = nullptr;
+			this->action_enter = nullptr;
 		}
 	}
 	
@@ -184,17 +207,15 @@ void Player::SetPosition(Vector3 pos)
 	this->rigidbody->position = pos;
 }
 
-void Player::SetAnime(AnimeSet anime, bool loop)
+void Player::SetAnimation(std::string name, bool loop)
 {
-	int index = (int)anime;
-
-	this->model->SetAnime(index);
-	this->anime = anime;
+	this->model->SetAnimation(name);
+	this->current_animation = name;
 
 	if (loop)
 		this->anime_timer.Reset(-1);
 	else
-		this->anime_timer.Reset(this->model->GetAnimePeriod(index));
+		this->anime_timer.Reset(this->model->GetAnimationPeriod(name));
 
 }
 
@@ -227,17 +248,17 @@ void Player::MoveControl(void)
 
 void Player::ActionControl(void)
 {
-	if ((GetKeyboardTrigger(KeyAction) || IsButtonTriggered(ButtonAction)))
+	if ((GetKeyboardTrigger(KeyAction) || GetKeyboardTrigger(KeyAction2) || IsButtonTriggered(ButtonAction)) && this->action_enter)
 	{
-		action();
+		this->current_state->SetState(StateName::Action);
 	}
 }
 
-void Player::WhistleControl(void)
+void Player::SeasonChangeControl(void)
 {
-	if ((GetKeyboardTrigger(KeyWhistle) || IsButtonTriggered(ButtonWhistle)) && !this->is_holding_item)
+	if ((GetKeyboardTrigger(KeySeasonChange) || IsButtonTriggered(ButtonSeasonChange)) && !this->is_holding_item)
 	{
-		this->current_state->SetState(StateName::Whistle);
+		this->current_state->SetState(StateName::SeasonChange);
 	}
 }
 
@@ -257,19 +278,15 @@ bool Player::JumpControl(void)
 void Player::Move(void)
 {
 	// 移動処理
-	auto camera = Renderer::GetInstance()->getCamera("default");
-	Vector3 offset = this->transform.position - camera->transform.position;
-	float phi = atan2f(offset.z, offset.x) - 0.5f*PI;
-
 	Vector3 move;
-	move.x = control.x*cosf(phi) - control.z*sinf(phi);
-	move.z = control.x*sinf(phi) + control.z*cosf(phi);
+	move.x = (fabsf(control.x) > 0.5f) ? control.x*PlayerSpeed : control.x*13.0f/0.5f;
+	move.z = control.z;
 
 	// 移動量を反応
-	this->rigidbody->velocity.x = move.x*PlayerSpeed;
+	this->rigidbody->velocity.x = move.x;
 
 	// 向きの設定
-	this->transform.setFront(move);
+	this->rigidbody->rotation.y = atan2f(-move.z, move.x) - PI / 2;
 }
 
 #pragma endregion
@@ -293,7 +310,7 @@ void Player::State::SetState(StateName state)
 
 void Player::StateIdle::OnEnter(void)
 {
-	this->player->SetAnime(AnimeSet::Idle);
+	this->player->SetAnimation("Idle");
 }
 
 void Player::StateIdle::Update(void)
@@ -312,7 +329,7 @@ void Player::StateIdle::SetState(StateName state)
 {
 	switch (state)
 	{
-	case StateName::Whistle:
+	case StateName::SeasonChange:
 	case StateName::Move:
 	case StateName::Air:
 	case StateName::Action:
@@ -329,7 +346,8 @@ void Player::StateIdle::SetState(StateName state)
 
 void Player::StateMove::OnEnter(void)
 {
-	this->player->SetAnime(AnimeSet::Running);
+	this->player->SetAnimation("Walk");
+	running = false;
 }
 
 void Player::StateMove::Update(void)
@@ -341,8 +359,9 @@ void Player::StateMove::Update(void)
 			float control_len = this->player->control.length();
 			if (control_len > 0.0f)
 			{
+				SetRunning();
 				this->player->Move();
-				this->player->model->SetAnimeSpeedScale(control_len);
+				this->player->model->SetAnimationSpeedScale(control_len * (running ? 1.0f : 1.0f/0.5f));
 			}
 			else
 			{
@@ -358,7 +377,7 @@ void Player::StateMove::Update(void)
 
 void Player::StateMove::OnExit(void)
 {
-	this->player->model->SetAnimeSpeedScale(1.0f);
+	this->player->model->SetAnimationSpeedScale(1.0f);
 }
 
 void Player::StateMove::SetState(StateName state)
@@ -372,6 +391,15 @@ void Player::StateMove::SetState(StateName state)
 	}
 }
 
+void Player::StateMove::SetRunning(void)
+{
+	if (running != this->player->control.length() > 0.5f)
+	{
+		running = !running;
+		this->player->SetAnimation(running ? "Run" : "Walk");
+	}
+}
+
 #pragma endregion
 
 #pragma region StateAction
@@ -380,10 +408,17 @@ void Player::StateMove::SetState(StateName state)
 //=============================================================================
 void Player::StateAction::OnEnter(void)
 {
+	this->player->action_enter();
 }
 
 void Player::StateAction::Update(void)
 {
+	this->player->action_update();
+}
+
+void Player::StateAction::OnExit(void)
+{
+	this->player->action_exit();
 }
 
 void Player::StateAction::SetState(StateName state)
@@ -405,9 +440,7 @@ void Player::StateAction::SetState(StateName state)
 void Player::StateAir::OnEnter(void)
 {
 	this->player->rigidbody->useGravity = true;
-
-	//TODO: ジャンプ／落下のアニメーションにする
-	this->player->SetAnime(AnimeSet::Idle);
+	this->player->SetAnimation("Fall");
 }
 
 void Player::StateAir::Update(void)
@@ -447,17 +480,30 @@ void Player::StateAir::SetState(StateName state)
 #pragma endregion
 
 #pragma region StateWhistle
-void Player::StateWhistle::OnEnter(void)
+void Player::StateSeasonChange::OnEnter(void)
 {
-	SeasonManager::SwitchSeason([this] 
-	{
-		this->SetState(StateName::Idle); 
-	});
-
-	this->player->whistle();
+	this->player->SetAnimation("SeasonChange", false);
+	change = false;
 }
 
-void Player::StateWhistle::SetState(StateName state)
+void Player::StateSeasonChange::Update(void)
+{
+	this->player->anime_timer++;
+
+	if (!change && this->player->anime_timer.Elapsed() > 0.8f)
+	{
+		SeasonManager::SwitchSeason([this]
+		{
+			this->SetState(StateName::Idle);
+		});
+
+		this->player->season_change();
+
+		change = true;
+	}
+}
+
+void Player::StateSeasonChange::SetState(StateName state)
 {
 	if(state == StateName::Idle)
 		State::SetState(state);

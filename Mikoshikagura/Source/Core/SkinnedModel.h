@@ -16,9 +16,7 @@ class SkinnedModel : public Drawable
 {
 public:
 	D3DXFRAME			*rootFrame;
-	XMESHCONTAINER		*meshCont;
-	D3DXBONECOMBINATION *combs;
-	BoneFrame			**boneMap;
+	std::vector<XMESHCONTAINER*> meshContList;
 	ID3DXAnimationController *animator;
 	LPD3DXANIMATIONSET	*animationSet;
 	D3DXMATRIX			mtx_local;
@@ -29,13 +27,21 @@ public:
 	SkinnedModel(std::string model_name);
 	~SkinnedModel(void);
 	void Draw(void) override;
-	void SetAnime(int n);
-	void SetAnimeSpeedScale(float value);
-	float GetAnimePeriod(int n);
+	void SetAnimation(int n);
+	void SetAnimation(std::string name);
+	void SetAnimationSpeedScale(float value);
+	LPD3DXANIMATIONSET GetCurrentAnimation(void);
+	float GetAnimationPeriod(int n);
+	float GetAnimationPeriod(std::string name);
 	D3DXFRAME *FindFrameByName(const char * name);
 
 private:
+	int anim_set_num;
+	float anim_speed_scale;
+	float anim_timer;
+	float anim_shift_time;
+
 	static D3DXFRAME *FindFrameByName(const char* name, D3DXFRAME *frame);
-	int anime_set_num;
-	float anime_speed_scale;
+	void InitMeshContainer(LPD3DXFRAME frame);
+	void AdvanceTime(float time);
 };

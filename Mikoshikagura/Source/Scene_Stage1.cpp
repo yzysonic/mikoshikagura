@@ -10,8 +10,10 @@ void Scene_Stage1::Init(void)
 
 	// リソースのロード
 	Texture::Load("map");
-	Texture::Load("body_sum.tga");
-	Texture::Load("misaki_head.tga");
+	Texture::Load("00_Kuroko_face");
+	Texture::Load("00_Kuroko_Face_Eye");
+	Texture::Load("00_Kuroko_Fuku_BR_No_Sode");
+	Texture::Load("00_Kuroko_hair");
 	Texture::Load("background_summer_layer0");
 	Texture::Load("background_summer_layer1");
 	Texture::Load("background_summer_layer2");
@@ -91,8 +93,10 @@ void Scene_Stage1::Uninit(void)
 	Renderer::GetInstance()->setCamera(nullptr);
 	
 	Texture::Release("map");
-	Texture::Release("body_sum.tga");
-	Texture::Release("misaki_head.tga");
+	Texture::Release("00_Kuroko_face");
+	Texture::Release("00_Kuroko_Face_Eye");
+	Texture::Release("00_Kuroko_Fuku_BR_No_Sode");
+	Texture::Release("00_Kuroko_hair");
 	Texture::Release("background_summer_layer0");
 	Texture::Release("background_summer_layer1");
 	Texture::Release("background_summer_layer2");
