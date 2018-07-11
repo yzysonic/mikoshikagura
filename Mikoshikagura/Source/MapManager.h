@@ -69,6 +69,9 @@ class MapManager :public Object ,ISeason{
 	std::vector<Object *> allobjectlist;
 	std::vector<Object *> signobjectlist;
 	std::vector<Object *> smoothobjectlist;
+
+	void SetActiveCollider(std::pair<int, int> cell);	//コライダーの更新
+	void ChangeActiveCollider(std::pair<int, int> cell, std::pair<int, int> vec);
 public:
 	MapManager();									//コンストラクタ
 	virtual ~MapManager();									//デストラクタ
@@ -82,7 +85,7 @@ public:
 
 	void CreateMap(MapLayer layer);
 	void UpdatePlayerCell();						//プレイヤーがいるセルの更新
-	void SetActiveCollider(std::pair<int, int> cell, bool state);	//コライダーの更新
+
 	void SetPlayerpointer(Player *player);			//プレイヤーポインタの設定
 	void SetSignText(Hukidashi * hukidasi);
 	void SetSmoothPoint(MainCamera *camera);

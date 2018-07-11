@@ -164,14 +164,26 @@ GroupType MapManager::SetGroupType(std::string grouptype) {
 //マップチップオブジェクト作成
 Object* MapManager::CreateMapObject(int id , MapLayer layer) {
 
-	Vector3 objscale;										//スケール
 	Object  *objtemp;							//オブジェクト生成
 
 												/*モデル読み込み処理*/
 	std::string model_name = "Maptip/" + std::to_string(id);	//名前設定
 	switch (id)
 	{
+	case 26:
+		//ステージ2　地面
+		objtemp = new Object();
+		model_name = "Maptip/" + std::to_string(23);
 
+		if (ModelData::Get(model_name)) {
+			objtemp->AddComponent<StaticModel>(model_name);
+		}
+		else {
+			model_name = "field_summer";
+			objtemp->AddComponent<StaticModel>(model_name);
+		}
+
+		break;
 	case 45:
 
 		//看板用処理
@@ -181,11 +193,23 @@ Object* MapManager::CreateMapObject(int id , MapLayer layer) {
 		if (Texture::Get(model_name)) {
 			objtemp->AddComponent<RectPolygon>(model_name,Layer::MASK);
 		}
-		else {
-			
-		}
 		
 		objtemp->GetComponent<RectPolygon>()->SetSize(Vector2::one *10);
+
+		break;
+
+	case 48:
+		objtemp = new Object();
+		model_name = "tree_tekito";
+		if (ModelData::Get(model_name)) {
+
+			objtemp->AddComponent<StaticModel>(model_name,Layer::PLAYER)->alphaTestEnable = false; //暫定
+		}
+		else {
+			model_name = "field_summer";
+			objtemp->AddComponent<StaticModel>(model_name);
+		}
+
 
 		break;
 
@@ -193,6 +217,21 @@ Object* MapManager::CreateMapObject(int id , MapLayer layer) {
 		objtemp = new Object();
 		smoothobjectlist.push_back(objtemp);
 
+		break;
+
+
+	case 100:
+		objtemp = new Object();
+		model_name = "torii";
+		if (ModelData::Get(model_name)) {
+
+			objtemp->AddComponent<StaticModel>(model_name, Layer::PLAYER)->alphaTestEnable = false; //暫定
+			objtemp->transform.setRotation(0.f, PI / 2, 0.f);
+		}
+		else {
+			model_name = "field_summer";
+			objtemp->AddComponent<StaticModel>(model_name);
+		}
 		break;
 	default:
 		objtemp = new Object();
@@ -217,14 +256,15 @@ Object* MapManager::CreateMapObject(int id , MapLayer layer) {
 			break;
 		}
 		break;
+
 	}
 
 
-	objtemp->transform.scale = transform.scale;				//スケール設定
-	objscale = objtemp->transform.scale;
+	objtemp->transform.scale = objscale;				//スケール設定
 
 	objtemp->AddComponent<BoxCollider2D>();					//コライダー追加
 	objtemp->GetComponent<BoxCollider2D>()->size = Vector2(BlockSize * objscale.x, BlockSize * objscale.y);
+	objtemp->GetComponent<BoxCollider2D>()->offset.y = +5.f;
 	objtemp->GetComponent<BoxCollider2D>()->SetActive(false);
 
 
@@ -273,7 +313,6 @@ void MapManager::UpdatePlayerCell()
 {
 
 	Vector3  playerpos = playerobj->transform.position;
-
 	std::pair<int, int> celltemp = WorldtoCell(playerpos);
 
 	if (celltemp != playercell) {
@@ -286,7 +325,7 @@ void MapManager::UpdatePlayerCell()
 
 }
 
-void MapManager::SetActiveCollider(std::pair<int, int> cell, bool state)
+void MapManager::SetActiveCollider(std::pair<int, int> cell)
 {
 
 	std::pair<int, int> targetcell[5];
@@ -313,7 +352,7 @@ void MapManager::SetActiveCollider(std::pair<int, int> cell, bool state)
 
 		if (fieldobjectmap.find(itcell) != fieldobjectmap.end()) {
 			if (fieldobjectmap[itcell]->GetActive()) {
-				fieldobjectmap[itcell]->GetComponent<BoxCollider2D>()->SetActive(state);
+				fieldobjectmap[itcell]->GetComponent<BoxCollider2D>()->SetActive(true);
 			}
 		}
 
@@ -322,10 +361,19 @@ void MapManager::SetActiveCollider(std::pair<int, int> cell, bool state)
 
 }
 
+void MapManager::ChangeActiveCollider(std::pair<int, int> cell, std::pair<int, int> vec)
+{
+
+
+
+}
+
 void MapManager::SetPlayerpointer(Player *player)
 {
 	playerobj = player;
+	SetActiveCollider(WorldtoCell(playerobj->transform.position));
 }
+
 
 void MapManager::Update()
 {
@@ -333,6 +381,18 @@ void MapManager::Update()
 		UpdatePlayerCell();
 
 	}
+
+
+	if (ImGui::DragFloat("MapObjScale", &objscale.z, 0.1f, 0.1f, 10.f)) {
+
+		for (auto itr : fieldobjectmap) {
+			itr.second->transform.scale.z = objscale.z;
+		}
+
+	}
+
+
+
 
 }
 
@@ -426,8 +486,8 @@ std::pair<int, int> MapManager::WorldtoCell(Vector3 worldpos)
 {
 	int x, y;
 	worldpos.x += BlockSize / 2;
-	x = (int)(worldpos.x / (transform.scale.x * BlockSize));
-	y = (int)((height *  BlockSize - worldpos.y) / (transform.scale.y * BlockSize));
+	x = (int)(worldpos.x / (objscale.x * BlockSize));
+	y = (int)((height *  BlockSize - worldpos.y) / (objscale.y * BlockSize));
 	
 	return std::pair<int, int>(x, y);
 }
