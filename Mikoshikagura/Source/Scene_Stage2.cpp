@@ -9,9 +9,6 @@ void Scene_Stage2::Init(void)
 	((SceneGlobal*)GameManager::GetInstance()->GetGlobalScene())->SetCameraActive(true);
 
 	// リソースのロード
-	VertexShader::Load("NormalVS.hlsl");
-	PixelShader::Load("OverlayPS.hlsl");
-
 	Texture::Load("map");
 	Texture::Load("body_sum.tga");
 	Texture::Load("misaki_head.tga");
