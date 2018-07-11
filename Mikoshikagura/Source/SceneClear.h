@@ -2,10 +2,8 @@
 #include "Core/Core.h"
 #include "Core/Text.h"
 #include "MainCamera.h"
-#include "Background.h"
-#include "SeasonManager.h"
 
-class SceneTitle : public Scene
+class SceneClear : public Scene
 {
 public:
 	void Init(void) override;
@@ -15,8 +13,6 @@ public:
 private:
 	bool			SceneEnd;
 	Object			*title;
-	SeasonManager	*seasonmanager;
-	Background		*background;
 	MainCamera		*camera;
 	Transform		dummy;
 };

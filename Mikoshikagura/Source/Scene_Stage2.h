@@ -6,14 +6,14 @@
 #include "Background.h"
 #include "SeasonManager.h"
 #include "GoalObject.h"
-#include "SceneClear.h"
+#include "SceneTitle.h"
 #include "FallingSnow.h"
 #include "SunLight.h"
 #include "FieldBgmPlayer.h"
 
 #include "ParticleOfLight.h"
 
-class Scene_Stage1 : public Scene
+class Scene_Stage2 : public Scene
 {
 public:
 	void Init(void) override;
@@ -30,7 +30,7 @@ private:
 	Hukidashi		*hukidashi;
 	Player			*player;
 	FieldBgmPlayer	*field_bgm_player;
-	GoalObject<SceneClear> *goal;
+	GoalObject<SceneTitle> *goal;
 	SunLight		*sun_light[20];
 
 	//テスト用壁

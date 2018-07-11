@@ -53,10 +53,9 @@ class MapManager :public Object ,ISeason{
 
 
 	static constexpr int BlockSize = 10;			//ブロックサイズ
-
+	Vector3 objscale = Vector3(1.f,1.f,3.f);								//マップオブジェクトスケール
 	int width;										//幅
 	int height;										//高さ
-	Vector3 objscale;								//マップオブジェクトスケール
 	Player *playerobj;								//プレイヤーのポインタ
 	std::pair<int, int> playercell;					//プレイヤーのいるセル
 

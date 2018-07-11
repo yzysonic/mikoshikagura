@@ -227,6 +227,7 @@
     <ClInclude Include="Source\Holdable.h" />
     <ClInclude Include="Source\Hukidashi.h" />
     <ClInclude Include="Source\ParticleOfLight.h" />
+    <ClInclude Include="Source\SceneClear.h" />
     <ClInclude Include="Source\SceneExplorer.h" />
     <ClInclude Include="Source\SceneImGuiTest.h" />
     <ClInclude Include="Source\Imgui\imconfig.h" />
@@ -244,6 +245,7 @@
     <ClInclude Include="Source\SceneTitle.h" />
     <ClInclude Include="Source\SceneYangTest.h" />
     <ClInclude Include="Source\Scene_Stage1.h" />
+    <ClInclude Include="Source\Scene_Stage2.h" />
     <ClInclude Include="Source\SeasonManager.h" />
     <ClInclude Include="Source\SeasonModel.h" />
     <ClInclude Include="Source\Sign.h" />
@@ -325,6 +327,7 @@
     <ClCompile Include="Source\ObjectExplorer.cpp" />
     <ClCompile Include="Source\ParticleOfLight.cpp" />
     <ClCompile Include="Source\Player.cpp" />
+    <ClCompile Include="Source\SceneClear.cpp" />
     <ClCompile Include="Source\SceneExplorer.cpp" />
     <ClCompile Include="Source\SceneGlobal.cpp" />
     <ClCompile Include="Source\SceneImGuiTest.cpp" />
@@ -335,6 +338,7 @@
     <ClCompile Include="Source\SceneTitle.cpp" />
     <ClCompile Include="Source\SceneYangTest.cpp" />
     <ClCompile Include="Source\Scene_Stage1.cpp" />
+    <ClCompile Include="Source\Scene_Stage2.cpp" />
     <ClCompile Include="Source\SeasonManager.cpp" />
     <ClCompile Include="Source\SeasonModel.cpp" />
     <ClCompile Include="Source\Sign.cpp" />

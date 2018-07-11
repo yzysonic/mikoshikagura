@@ -358,6 +358,12 @@
     <ClInclude Include="Source\FieldBgmPlayer.h">
       <Filter>GameObject</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Scene_Stage2.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneClear.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Core\AllocateHirerachy.cpp">
@@ -631,6 +637,12 @@
     </ClCompile>
     <ClCompile Include="Source\FieldBgmPlayer.cpp">
       <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneClear.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene_Stage2.cpp">
+      <Filter>Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
