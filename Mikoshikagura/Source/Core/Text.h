@@ -20,9 +20,12 @@ public:
 	void AddText(char c);
 	void ClearText(void);
 	void LoadFont(std::string filename);
+	void SetSize(UINT x, UINT y);
+	void SetFormat(UINT fm);
 	RECT area;
 
 private:
 	LPD3DXFONT	Font = NULL;
 	std::string text, name;
+	UINT width, height, format;
 };
