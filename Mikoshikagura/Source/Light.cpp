@@ -23,7 +23,7 @@ void Light::Init(void)
 
 	// ライト0の拡散光の設定
 	light[0].Diffuse = D3DXCOLOR(0xffffffff);
-	light[0].Ambient = D3DXCOLOR(0xffffffff);
+	//light[0].Ambient = D3DXCOLOR(0xffffffff);
 
 	// ライト0の方向の設定
 	vecDir = D3DXVECTOR3(968.0f, -934.0f, 2689.0f);

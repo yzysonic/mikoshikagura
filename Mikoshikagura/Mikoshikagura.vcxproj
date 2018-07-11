@@ -245,6 +245,7 @@
     <ClInclude Include="Source\SceneTitle.h" />
     <ClInclude Include="Source\SceneYangTest.h" />
     <ClInclude Include="Source\Scene_Stage1.h" />
+    <ClInclude Include="Source\Scene_Stage2.h" />
     <ClInclude Include="Source\SeasonManager.h" />
     <ClInclude Include="Source\SeasonModel.h" />
     <ClInclude Include="Source\Sign.h" />
@@ -337,6 +338,7 @@
     <ClCompile Include="Source\SceneTitle.cpp" />
     <ClCompile Include="Source\SceneYangTest.cpp" />
     <ClCompile Include="Source\Scene_Stage1.cpp" />
+    <ClCompile Include="Source\Scene_Stage2.cpp" />
     <ClCompile Include="Source\SeasonManager.cpp" />
     <ClCompile Include="Source\SeasonModel.cpp" />
     <ClCompile Include="Source\Sign.cpp" />

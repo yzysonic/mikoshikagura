@@ -1,17 +1,22 @@
-#include "Scene_Stage1.h"
+#include "Scene_Stage2.h"
 #include "FadeScreen.h"
 #include "Core/Game.h"
 #include "Light.h"
 #include "SceneGlobal.h"
 
-void Scene_Stage1::Init(void)
+void Scene_Stage2::Init(void)
 {
 	((SceneGlobal*)GameManager::GetInstance()->GetGlobalScene())->SetCameraActive(true);
 
 	// リソースのロード
+	VertexShader::Load("NormalVS.hlsl");
+	PixelShader::Load("OverlayPS.hlsl");
+
 	Texture::Load("map");
 	Texture::Load("body_sum.tga");
 	Texture::Load("misaki_head.tga");
+	Texture::Load("bark01_bottom.tga");			//木
+	Texture::Load("branch01.tga");
 	Texture::Load("background_summer_layer0");
 	Texture::Load("background_summer_layer1");
 	Texture::Load("background_summer_layer2");
@@ -25,16 +30,17 @@ void Scene_Stage1::Init(void)
 	Texture::Load("sun_light");
 	Texture::Load("sun_light2");
 
-	ModelData::Load("torii");
 	ModelData::Load("Maptip/20_summer");
 	ModelData::Load("Maptip/20_winter");
 	ModelData::Load("Maptip/23");
 	ModelData::Load("Maptip/37");
 	ModelData::Load("field_summer");
+	ModelData::Load("tree_tekito");
+	ModelData::Load("torii");
 	Sound::Load("field_summer");
 	Sound::Load("field_winter");
 	//Sound::LoadSerial("foot_mud", 7);
-	
+
 	Light::Init();
 	SeasonManager::Create(SeasonType::Summer);
 
@@ -48,7 +54,7 @@ void Scene_Stage1::Init(void)
 	camera->setBackColor(Color(250, 250, 250, 255));
 	RenderSpace::Get("default")->SetCamera(0, camera);
 
-	for(auto & light : sun_light)
+	for (auto & light : sun_light)
 		light = new SunLight;
 
 	wall = new Object;
@@ -68,9 +74,9 @@ void Scene_Stage1::Init(void)
 	field_bgm_player = new FieldBgmPlayer;
 
 	mapdata = new MapManager();
-	mapdata->Load("Data/Map/prototype_map1.tmx");
+	mapdata->Load("Data/Map/prototype_map2_new.tmx");
 	mapdata->SetPlayerpointer(player);
-	//mapdata->SetSmoothPoint(camera);
+	mapdata->SetSmoothPoint(camera);
 
 	falling_snow = new FallingSnow(mapdata);
 	light_particle = new ParticleOfLight(mapdata);
@@ -81,16 +87,16 @@ void Scene_Stage1::Init(void)
 	FadeScreen::FadeIn(Color::white, 1.0f);
 }
 
-void Scene_Stage1::Update(void)
+void Scene_Stage2::Update(void)
 {
 }
 
-void Scene_Stage1::Uninit(void)
+void Scene_Stage2::Uninit(void)
 {
 	SeasonManager::Destroy();
 
 	Renderer::GetInstance()->setCamera(nullptr);
-	
+
 	Texture::Release("map");
 	Texture::Release("body_sum.tga");
 	Texture::Release("misaki_head.tga");
@@ -105,12 +111,13 @@ void Scene_Stage1::Uninit(void)
 	Texture::Release("hukidashi");
 	Texture::Release("sun_light");
 	Texture::Release("sun_light2");
-	ModelData::Release("torii");
 	ModelData::Release("Maptip/23");
 	ModelData::Release("Maptip/37");
 	ModelData::Release("Maptip/20_summer");
 	ModelData::Release("Maptip/20_winter");
 	ModelData::Release("field_summer");
+	ModelData::Release("torii");
+	ModelData::Release("tree_tekito");
 	Sound::Release("field_summer");
 	Sound::Release("field_winter");
 	//Sound::ReleaseSerial("foot_mud");
