@@ -81,7 +81,7 @@ void MapManager::Load(std::string str)
 
 	}
 
-	groundheightlist.resize(width,-1.0f);
+	groundheightlist.resize(width, -1.0f);
 
 }
 //csvデータのパース
@@ -135,7 +135,7 @@ LayerType MapManager::SetLayerType(std::string layertype) {
 	else if (layertype == "Gimmick_Object") {
 		return LayerType::Gimmick_Object;
 	}
-	else{
+	else {
 		return LayerType::None;
 	}
 }
@@ -162,7 +162,7 @@ GroupType MapManager::SetGroupType(std::string grouptype) {
 
 }
 //マップチップオブジェクト作成
-Object* MapManager::CreateMapObject(int id , MapLayer layer) {
+Object* MapManager::CreateMapObject(int id, MapLayer layer) {
 
 	Object  *objtemp;							//オブジェクト生成
 
@@ -191,11 +191,12 @@ Object* MapManager::CreateMapObject(int id , MapLayer layer) {
 		objtemp->type = ObjectType::Accessary;						//タイプ設定
 		signobjectlist.push_back(objtemp);
 		if (Texture::Get(model_name)) {
-			objtemp->AddComponent<RectPolygon>(model_name,Layer::MASK);
+			objtemp->AddComponent<RectPolygon>(model_name, Layer::MASK);
 		}
-		
-		objtemp->GetComponent<RectPolygon>()->SetSize(Vector2::one *10);
 
+		objtemp->GetComponent<RectPolygon>()->SetSize(Vector2::one * 10);
+		objtemp->transform.position.y += 5.f;
+		objtemp->transform.position.z += 5.f;
 		break;
 
 	case 48:
@@ -203,7 +204,7 @@ Object* MapManager::CreateMapObject(int id , MapLayer layer) {
 		model_name = "tree_tekito";
 		if (ModelData::Get(model_name)) {
 
-			objtemp->AddComponent<StaticModel>(model_name,Layer::PLAYER)->alphaTestEnable = false; //暫定
+			objtemp->AddComponent<StaticModel>(model_name, Layer::PLAYER)->alphaTestEnable = false; //暫定
 		}
 		else {
 			model_name = "field_summer";
@@ -245,7 +246,7 @@ Object* MapManager::CreateMapObject(int id , MapLayer layer) {
 				model_name = "field_summer";
 			}
 
-			objtemp->AddComponent<SeasonModel>(model_name.c_str(),false);
+			objtemp->AddComponent<SeasonModel>(model_name.c_str(), false);
 			break;
 		default:
 			if (!(ModelData::Get(model_name))) {
@@ -264,7 +265,7 @@ Object* MapManager::CreateMapObject(int id , MapLayer layer) {
 
 	objtemp->AddComponent<BoxCollider2D>();					//コライダー追加
 	objtemp->GetComponent<BoxCollider2D>()->size = Vector2(BlockSize * objscale.x, BlockSize * objscale.y);
-	objtemp->GetComponent<BoxCollider2D>()->offset.y = +5.f;
+	objtemp->GetComponent<BoxCollider2D>()->offset.y = 5.f;
 	objtemp->GetComponent<BoxCollider2D>()->SetActive(false);
 
 
@@ -281,24 +282,27 @@ void MapManager::CreateMap(MapLayer layer)
 			int id = layer.maptip[i][j];
 			if (id > 0) {
 
-				Object* objtemp = CreateMapObject(id,layer);
+				Object* objtemp = CreateMapObject(id, layer);
 
-				objtemp->transform.position = Vector3((float)(j * BlockSize * objscale.x), (float)((height - i) * BlockSize * objscale.y), 0.0f);
+				objtemp->transform.position += Vector3((float)(j * BlockSize * objscale.x), (float)((height - i) * BlockSize * objscale.y), 0.0f);
 
 
 				//フィールドレイヤーの場合mapに格納
 				if (layer.layer == LayerType::Field) {
+					objtemp->transform.scale.z = objscale.z * 3;
 					fieldobjectmap[std::pair<int, int>(j, i)] = objtemp;
 				}
 
 				//グループごとにリストにポインタを格納
 				if (layer.group == GroupType::Season) {
 					seasonobjectlist.push_back(objtemp);
-				} else if (layer.group == GroupType::Summer) {
+				}
+				else if (layer.group == GroupType::Summer) {
 					objtemp->SetActive(false);
 					summerobjectlist.push_back(objtemp);
 
-				} else if (layer.group == GroupType::Winter) {
+				}
+				else if (layer.group == GroupType::Winter) {
 					objtemp->SetActive(false);
 					winterobjectlist.push_back(objtemp);
 				}
@@ -325,7 +329,7 @@ void MapManager::UpdatePlayerCell()
 
 }
 
-void MapManager::SetActiveCollider(std::pair<int, int> cell)
+void MapManager::SetActiveCollider(std::pair<int, int> cell, bool state)
 {
 
 	std::pair<int, int> targetcell[5];
@@ -352,7 +356,7 @@ void MapManager::SetActiveCollider(std::pair<int, int> cell)
 
 		if (fieldobjectmap.find(itcell) != fieldobjectmap.end()) {
 			if (fieldobjectmap[itcell]->GetActive()) {
-				fieldobjectmap[itcell]->GetComponent<BoxCollider2D>()->SetActive(true);
+				fieldobjectmap[itcell]->GetComponent<BoxCollider2D>()->SetActive(state);
 			}
 		}
 
@@ -361,17 +365,9 @@ void MapManager::SetActiveCollider(std::pair<int, int> cell)
 
 }
 
-void MapManager::ChangeActiveCollider(std::pair<int, int> cell, std::pair<int, int> vec)
-{
-
-
-
-}
-
 void MapManager::SetPlayerpointer(Player *player)
 {
 	playerobj = player;
-	SetActiveCollider(WorldtoCell(playerobj->transform.position));
 }
 
 
@@ -383,13 +379,13 @@ void MapManager::Update()
 	}
 
 
-	if (ImGui::DragFloat("MapObjScale", &objscale.z, 0.1f, 0.1f, 10.f)) {
+	//if (ImGui::DragFloat("MapObjScale", &objscale.z, 0.1f, 0.1f, 10.f)) {
 
-		for (auto itr : fieldobjectmap) {
-			itr.second->transform.scale.z = objscale.z;
-		}
+	//	for (auto itr : fieldobjectmap) {
+	//		itr.second->transform.scale.z = objscale.z;
+	//	}
 
-	}
+	//}
 
 
 
@@ -404,7 +400,7 @@ void MapManager::SetSummer()
 		itr->GetComponent<SeasonModel>()->SetSummer();
 	}
 
-	for (auto itr :summerobjectlist) {
+	for (auto itr : summerobjectlist) {
 		itr->SetActive(true);
 	}
 
@@ -433,7 +429,7 @@ void MapManager::SetSummer()
 
 
 	//マップ表面の初期化
-	for (auto & x :groundheightlist)
+	for (auto & x : groundheightlist)
 	{
 		x = -1.0f;
 	}
@@ -488,7 +484,7 @@ std::pair<int, int> MapManager::WorldtoCell(Vector3 worldpos)
 	worldpos.x += BlockSize / 2;
 	x = (int)(worldpos.x / (objscale.x * BlockSize));
 	y = (int)((height *  BlockSize - worldpos.y) / (objscale.y * BlockSize));
-	
+
 	return std::pair<int, int>(x, y);
 }
 
@@ -516,7 +512,7 @@ void MapManager::SetSignText(Hukidashi* hukidasi) {
 
 	for (auto itr : signobjectlist) {
 		itr->GetComponent<BoxCollider2D>()->SetActive(true);
-		dynamic_cast<Sign*>(itr)->Sign::SetText(xml_id->FirstChildElement("data")->GetText(),hukidasi);
+		dynamic_cast<Sign*>(itr)->Sign::SetText(xml_id->FirstChildElement("data")->GetText(), hukidasi);
 
 		xml_id = xml_id->NextSiblingElement();
 	}
@@ -533,17 +529,17 @@ void MapManager::SetSmoothPoint(MainCamera *camera)
 
 float MapManager::GetGroundPosition(float x) {
 
-	std::pair <int, int> celltemp = WorldtoCell(Vector3(x,0,0));
+	std::pair <int, int> celltemp = WorldtoCell(Vector3(x, 0, 0));
 
 
 	if (celltemp.first < 0) {
 		return 0.0f;
 	}
-	else if(celltemp.first >= width){
+	else if (celltemp.first >= width) {
 		return 0.0f;
 	}
 
-		
+
 	if (groundheightlist[celltemp.first] != -1.0f) {
 		return groundheightlist[celltemp.first];
 	}

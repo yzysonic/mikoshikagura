@@ -28,6 +28,7 @@ void Scene_Stage1::Init(void)
 	Texture::Load("sun_light");
 	Texture::Load("sun_light2");
 
+	ModelData::Load("torii");
 	ModelData::Load("Maptip/20_summer");
 	ModelData::Load("Maptip/20_winter");
 	ModelData::Load("Maptip/23");
@@ -107,6 +108,7 @@ void Scene_Stage1::Uninit(void)
 	Texture::Release("hukidashi");
 	Texture::Release("sun_light");
 	Texture::Release("sun_light2");
+	ModelData::Release("torii");
 	ModelData::Release("Maptip/23");
 	ModelData::Release("Maptip/37");
 	ModelData::Release("Maptip/20_summer");
