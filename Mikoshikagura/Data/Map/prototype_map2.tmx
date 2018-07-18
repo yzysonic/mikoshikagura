@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="50" height="30" tilewidth="128" tileheight="128" infinite="0" nextobjectid="1">
  <tileset firstgid="1" source="../../../../プロとマップ/field.tsx"/>
  <tileset firstgid="37" source="../../../../プロとマップ/gimmick_filed.tsx"/>
