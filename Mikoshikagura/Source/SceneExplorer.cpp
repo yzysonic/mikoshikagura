@@ -8,6 +8,8 @@
 #include "SceneYangTest.h"
 #include "SceneStackSample.h"
 #include "Scene_Stage1.h"
+#include "SceneClear.h"
+
 #include "Scene_Stage2.h"
 void SceneExplorer::Init(void)
 {
@@ -33,6 +35,8 @@ void SceneExplorer::Init(void)
 	AddScene<SceneTitle>();
 
 	AddScene<Scene_Stage1>();
+	AddScene<SceneClear>();
+
 	AddScene<Scene_Stage2>();
 
 	FadeScreen::FadeIn(Color::black, 0.0f);

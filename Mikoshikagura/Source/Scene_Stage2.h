@@ -1,5 +1,4 @@
 #pragma once
-#pragma once
 #include "Core/Core.h"
 #include "MainCamera.h"
 #include "Player.h"

@@ -9,12 +9,11 @@ void Scene_Stage1::Init(void)
 	((SceneGlobal*)GameManager::GetInstance()->GetGlobalScene())->SetCameraActive(true);
 
 	// リソースのロード
-	VertexShader::Load("NormalVS.hlsl");
-	PixelShader::Load("OverlayPS.hlsl");
-
 	Texture::Load("map");
-	Texture::Load("body_sum.tga");
-	Texture::Load("misaki_head.tga");
+	Texture::Load("00_Kuroko_face");
+	Texture::Load("00_Kuroko_Face_Eye");
+	Texture::Load("00_Kuroko_Fuku_BR_No_Sode");
+	Texture::Load("00_Kuroko_hair");
 	Texture::Load("background_summer_layer0");
 	Texture::Load("background_summer_layer1");
 	Texture::Load("background_summer_layer2");
@@ -60,7 +59,7 @@ void Scene_Stage1::Init(void)
 	wall->GetComponent<BoxCollider2D>()->size = Vector2(10.0f, 1000.0f);
 	wall->GetComponent<BoxCollider2D>()->SetActive(true);
 
-	goal = new GoalObject<SceneTitle>();
+	goal = new GoalObject<SceneClear>();
 	goal->transform.scale = Vector3::one*10.f;
 	goal->transform.position = Vector3(380, 0, 0);
 	goal->AddComponent<BoxCollider2D>()->size = Vector2(10, 1000);
@@ -73,7 +72,7 @@ void Scene_Stage1::Init(void)
 	mapdata = new MapManager();
 	mapdata->Load("Data/Map/prototype_map1.tmx");
 	mapdata->SetPlayerpointer(player);
-	mapdata->SetSmoothPoint(camera);
+	//mapdata->SetSmoothPoint(camera);
 
 	falling_snow = new FallingSnow(mapdata);
 	light_particle = new ParticleOfLight(mapdata);
@@ -95,8 +94,10 @@ void Scene_Stage1::Uninit(void)
 	Renderer::GetInstance()->setCamera(nullptr);
 	
 	Texture::Release("map");
-	Texture::Release("body_sum.tga");
-	Texture::Release("misaki_head.tga");
+	Texture::Release("00_Kuroko_face");
+	Texture::Release("00_Kuroko_Face_Eye");
+	Texture::Release("00_Kuroko_Fuku_BR_No_Sode");
+	Texture::Release("00_Kuroko_hair");
 	Texture::Release("background_summer_layer0");
 	Texture::Release("background_summer_layer1");
 	Texture::Release("background_summer_layer2");

@@ -227,6 +227,7 @@
     <ClInclude Include="Source\Holdable.h" />
     <ClInclude Include="Source\Hukidashi.h" />
     <ClInclude Include="Source\ParticleOfLight.h" />
+    <ClInclude Include="Source\SceneClear.h" />
     <ClInclude Include="Source\SceneExplorer.h" />
     <ClInclude Include="Source\SceneImGuiTest.h" />
     <ClInclude Include="Source\Imgui\imconfig.h" />
@@ -326,6 +327,7 @@
     <ClCompile Include="Source\ObjectExplorer.cpp" />
     <ClCompile Include="Source\ParticleOfLight.cpp" />
     <ClCompile Include="Source\Player.cpp" />
+    <ClCompile Include="Source\SceneClear.cpp" />
     <ClCompile Include="Source\SceneExplorer.cpp" />
     <ClCompile Include="Source\SceneGlobal.cpp" />
     <ClCompile Include="Source\SceneImGuiTest.cpp" />
@@ -351,28 +353,6 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">3.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">3.0</ShaderModel>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Shader\OverlayPS.hlsl">
-      <FileType>Document</FileType>
-      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">OverlayPS</EntryPointName>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">3.0</ShaderModel>
-      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">OverlayPS</EntryPointName>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">3.0</ShaderModel>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Shader\NormalVS.hlsl">
-      <FileType>Document</FileType>
-      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NormalPS</EntryPointName>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">3.0</ShaderModel>
-      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NormalPS</EntryPointName>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">3.0</ShaderModel>
     </None>
   </ItemGroup>

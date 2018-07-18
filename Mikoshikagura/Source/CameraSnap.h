@@ -1,13 +1,20 @@
 #pragma once
 #include "Core/Core.h"
 
-#define SnapDistance (50.0f)
+class Snapper : public Object
+{
+public:
+	Snapper();
+	bool snapping;
+	void OnCollisionEnter(Object *object) override;
+	void OnCollisionExit(Object *object) override;
+};
 
 class CameraSnap : public Script
 {
 public:
 	Transform *target = nullptr;
-	std::vector<Transform*> snappers;
+	std::vector<Snapper*> snappers;
 
 	void Update(void) override;
 

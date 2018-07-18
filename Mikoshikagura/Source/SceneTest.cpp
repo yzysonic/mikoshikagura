@@ -1,88 +1,86 @@
 #include "SceneTest.h"
 #include "FadeScreen.h"
+#include "Core/Game.h"
 #include "Light.h"
-#include "DebugManager.h"
-#include "Core\Physics.h"
-#include "SeasonManager.h"
+#include "SceneGlobal.h"
 void SceneTest::Init(void)
 {
+	((SceneGlobal*)GameManager::GetInstance()->GetGlobalScene())->SetCameraActive(true);
 
-	SeasonManager::Create();
-	SeasonManager::SetSeason(SeasonType::Summer);
-
-	FadeScreen::FadeIn(Color::white, 1.0f);
-	Light::Init();
-	Texture::Load("body_sum.tga");
-	Texture::Load("misaki_head.tga");
-
-	Texture::Load("target");
-	Texture::Load("hukidashi");
 	// リソースのロード
 	Texture::Load("map");
 	Texture::Load("body_sum.tga");
 	Texture::Load("misaki_head.tga");
-	Texture::Load("background");
+	Texture::Load("background_summer_layer0");
+	Texture::Load("background_summer_layer1");
+	Texture::Load("background_summer_layer2");
+	Texture::Load("background_winter_layer0");
+	Texture::Load("background_winter_layer1");
+	Texture::Load("background_winter_layer2");
+	Texture::Load("particle");
+	Texture::Load("particle_light");
+	Texture::Load("hukidashi");
+	Texture::Load("Maptip/45");
+	Texture::Load("sun_light");
+	Texture::Load("sun_light2");
 
 	ModelData::Load("Maptip/20_summer");
 	ModelData::Load("Maptip/20_winter");
 	ModelData::Load("Maptip/23");
 	ModelData::Load("Maptip/37");
 	ModelData::Load("field_summer");
-	Sound::Load("bgm_demo");
+	Sound::Load("field_summer");
+	Sound::Load("field_winter");
+	Sound::LoadSerial("foot_mud", 7);
 
+	Light::Init();
+	SeasonManager::Create(SeasonType::Summer);
 
-
-	target1 = new Object;
-	target1->AddComponent<RectPolygon>("target");
-	target1->transform.scale = Vector3::one*20.f;
-	target1->transform.position = Vector3(55, 65, 3);
-	target2 = new Object;
-	target2->AddComponent<RectPolygon>("target");
-	target2->transform.scale = Vector3::one*20.f;
-	target2->transform.position = Vector3(120, 65, 3);
+	// ゲームオブジェクトの初期化
+	player = new Player;
+	player->SetPosition(Vector3(10, 70, 0));
 
 	camera = new MainCamera;
-	player = new Player;
+	camera->render_target = RenderTarget::Get("rt_main");
 	camera->SetTarget(&player->transform);
+	camera->setBackColor(Color(250, 250, 250, 255));
+	RenderSpace::Get("default")->SetCamera(0, camera);
 
-	camera->AddSnapper(&target1->transform);
-	camera->AddSnapper(&target2->transform);
-	//camera->RemoveSnapper(&target1->transform);
+	for (auto & light : sun_light)
+		light = new SunLight;
 
-	Renderer::GetInstance()->setCamera(camera);
-
-	player->SetPosition(Vector3(0, 70, 0));
-
-
-
-	//0522nagai mapdata作成
 	mapdata = new MapManager();
-	mapdata->Load("Data/Map/prototype_map1.tmx");
+	mapdata->Load("Data/Map/prototype_map2.tmx");
 	mapdata->SetPlayerpointer(player);
 
-	Physics::GetInstance()->setGravity(Vector3(0.0f, -98.0f, 0.0f));
+	background = new Background;
+	falling_snow = new FallingSnow(mapdata);
+	light_particle = new ParticleOfLight(mapdata);
 
-	//0601umeda hukidashi作成
 	hukidashi = new Hukidashi;
+	mapdata->SetSignText(hukidashi);
 
-	kanban = new Sign("これはテストメッセージです。\nThis is test message.", hukidashi);
-	kanban->AddComponent<RectPolygon>("target");
-	kanban->transform.scale = Vector3::one*10.f;
-	kanban->transform.position = Vector3(180, 60, 3);
-	kanban->AddComponent<BoxCollider2D>()->size = Vector2(10,10);
+	Light::Init();
+	FadeScreen::FadeIn(Color::black, 0.0f);
 
+	wall = new Object;
+	wall->type = ObjectType::Field;
+	wall->AddComponent<BoxCollider2D>()->size = Vector2(10.0f, 1000.0f);
 
-	kanban2 = new Sign("メッセージ遷移テスト\nThis is test message.", hukidashi);
-	kanban2->AddComponent<RectPolygon>("target");
-	kanban2->transform.scale = Vector3::one*10.f;
-	kanban2->transform.position = Vector3(170, 60, 3);
-	kanban2->AddComponent<BoxCollider2D>()->size = Vector2(10, 10);
-
-	//0613umeda GoalObject
 	goal = new GoalObject<SceneTest>();
 	goal->transform.scale = Vector3::one*10.f;
-	goal->transform.position = Vector3(200, 60, 3);
-	goal->AddComponent<BoxCollider2D>()->size = Vector2(10, 10);
+	goal->transform.position = Vector3(380, 0, 0);
+	goal->AddComponent<BoxCollider2D>()->size = Vector2(10, 1000);
+
+	snapper = new Snapper();
+	snapper->transform.position = Vector3(185, 95, 0);
+	snapper->AddComponent<BoxCollider2D>()->size = Vector2(40, 60);
+	snapper->GetComponent<BoxCollider2D>()->offset = Vector2(-20, -30);
+	camera->AddSnapper(snapper);
+
+	FadeScreen::FadeIn(Color::white, 1.0f);
+
+	field_bgm_player = new FieldBgmPlayer;
 }
 
 void SceneTest::Update(void)
@@ -93,22 +91,32 @@ void SceneTest::Update(void)
 
 void SceneTest::Uninit(void)
 {
-	Renderer::GetInstance()->setCamera(nullptr);
-	Texture::Release("body_sum.tga");
-	Texture::Release("misaki_head.tga");
+	SeasonManager::Destroy();
 
-	Texture::Release("target");
-	Texture::Release("hukidashi");
-	// リソースのロード
+	Renderer::GetInstance()->setCamera(nullptr);
+
 	Texture::Release("map");
 	Texture::Release("body_sum.tga");
 	Texture::Release("misaki_head.tga");
-	Texture::Release("background");
-
-	ModelData::Release("Maptip/20_summer");
-	ModelData::Release("Maptip/20_winter");
+	Texture::Release("background_summer_layer0");
+	Texture::Release("background_summer_layer1");
+	Texture::Release("background_summer_layer2");
+	Texture::Release("background_winter_layer0");
+	Texture::Release("background_winter_layer1");
+	Texture::Release("background_winter_layer2");
+	Texture::Release("particle");
+	Texture::Release("particle_light");
+	Texture::Release("hukidashi");
+	Texture::Release("sun_light");
+	Texture::Release("sun_light2");
 	ModelData::Release("Maptip/23");
 	ModelData::Release("Maptip/37");
+	ModelData::Release("Maptip/20_summer");
+	ModelData::Release("Maptip/20_winter");
 	ModelData::Release("field_summer");
-	Sound::Release("bgm_demo");
+	Sound::Release("field_summer");
+	Sound::Release("field_winter");
+	Sound::ReleaseSerial("foot_mud");
+
+	((SceneGlobal*)GameManager::GetInstance()->GetGlobalScene())->SetCameraActive(false);
 }

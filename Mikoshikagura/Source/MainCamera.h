@@ -10,8 +10,12 @@ class MainCamera :public Camera
 public:
 	MainCamera(void);
 	void SetTarget(Transform* target);
-	void AddSnapper(Transform* target);
-	void RemoveSnapper(Transform* target);
+	void AddSnapper(Snapper* object);
+	void RemoveSnapper(Snapper* object);
+
+	//0627 íœ—\’è
+	void AddSnapper(Transform* target) {};
+	void RemoveSnapper(Transform* target) {};
 
 private:
 	CameraSphericalCoordinate* coordinate;

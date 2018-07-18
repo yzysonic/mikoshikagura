@@ -2,10 +2,14 @@
 #include "Core/Core.h"
 #include "MainCamera.h"
 #include "Player.h"
-#include "Hukidashi.h"
-#include "Sign.h"
 #include "MapManager.h"
+#include "Background.h"
+#include "SeasonManager.h"
 #include "GoalObject.h"
+#include "FallingSnow.h"
+#include "SunLight.h"
+#include "ParticleOfLight.h"
+#include "FieldBgmPlayer.h"
 
 class SceneTest : public Scene
 {
@@ -15,18 +19,19 @@ public:
 	void Uninit(void) override;
 
 private:
-	Object *test;
-	Object *testBG;
-	Object *target1;
-	Object *target2;
-	Sign *kanban;
-	Sign *kanban2;
-	MainCamera *camera;
-	Player *player;
-	Hukidashi *hukidashi;
+	MainCamera		*camera;
+	SeasonManager	*seasonmanager;
+	Background		*background;
+	FallingSnow		*falling_snow;
+	ParticleOfLight	*light_particle;
+	MapManager		*mapdata;
+	Hukidashi		*hukidashi;
+	Player			*player;
 	GoalObject<SceneTest> *goal;
+	SunLight		*sun_light[20];
+	Snapper			*snapper;
+	FieldBgmPlayer	*field_bgm_player;
 
-	MapManager *mapdata;
-
-	std::vector<Object> mapobj;
+	//テスト用壁
+	Object *wall;
 };

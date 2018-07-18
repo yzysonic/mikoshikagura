@@ -2,13 +2,14 @@
 #include "Core/Core.h"
 #include <set>
 
-#define KeyJump		DIK_SPACE
-#define KeyAction	DIK_RETURN
-#define KeyWhistle	DIK_TAB
+#define KeyJump			DIK_SPACE
+#define KeyAction		DIK_RETURN
+#define KeyAction2		DIK_E
+#define KeySeasonChange	DIK_TAB
 
-#define ButtonJump		BUTTON_CR
-#define ButtonAction	BUTTON_CI
-#define ButtonWhistle	BUTTON_TR
+#define ButtonJump			BUTTON_CR
+#define ButtonAction		BUTTON_CI
+#define ButtonSeasonChange	BUTTON_TR
 
 #define PlayerSpeed (40.0f)
 #define PlayerJumpSpeed (45.0f)
@@ -30,18 +31,10 @@ public:
 		Move,
 		Air,
 		Action,
-		Whistle,
+		SeasonChange,
 		Max
 	};
 
-	// アニメーション定義
-	enum class AnimeSet
-	{
-		Running,
-		Idle
-	} anime;
-
-	
 #pragma region State
 	// 状態クラス
 	class State
@@ -57,7 +50,7 @@ public:
 	protected:
 		Player * player;
 
-	} *current_state;
+	} *current_state, *action_state;
 
 	// 待機状態
 	class StateIdle : public State
@@ -74,12 +67,16 @@ public:
 	class StateMove : public State
 	{
 	public:
-		StateMove(Player* player) : State(player) {}
+		StateMove(Player* player) : State(player), running(false) {}
 		void OnEnter(void) override;
 		void Update(void) override;
 		void OnExit(void) override;
 		void SetState(StateName state) override;
 		inline const char* ToString(void) override { return "Move"; }
+
+	private:
+		bool running;
+		void SetRunning(void);
 	};
 
 	// 空中状態
@@ -101,6 +98,7 @@ public:
 		StateAction(Player* player) : State(player) {}
 		void OnEnter(void) override;
 		void Update(void) override;
+		void OnExit(void) override;
 		void SetState(StateName state) override;
 		inline const char* ToString(void) override { return "Action"; }
 	private:
@@ -108,15 +106,16 @@ public:
 	};
 
 	// 吹笛状態
-	class StateWhistle : public State
+	class StateSeasonChange : public State
 	{
 	public:
-		StateWhistle(Player* player) : State(player) {}
+		StateSeasonChange(Player* player) : State(player) {}
 		void OnEnter(void) override;
+		void Update(void) override;
 		void SetState(StateName state) override;
-		inline const char* ToString(void) override { return "Whistle"; }
+		inline const char* ToString(void) override { return "SeasonChange"; }
 	private:
-		FrameTimer timer;
+		bool change;
 	};
 
 #pragma endregion
@@ -144,7 +143,7 @@ public:
 
 	// 状態インスタンスリスト
 	std::vector<smart_ptr<State>> state;
-	Event whistle;
+	Event season_change;
 
 	// メンバー関数定義
 
@@ -161,6 +160,7 @@ private:
 	// メンバー変数定義
 
 	SkinnedModel* model;
+	std::string current_animation;
 	BoxCollider2D* collider;
 	std::set<Collider*> ground_colliders;
 	Rigidbody* rigidbody;
@@ -173,14 +173,16 @@ private:
 	float speed;
 	bool is_grounded;
 	bool is_holding_item;
-	Event action;
+	Event action_enter;
+	Event action_update;
+	Event action_exit;
 
 	// メンバー関数定義
 
-	void SetAnime(AnimeSet anime, bool loop = true);
+	void SetAnimation(std::string name, bool loop = true);
 	void MoveControl(void);
 	void ActionControl(void);
-	void WhistleControl(void);
+	void SeasonChangeControl(void);
 	bool JumpControl(void);
 	void Move(void);
 };

@@ -24,16 +24,16 @@ void MainCamera::SetTarget(Transform * target)
 	snap->SetActive(true);
 }
 
-void MainCamera::AddSnapper(Transform* target)
+void MainCamera::AddSnapper(Snapper* snapper)
 {
-	snap->snappers.push_back(target);
+	snap->snappers.push_back(snapper);
 }
 
-void MainCamera::RemoveSnapper(Transform* target)
+void MainCamera::RemoveSnapper(Snapper* snapper)
 {
-	auto snapper = std::find(snap->snappers.begin(), snap->snappers.end(), target);
-	if (snapper != snap->snappers.end())
+	auto target = std::find(snap->snappers.begin(), snap->snappers.end(), snapper);
+	if (target != snap->snappers.end())
 	{
-		snap->snappers.erase(snapper);
+		snap->snappers.erase(target);
 	}
 }

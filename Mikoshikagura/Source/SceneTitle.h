@@ -1,6 +1,9 @@
 #pragma once
 #include "Core/Core.h"
 #include "Core/Text.h"
+#include "MainCamera.h"
+#include "Background.h"
+#include "SeasonManager.h"
 
 class SceneTitle : public Scene
 {
@@ -10,7 +13,10 @@ public:
 	void Uninit(void) override;
 
 private:
-	bool SceneEnd;
-	Object *title;
-	
+	bool			SceneEnd;
+	Object			*title;
+	SeasonManager	*seasonmanager;
+	Background		*background;
+	MainCamera		*camera;
+	Transform		dummy;
 };

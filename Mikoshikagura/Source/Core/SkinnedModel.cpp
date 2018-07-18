@@ -10,6 +10,7 @@
 #include "Object.h"
 #include "Game.h"
 #include "Window.h"
+#include "Time.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -29,14 +30,11 @@ SkinnedModel::SkinnedModel(std::string model_name) : Drawable(Layer::DEFAULT, "d
 
 	// モデル関係の初期化
 	this->rootFrame = NULL;
-	this->meshCont = NULL;
-	this->combs = NULL;
-	this->boneMap = NULL;
 	this->animationSet = NULL;
 	this->activeAnimation = 0;
 	this->alphaTestEnable = false;
-	this->anime_set_num = 0;
-	this->anime_speed_scale = 1.0f;
+	this->anim_set_num = 0;
+	this->anim_speed_scale = 1.0f;
 
 	path = MODEL_PATH + model_name + ".x";
 
@@ -63,29 +61,13 @@ SkinnedModel::SkinnedModel(std::string model_name) : Drawable(Layer::DEFAULT, "d
 		return;
 	}
 
-	this->meshCont = FindMeshContainer(this->rootFrame);
-
-	// ボーン設定
-	if (this->meshCont->pSkinInfo != NULL)
-	{
-		this->combs = (D3DXBONECOMBINATION*)this->meshCont->boneCombinationTable->GetBufferPointer();
-		this->boneMap = (BoneFrame**)malloc(sizeof(BoneFrame*)*this->meshCont->pSkinInfo->GetNumBones());
-		for (DWORD i = 0; i < this->meshCont->pSkinInfo->GetNumBones(); i++)
-		{
-			this->boneMap[i] = (BoneFrame*)FindFrameByName(this->meshCont->pSkinInfo->GetBoneName(i), this->rootFrame);
-			this->boneMap[i]->mtxOffset = *this->meshCont->pSkinInfo->GetBoneOffsetMatrix(i);
-		}
-	}
-
-	//マテリアルの設定
-	for (int i = 0; i < (int)this->meshCont->NumMaterials; i++)
-		this->meshCont->pMaterials[i].MatD3D.Ambient = this->meshCont->pMaterials[i].MatD3D.Diffuse;
+	InitMeshContainer(this->rootFrame);
 
 	// アニメーターの設定
 	if (this->animator)
 	{
-		this->anime_set_num = this->animator->GetMaxNumAnimationSets();
-		if (this->anime_set_num > 1)
+		this->anim_set_num = this->animator->GetMaxNumAnimationSets();
+		if (this->anim_set_num > 1)
 		{
 			int n = this->animator->GetMaxNumAnimationSets();
 			this->animationSet = (LPD3DXANIMATIONSET*)malloc(sizeof(LPD3DXANIMATIONSET)*n);
@@ -104,8 +86,11 @@ SkinnedModel::SkinnedModel(std::string model_name) : Drawable(Layer::DEFAULT, "d
 SkinnedModel::~SkinnedModel(void)
 {
 	AllocateHierarchy	allocater;
+	for (auto mesh : this->meshContList)
+	{
+		SafeDelete(mesh->boneMap);
 
-	SafeFree(this->boneMap);
+	}
 	SafeFree(this->animationSet);
 
 	allocater.DestroyFrame(this->rootFrame);
@@ -128,37 +113,42 @@ void SkinnedModel::Draw(void)
 	pDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
 
 	// アニメーション更新
-	this->animator->AdvanceTime(0.016f*this->anime_speed_scale, 0);
+	AdvanceTime(Time::DeltaTime()*this->anim_speed_scale);
 	// ボーンマトリクス更新
 	this->object->transform.UpdateWorldMatrix();
 	// 頂点を ローカル空間 → ボーン空間 → フレームローカル空間 → ワールド空間 の順番で変換するためのマトリクス
 	((BoneFrame*)this->rootFrame->pFrameFirstChild->pFrameFirstChild)->UpdateMatrix(this->rootFrame->pFrameFirstChild->TransformationMatrix*this->mtx_local*this->object->transform.mtx_world);
 
-	for (DWORD i = 0; i < this->meshCont->numBoneCombinations; i++) {
-		DWORD boneNum = 0;
-		for (DWORD j = 0; j < this->meshCont->maxFaceInfl; j++) {
-			DWORD id = this->combs[i].BoneId[j];
-			if (id != UINT_MAX) {
-				pDevice->SetTransform(D3DTS_WORLDMATRIX(j), &(this->boneMap[id]->mtxCombined));
-				boneNum++;
+	for (auto mesh : this->meshContList)
+	{
+		for (DWORD i = 0; i < mesh->numBoneCombinations; i++) {
+			DWORD boneNum = 0;
+			for (DWORD j = 0; j < mesh->maxFaceInfl; j++) {
+				DWORD id = mesh->combs[i].BoneId[j];
+				if (id != UINT_MAX) {
+					pDevice->SetTransform(D3DTS_WORLDMATRIX(j), &(mesh->boneMap[id]->mtxCombined));
+					boneNum++;
+				}
 			}
+			pDevice->SetRenderState(D3DRS_VERTEXBLEND, boneNum - 1);
+
+			int attribID = mesh->combs[i].AttribId;
+
+			//マテリアルの設定
+			pDevice->SetMaterial(&mesh->pMaterials[attribID].MatD3D);
+
+			//テクスチャの設定
+			if (mesh->pTextures[attribID])
+				pDevice->SetTexture(0, mesh->pTextures[attribID]->pDXTex);
+			else
+				pDevice->SetTexture(0, NULL);
+			//描画
+			mesh->MeshData.pMesh->DrawSubset(i);
+
 		}
-		pDevice->SetRenderState(D3DRS_VERTEXBLEND, boneNum - 1);
-
-		int attribID = this->combs[i].AttribId;
-
-		//マテリアルの設定
-		pDevice->SetMaterial(&this->meshCont->pMaterials[attribID].MatD3D);
-
-		//テクスチャの設定
-		if (this->meshCont->pTextures[attribID])
-			pDevice->SetTexture(0, this->meshCont->pTextures[attribID]->pDXTex);
-		else
-			pDevice->SetTexture(0, NULL);
-		//描画
-		this->meshCont->MeshData.pMesh->DrawSubset(i);
 
 	}
+
 
 	 //マテリアルを元に戻す
 	pDevice->SetMaterial(&matDef);
@@ -167,22 +157,67 @@ void SkinnedModel::Draw(void)
 
 }
 
-void SkinnedModel::SetAnime(int n)
+void SkinnedModel::SetAnimation(int n)
 {
 	this->animator->SetTrackAnimationSet(0, this->animationSet[n]);
 	this->animator->SetTrackPosition(0, 0);
 }
 
-void SkinnedModel::SetAnimeSpeedScale(float value)
+void SkinnedModel::SetAnimation(std::string name)
 {
-	this->anime_speed_scale = value;
+	LPD3DXANIMATIONSET animationSet;
+	this->animator->GetAnimationSetByName(name.c_str(), &animationSet);
+
+	if (this->GetCurrentAnimation() == animationSet)
+		return;
+
+	// 現在のアニメーションセットの設定値を取得
+	D3DXTRACK_DESC TD;
+	this->animator->GetTrackDesc(0, &TD);
+
+	// 今のアニメーションをトラック1に移行
+	this->animator->SetTrackAnimationSet(1, this->GetCurrentAnimation());
+	this->animator->SetTrackDesc(1, &TD);
+
+	// 新しいアニメーションセットをトラック0に設定
+	this->animator->SetTrackAnimationSet(0, animationSet);
+
+	// トラックの合成
+	this->animator->SetTrackEnable(0, true);
+	this->animator->SetTrackEnable(1, true);
+
+	this->animator->SetTrackPosition(0, 0);
+	this->anim_shift_time = 0.15f;
+	this->anim_timer = 0.0f;
 }
 
-float SkinnedModel::GetAnimePeriod(int n)
+void SkinnedModel::SetAnimationSpeedScale(float value)
 {
-	if(n<this->anime_set_num)
+	this->anim_speed_scale = value;
+}
+
+LPD3DXANIMATIONSET SkinnedModel::GetCurrentAnimation(void)
+{
+	LPD3DXANIMATIONSET animationSet;
+	this->animator->GetTrackAnimationSet(0, &animationSet);
+	return animationSet;
+}
+
+float SkinnedModel::GetAnimationPeriod(int n)
+{
+	if(n<this->anim_set_num)
 		return (float)this->animationSet[n]->GetPeriod();
 	else 
+		return 0.0f;
+}
+
+float SkinnedModel::GetAnimationPeriod(std::string name)
+{
+	LPD3DXANIMATIONSET animationSet;
+	this->animator->GetAnimationSetByName(name.c_str(), &animationSet);
+	if (animationSet)
+		return animationSet->GetPeriod();
+	else
 		return 0.0f;
 }
 
@@ -210,4 +245,62 @@ D3DXFRAME * SkinnedModel::FindFrameByName(const char * name, D3DXFRAME * frame)
 	}
 	return NULL;
 	
+}
+
+void SkinnedModel::InitMeshContainer(LPD3DXFRAME frame)
+{
+	if (frame->pMeshContainer)
+	{
+		auto mesh = (XMESHCONTAINER*)frame->pMeshContainer;
+
+		// ボーン設定
+		if (mesh->pSkinInfo != NULL)
+		{
+			mesh->combs = (D3DXBONECOMBINATION*)mesh->boneCombinationTable->GetBufferPointer();
+			mesh->boneMap = new BoneFrame*[mesh->pSkinInfo->GetNumBones()];
+			for (DWORD i = 0; i < mesh->pSkinInfo->GetNumBones(); i++)
+			{
+				mesh->boneMap[i] = (BoneFrame*)FindFrameByName(mesh->pSkinInfo->GetBoneName(i), this->rootFrame);
+				mesh->boneMap[i]->mtxOffset = *mesh->pSkinInfo->GetBoneOffsetMatrix(i);
+			}
+		}
+
+		//マテリアルの設定
+		for (int i = 0; i < (int)mesh->NumMaterials; i++)
+			mesh->pMaterials[i].MatD3D.Ambient = mesh->pMaterials[i].MatD3D.Diffuse;
+
+		this->meshContList.emplace_back(mesh);
+	}
+
+	if (frame->pFrameSibling)
+	{
+		InitMeshContainer(frame->pFrameSibling);
+	}
+
+	if (frame->pFrameFirstChild)
+	{
+		InitMeshContainer(frame->pFrameFirstChild);
+	}
+
+}
+
+void SkinnedModel::AdvanceTime(float time)
+{
+	this->anim_timer += time;
+
+	// モーションブレンド
+	if (this->anim_timer < this->anim_shift_time)
+	{
+		auto weight = this->anim_timer / this->anim_shift_time;
+		
+		this->animator->SetTrackWeight(0, weight);
+		this->animator->SetTrackWeight(1, 1 - weight);
+	}
+	else
+	{
+		this->animator->SetTrackWeight(0, 1.0f);
+		this->animator->SetTrackEnable(1, false);
+	}
+
+	this->animator->AdvanceTime(time, 0);
 }

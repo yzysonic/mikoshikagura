@@ -6,7 +6,7 @@
 #include "Background.h"
 #include "SeasonManager.h"
 #include "GoalObject.h"
-#include "SceneTitle.h"
+#include "SceneClear.h"
 #include "FallingSnow.h"
 #include "SunLight.h"
 #include "FieldBgmPlayer.h"
@@ -30,7 +30,7 @@ private:
 	Hukidashi		*hukidashi;
 	Player			*player;
 	FieldBgmPlayer	*field_bgm_player;
-	GoalObject<SceneTitle> *goal;
+	GoalObject<SceneClear> *goal;
 	SunLight		*sun_light[20];
 
 	//テスト用壁

@@ -9,12 +9,11 @@ void Scene_Stage2::Init(void)
 	((SceneGlobal*)GameManager::GetInstance()->GetGlobalScene())->SetCameraActive(true);
 
 	// リソースのロード
-	VertexShader::Load("NormalVS.hlsl");
-	PixelShader::Load("OverlayPS.hlsl");
-
 	Texture::Load("map");
-	Texture::Load("body_sum.tga");
-	Texture::Load("misaki_head.tga");
+	Texture::Load("00_Kuroko_face");
+	Texture::Load("00_Kuroko_Face_Eye");
+	Texture::Load("00_Kuroko_Fuku_BR_No_Sode");
+	Texture::Load("00_Kuroko_hair");
 	Texture::Load("bark01_bottom.tga");			//木
 	Texture::Load("branch01.tga");
 	Texture::Load("background_summer_layer0");
@@ -98,8 +97,12 @@ void Scene_Stage2::Uninit(void)
 	Renderer::GetInstance()->setCamera(nullptr);
 
 	Texture::Release("map");
-	Texture::Release("body_sum.tga");
-	Texture::Release("misaki_head.tga");
+	Texture::Release("00_Kuroko_face");
+	Texture::Release("00_Kuroko_Face_Eye");
+	Texture::Release("00_Kuroko_Fuku_BR_No_Sode");
+	Texture::Release("00_Kuroko_hair");
+	Texture::Release("bark01_bottom.tga");			//木
+	Texture::Release("branch01.tga");
 	Texture::Release("background_summer_layer0");
 	Texture::Release("background_summer_layer1");
 	Texture::Release("background_summer_layer2");

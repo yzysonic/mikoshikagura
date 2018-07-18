@@ -53,4 +53,5 @@ private:
 	Item * item;
 	SeasonBgmPlayerTest * bgm_player;
 	Object * snow;
+	Object * test_model;
 };
