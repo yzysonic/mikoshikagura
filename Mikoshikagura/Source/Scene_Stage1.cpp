@@ -35,7 +35,7 @@ void Scene_Stage1::Init(void)
 	ModelData::Load("field_summer");
 	Sound::Load("field_summer");
 	Sound::Load("field_winter");
-	//Sound::LoadSerial("foot_mud", 7);
+	Sound::LoadSerial("foot_mud", 7);
 	
 	Light::Init();
 	SeasonManager::Create(SeasonType::Summer);
@@ -117,7 +117,7 @@ void Scene_Stage1::Uninit(void)
 	ModelData::Release("field_summer");
 	Sound::Release("field_summer");
 	Sound::Release("field_winter");
-	//Sound::ReleaseSerial("foot_mud");
+	Sound::ReleaseSerial("foot_mud");
 
 	((SceneGlobal*)GameManager::GetInstance()->GetGlobalScene())->SetCameraActive(false);
 }

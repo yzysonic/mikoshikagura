@@ -34,11 +34,59 @@ Player::Player(void)
 	this->rigidbody->useGravity = true;
 
 	// 足音初期化
-	Foot::player = this;
-	//this->foot[0] = new Foot("Armature_Foot_L");
-	//this->foot[1] = new Foot("Armature_Foot_R");
 	this->foot_sounds = Sound::GetSerial("foot_mud");
 	this->sound_player = AddComponent<SoundPlayer>();
+
+	this->PlayFootSound = [this]
+	{
+		this->sound_player->SetSound(foot_sounds[Random(0, foot_sounds.size() - 1)]);
+		this->sound_player->Play();
+	};
+
+	// 足音のアニメーションイベント登録
+	auto animSet = (ID3DXKeyframedAnimationSet*)this->model->GetAnimation("Walk");
+
+	D3DXKEY_CALLBACK keys[2];
+	keys[0].Time = 12.0f;
+	keys[1].Time = 27.0f;
+
+	keys[0].pCallbackData = keys[1].pCallbackData = &PlayFootSound;
+
+	ID3DXBuffer* compressedInfo = 0;
+	animSet->Compress(D3DXCOMPRESS_DEFAULT, 0.5f, 0, &compressedInfo);
+
+	ID3DXCompressedAnimationSet* compressedAnimSet = 0;
+	D3DXCreateCompressedAnimationSet(animSet->GetName(),
+		animSet->GetSourceTicksPerSecond(),
+		animSet->GetPlaybackType(), compressedInfo,
+		2, keys, &compressedAnimSet);
+
+	this->model->animator->UnregisterAnimationSet(animSet);
+	this->model->animator->RegisterAnimationSet(compressedAnimSet);
+
+	compressedInfo->Release();
+	animSet->Release();
+	compressedAnimSet->Release();
+
+	animSet = (ID3DXKeyframedAnimationSet*)this->model->GetAnimation("Run");
+
+	keys[0].Time = 9.0f;
+	keys[1].Time = 20.0f;
+
+	animSet->Compress(D3DXCOMPRESS_DEFAULT, 0.5f, 0, &compressedInfo);
+
+	D3DXCreateCompressedAnimationSet(animSet->GetName(),
+		animSet->GetSourceTicksPerSecond(),
+		animSet->GetPlaybackType(), compressedInfo,
+		2, keys, &compressedAnimSet);
+
+	this->model->animator->UnregisterAnimationSet(animSet);
+	this->model->animator->RegisterAnimationSet(compressedAnimSet);
+
+	compressedInfo->Release();
+	animSet->Release();
+	compressedAnimSet->Release();
+
 
 	// ステート初期化
 	this->state.resize((int)StateName::Max);
@@ -125,7 +173,6 @@ void Player::OnCollisionStay(Object * other)
 		if (this->last_position.y + this->collider->offset.y - 0.5f*this->collider->size.y >=
 			otherColliderPos.y + 0.5f*otherCollider->size.y)
 		{
-
 			this->ground_colliders.insert(otherCollider);
 			this->is_grounded = true;
 		}
@@ -352,6 +399,8 @@ void Player::StateMove::OnEnter(void)
 
 void Player::StateMove::Update(void)
 {
+	this->player->anime_timer++;
+	auto animset = (ID3DXKeyframedAnimationSet*)this->player->model->GetCurrentAnimation();
 	if (this->player->is_grounded)
 	{
 		if (!this->player->JumpControl())
@@ -384,6 +433,8 @@ void Player::StateMove::SetState(StateName state)
 {
 	switch (state)
 	{
+	case StateName::SeasonChange:
+		if (running) break;
 	case StateName::Idle:
 	case StateName::Air:
 	case StateName::Action:
@@ -463,6 +514,7 @@ void Player::StateAir::Update(void)
 
 void Player::StateAir::OnExit(void)
 {
+	this->player->PlayFootSound();
 	this->player->rigidbody->useGravity = false;
 }
 
@@ -483,6 +535,7 @@ void Player::StateAir::SetState(StateName state)
 void Player::StateSeasonChange::OnEnter(void)
 {
 	this->player->SetAnimation("SeasonChange", false);
+	this->player->rigidbody->velocity.x = 0.0f;
 	change = false;
 }
 
@@ -507,45 +560,5 @@ void Player::StateSeasonChange::SetState(StateName state)
 {
 	if(state == StateName::Idle)
 		State::SetState(state);
-}
-#pragma endregion
-
-#pragma region Foot
-
-Player* Player::Foot::player;
-
-Player::Foot::Foot(const char* name)
-{
-	this->name = name;
-	frame = (BoneFrame*)player->model->FindFrameByName(name);
-	collider = AddComponent<BoxCollider2D>();
-	collider->size = Vector2::one*0.5f;
-	last_ground = nullptr;
-	Update();
-}
-
-void Player::Foot::Update(void)
-{
-	D3DXVECTOR4 vec4;
-	D3DXVec3Transform(&vec4, &D3DXVECTOR3(0.0f, 0.0f, 0.0f), &frame->mtxCombined);
-	transform.position.x = vec4.x;
-	transform.position.y = vec4.y;
-}
-
-void Player::Foot::OnCollisionEnter(Object * other)
-{
-	if (other->type == ObjectType::Field && !last_ground)
-	{
-		player->sound_player->SetSound(player->foot_sounds[Random(0, player->foot_sounds.size() - 1)]);
-		player->sound_player->Play();
-		last_ground = other;
-	}
-}
-void Player::Foot::OnCollisionExit(Object * other)
-{
-	if (other->type == ObjectType::Field && last_ground == other)
-	{
-		last_ground = nullptr;
-	}
 }
 #pragma endregion

@@ -30,13 +30,6 @@ STDMETHODIMP AllocateHierarchy::DestroyFrame(LPD3DXFRAME pFrameToFree)
 	if (pFrameToFree == nullptr)
 		return D3D_OK;
 
-	if (pFrameToFree->pFrameFirstChild)
-		DestroyFrame(pFrameToFree->pFrameFirstChild);
-	if (pFrameToFree->pFrameSibling)
-		DestroyFrame(pFrameToFree->pFrameSibling);
-	if (pFrameToFree->pMeshContainer)
-		DestroyMeshContainer(pFrameToFree->pMeshContainer);
-
 	delete[] pFrameToFree->Name;
 	delete pFrameToFree;
 

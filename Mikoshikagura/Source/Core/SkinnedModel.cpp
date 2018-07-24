@@ -92,8 +92,7 @@ SkinnedModel::~SkinnedModel(void)
 
 	}
 	SafeFree(this->animationSet);
-
-	allocater.DestroyFrame(this->rootFrame);
+	D3DXFrameDestroy(this->rootFrame, &allocater);
 }
 
 
@@ -194,6 +193,13 @@ void SkinnedModel::SetAnimation(std::string name)
 void SkinnedModel::SetAnimationSpeedScale(float value)
 {
 	this->anim_speed_scale = value;
+}
+
+LPD3DXANIMATIONSET SkinnedModel::GetAnimation(std::string name)
+{
+	LPD3DXANIMATIONSET animationSet;
+	this->animator->GetAnimationSetByName(name.c_str(), &animationSet);
+	return animationSet;
 }
 
 LPD3DXANIMATIONSET SkinnedModel::GetCurrentAnimation(void)
@@ -302,5 +308,5 @@ void SkinnedModel::AdvanceTime(float time)
 		this->animator->SetTrackEnable(1, false);
 	}
 
-	this->animator->AdvanceTime(time, 0);
+	this->animator->AdvanceTime(time, &callback_handler);
 }

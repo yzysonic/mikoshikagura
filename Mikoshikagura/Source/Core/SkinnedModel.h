@@ -14,6 +14,18 @@
 
 class SkinnedModel : public Drawable
 {
+private:
+	class CallbackHandler : public ID3DXAnimationCallbackHandler
+	{
+	public:
+		HRESULT CALLBACK HandleCallback(THIS_ UINT Track, LPVOID pCallbackData)
+		{
+			if(pCallbackData)
+				(*(Action*)pCallbackData)();
+			return D3D_OK;
+		}
+	} callback_handler;
+
 public:
 	D3DXFRAME			*rootFrame;
 	std::vector<XMESHCONTAINER*> meshContList;
@@ -30,6 +42,7 @@ public:
 	void SetAnimation(int n);
 	void SetAnimation(std::string name);
 	void SetAnimationSpeedScale(float value);
+	LPD3DXANIMATIONSET GetAnimation(std::string name);
 	LPD3DXANIMATIONSET GetCurrentAnimation(void);
 	float GetAnimationPeriod(int n);
 	float GetAnimationPeriod(std::string name);

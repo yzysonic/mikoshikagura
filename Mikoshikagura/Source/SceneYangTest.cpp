@@ -16,7 +16,6 @@ void SceneYangTest::Init(void)
 	ModelData::Load("field_winter");
 	Texture::Load("00_Kuroko_face");
 	Texture::Load("00_Kuroko_Face_Eye");
-	Texture::Load("00_Kuroko_Fuku_BR");
 	Texture::Load("00_Kuroko_Fuku_BR_No_Sode");
 	Texture::Load("00_Kuroko_hair");
 	Texture::Load("mushroom");
@@ -29,10 +28,6 @@ void SceneYangTest::Init(void)
 	SeasonManager::Create(SeasonType::Summer);
 
 	// オブジェクト初期化
-	//test_model = new Object;
-	////test_model->AddComponent<StaticModel>("player2");
-	//test_model->AddComponent<SkinnedModel>("player2");
-
 	player	= new Player;
 	player->SetPosition(Vector3(0.0f, 30.0f, 0.0f));
 
@@ -112,7 +107,6 @@ void SceneYangTest::Uninit(void)
 	ModelData::Release("field_winter");
 	Texture::Release("00_Kuroko_face");
 	Texture::Release("00_Kuroko_Face_Eye");
-	Texture::Release("00_Kuroko_Fuku_BR");
 	Texture::Release("00_Kuroko_Fuku_BR_No_Sode");
 	Texture::Release("00_Kuroko_hair");
 	Texture::Release("mushroom");
