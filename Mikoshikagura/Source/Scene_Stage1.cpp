@@ -42,7 +42,7 @@ void Scene_Stage1::Init(void)
 
 	// ゲームオブジェクトの初期化
 	player = new Player;
-	player->SetPosition(Vector3(10, 70, 0));
+	player->SetPosition(Vector3(30, 70, 0));
 
 	camera = new MainCamera;
 	camera->render_target = RenderTarget::Get("rt_main");
@@ -63,6 +63,7 @@ void Scene_Stage1::Init(void)
 	goal->transform.scale = Vector3::one*10.f;
 	goal->transform.position = Vector3(380, 0, 0);
 	goal->AddComponent<BoxCollider2D>()->size = Vector2(10, 1000);
+	goal->GetComponent<BoxCollider2D>()->offset = Vector2(5,0);
 
 	background = new Background;
 	hukidashi = new Hukidashi;
