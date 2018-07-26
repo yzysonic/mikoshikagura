@@ -33,6 +33,7 @@ Player::Player(void)
 	// Rigidbody‰Šú‰»
 	this->rigidbody = AddComponent<Rigidbody>();
 	this->rigidbody->useGravity = true;
+	this->rigidbody->rotation.y = -1.57f;
 
 	// ƒTƒEƒ“ƒh‰Šú‰»
 	this->jump_sounds = Sound::GetSerial("jump");

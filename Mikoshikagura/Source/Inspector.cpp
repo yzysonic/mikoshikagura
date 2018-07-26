@@ -60,6 +60,7 @@ void Inspector::GuiContent(void)
 			if (ImGui::Checkbox("Active", &active)) { rigidbody->SetActive(active); }
 			ImGui::Checkbox("Gravity", &rigidbody->useGravity);
 			ImGui::DragFloat3("position", (float*)&rigidbody->position);
+			ImGui::DragFloat3("rotation", (float*)&rigidbody->rotation);
 			ImGui::DragFloat3("velocity", (float*)&rigidbody->velocity);
 			ImGui::DragFloat3("acceleration", (float*)&rigidbody->acceleration);
 

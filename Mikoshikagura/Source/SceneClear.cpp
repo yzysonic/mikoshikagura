@@ -12,7 +12,6 @@ void SceneClear::Init(void)
 
 	title = new Object;
 	title->AddComponent<Text>()->LoadFont("‚¨‚Â‚Æ‚ßƒtƒHƒ“ƒg");
-	title->GetComponent<Text>()->SetSize(60, 0);
 	title->GetComponent<Text>()->area = { 0,0,SystemParameters::ResolutionX,SystemParameters::ResolutionY };
 	title->GetComponent<Text>()->SetSize(128, 0);
 	title->GetComponent<Text>()->SetColor(Color::black);

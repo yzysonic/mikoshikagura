@@ -35,6 +35,8 @@ void SceneTitle::Init(void)
 	for (auto & light : sun_light)
 		light = new SunLight;
 
+	next_scene = false;
+
 	FadeScreen::FadeIn(Color::black, 1.0f, [this] {
 		Sound::Get("voice_title")->Play();
 		title->GetComponent<Text>()->SetText("エンターキーではじめる");
@@ -43,12 +45,13 @@ void SceneTitle::Init(void)
 
 void SceneTitle::Update(void)
 {
-	if (GetKeyboardTrigger(DIK_RETURN))
+	if (GetKeyboardTrigger(DIK_RETURN) && !next_scene)
 	{
 		Sound::Get("game_start")->Play();
 		FadeScreen::FadeOut(Color::white, 1.0f, [this] {
 			GameManager::GetInstance()->SetScene(new Scene_Stage1);
 		});
+		next_scene = true;
 	}
 	if (GetKeyboardTrigger(DIK_TAB))
 	{

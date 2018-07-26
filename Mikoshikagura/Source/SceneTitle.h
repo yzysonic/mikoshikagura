@@ -15,6 +15,7 @@ public:
 	void Uninit(void) override;
 
 private:
+	bool			next_scene;
 	Object			*title;
 	SeasonManager	*seasonmanager;
 	Background		*background;
