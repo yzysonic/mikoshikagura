@@ -19,6 +19,7 @@ Player::Player(void)
 	this->current_animation = "Idle";
 	this->is_grounded = false;
 	this->is_holding_item = false;
+	this->jump_timer.Reset(0.0f);
 
 	// モデル初期化
 	this->model = AddComponent<SkinnedModel>("player");
@@ -33,14 +34,16 @@ Player::Player(void)
 	this->rigidbody = AddComponent<Rigidbody>();
 	this->rigidbody->useGravity = true;
 
+	// サウンド初期化
+	this->jump_sounds = Sound::GetSerial("jump");
+	this->skill_sound = Sound::Get("player_skill");
+
 	// 足音初期化
-	this->foot_sounds = Sound::GetSerial("foot_mud");
-	this->sound_player = AddComponent<SoundPlayer>();
+	this->foot_sounds = Sound::GetSerial( (SeasonManager::GetSeason() == SeasonType::Summer) ? "foot_mud" : "foot_snow");
 
 	this->PlayFootSound = [this]
 	{
-		this->sound_player->SetSound(foot_sounds[Random(0, foot_sounds.size() - 1)]);
-		this->sound_player->Play();
+		foot_sounds[Random(0, foot_sounds.size() - 1)]->Play();
 	};
 
 	// 足音のアニメーションイベント登録
@@ -106,6 +109,8 @@ Player::Player(void)
 
 void Player::Update(void)
 {
+	jump_timer++;
+
 	MoveControl();
 	ActionControl();
 	SeasonChangeControl();
@@ -246,6 +251,16 @@ void Player::OnCollisionExit(Object * other)
 		}
 	}
 	
+}
+
+void Player::SetSummer(void)
+{
+	this->foot_sounds = Sound::GetSerial("foot_mud");
+}
+
+void Player::SetWinter(void)
+{
+	this->foot_sounds = Sound::GetSerial("foot_snow");
 }
 
 void Player::SetPosition(Vector3 pos)
@@ -492,6 +507,11 @@ void Player::StateAir::OnEnter(void)
 {
 	this->player->rigidbody->useGravity = true;
 	this->player->SetAnimation("Fall");
+	if ((this->player->rigidbody->velocity.y > 0.0f) && this->player->jump_timer.TimeUp())
+	{
+		this->player->jump_sounds[Random(0, this->player->jump_sounds.size() - 1)]->Play();
+		this->player->jump_timer.Reset(2.0f);
+	}
 }
 
 void Player::StateAir::Update(void)
@@ -536,6 +556,7 @@ void Player::StateSeasonChange::OnEnter(void)
 {
 	this->player->SetAnimation("SeasonChange", false);
 	this->player->rigidbody->velocity.x = 0.0f;
+	this->player->skill_sound->Play();
 	change = false;
 }
 

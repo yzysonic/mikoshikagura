@@ -355,14 +355,14 @@
     <ClInclude Include="Source\ParticleOfLight.h">
       <Filter>GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="Source\FieldBgmPlayer.h">
-      <Filter>GameObject</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Scene_Stage2.h">
       <Filter>Scene</Filter>
     </ClInclude>
     <ClInclude Include="Source\SceneClear.h">
       <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SeasonSoundPlayer.h">
+      <Filter>GameObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -635,14 +635,14 @@
     <ClCompile Include="Source\ParticleOfLight.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="Source\FieldBgmPlayer.cpp">
-      <Filter>GameObject</Filter>
-    </ClCompile>
     <ClCompile Include="Source\SceneClear.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="Source\Scene_Stage2.cpp">
       <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SeasonSoundPlayer.cpp">
+      <Filter>GameObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

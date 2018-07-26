@@ -101,10 +101,7 @@ LRESULT CALLBACK Window::WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPAR
 	switch (message)
 	{
 	case WM_CLOSE:
-		if (Game::End())
-		{
-			Destroy();	// ウィンドウを破棄するよう指示する
-		}
+		Game::EndPrompt();
 		break;
 	case WM_DESTROY:
 		PostQuitMessage(0);
@@ -114,7 +111,7 @@ LRESULT CALLBACK Window::WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPAR
 		switch (wParam)
 		{
 		case VK_ESCAPE:		// [ESC]キーが押された
-			Game::Stop();
+			Game::EndPrompt();
 			break;
 		case VK_F9:			// [F9]キーが押された
 			SetWindowMode(!s_bWindowMode);

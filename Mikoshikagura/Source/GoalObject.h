@@ -61,6 +61,7 @@ inline void GoalObject<T>::OnCollisionEnter(Object * object)
 {
 	if (object->type == ObjectType::Player && goal_state != fading)
 	{
+		Sound::Get("stage_clear")->Play();
 		FadeScreen::FadeOut(Color::white, 1.0f);
 		goal_state = fading;
 	}

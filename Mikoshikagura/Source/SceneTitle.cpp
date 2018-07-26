@@ -8,15 +8,12 @@ void SceneTitle::Init(void)
 {
 	((SceneGlobal*)GameManager::GetInstance()->GetGlobalScene())->SetCameraActive(true);
 	Texture::Load("mikoshikagura_rogo2");
-	Texture::Load("background_summer_layer0");
-	Texture::Load("background_summer_layer1");
-	Texture::Load("background_summer_layer2");
-	Texture::Load("background_winter_layer0");
-	Texture::Load("background_winter_layer1");
-	Texture::Load("background_winter_layer2");
-
+	Sound::Load("voice_title");
+	Sound::Load("game_start");
 	Light::Init();
 	SeasonManager::Create(SeasonType::Summer);
+
+	environment_player = new SeasonSoundPlayer("environment");
 
 	title = new Object;
 	title->AddComponent<RectPolygon2D>("mikoshikagura_rogo2")->SetSize(960, 240);
@@ -35,34 +32,33 @@ void SceneTitle::Init(void)
 	RenderSpace::Get("default")->SetCamera(0, camera);
 	background = new Background;
 
-	SceneEnd = false;
-	FadeScreen::FadeIn(Color::black, 1.0f);
+	for (auto & light : sun_light)
+		light = new SunLight;
+
+	FadeScreen::FadeIn(Color::black, 1.0f, [this] {
+		Sound::Get("voice_title")->Play();
+		title->GetComponent<Text>()->SetText("エンターキーではじめる");
+	});
 }
 
 void SceneTitle::Update(void)
 {
-	if (!SceneEnd && GetKeyboardTrigger(DIK_RETURN))
+	if (GetKeyboardTrigger(DIK_RETURN))
 	{
-		FadeScreen::FadeOut(Color::white, 1.0f);
-		SceneEnd = true;
+		Sound::Get("game_start")->Play();
+		FadeScreen::FadeOut(Color::white, 1.0f, [this] {
+			GameManager::GetInstance()->SetScene(new Scene_Stage1);
+		});
 	}
-	if (!SceneEnd && FadeScreen::Finished())
+	if (GetKeyboardTrigger(DIK_TAB))
 	{
-		title->GetComponent<Text>()->SetText("エンターキーではじめる");
-	}
-	if (SceneEnd && FadeScreen::Finished())
-	{
-		GameManager::GetInstance()->SetScene(new Scene_Stage1);
+		SeasonManager::SwitchSeason();
 	}
 }
 
 void SceneTitle::Uninit(void)
 {
 	Texture::Release("mikoshikagura_rogo2");
-	Texture::Release("background_summer_layer0");
-	Texture::Release("background_summer_layer1");
-	Texture::Release("background_summer_layer2");
-	Texture::Release("background_winter_layer0");
-	Texture::Release("background_winter_layer1");
-	Texture::Release("background_winter_layer2");
+	Sound::Release("voice_title");
+	Sound::Release("game_start");
 }

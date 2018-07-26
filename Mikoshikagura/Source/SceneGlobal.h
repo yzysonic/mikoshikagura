@@ -13,4 +13,5 @@ public:
 private:
 	Camera* camera;
 	RenderTarget* render_target;
+	FrameTimer stop_timer;
 };

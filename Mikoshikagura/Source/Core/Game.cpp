@@ -15,6 +15,7 @@
 #endif
 
 bool Game::run_game;
+std::function<void()> Game::EndProcess = [] {Game::Stop(); };
 
 void Game::Init(void)
 {
@@ -59,9 +60,19 @@ void Game::Uninit(void)
 	Time::Uninit();
 }
 
-bool Game::End(void)
+bool Game::EndPrompt(void)
 {
+#ifdef _DEBUG
+	Game::Stop();
 	return true;
+#endif
+	if (MessageBox(Window::GetHWnd(), "終了しますか？", "終了確認", MB_YESNO | MB_ICONQUESTION) == IDYES)
+	{
+		Game::EndProcess();
+		return true;
+	}
+
+	return false;
 }
 
 void Game::Stop(void)

@@ -19,5 +19,7 @@ private:
 
 	SeasonType current_season;
 	std::vector<ISeason*>object_list;
-	SeasonManager(void) : current_season(SeasonType::None) {};
+	SeasonManager(void);
+	Sound * to_summer_sound;
+	Sound * to_winter_sound;
 };

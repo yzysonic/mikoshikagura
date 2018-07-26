@@ -1,12 +1,12 @@
-#include "FieldBgmPlayer.h"
+#include "SeasonSoundPlayer.h"
 #include "SeasonManager.h"
 
-FieldBgmPlayer::FieldBgmPlayer(void)
+SeasonSoundPlayer::SeasonSoundPlayer(std::string sound_name)
 {
-	name = "FieldBgmPlayer";
+	name = "FieldBgmPlayer_" + sound_name;
 
-	auto sound_summer = Sound::Get("field_summer");
-	auto sound_winter = Sound::Get("field_winter");
+	auto sound_summer = Sound::Get(sound_name + "_summer");
+	auto sound_winter = Sound::Get(sound_name + "_winter");
 	sound_summer->loop = true;
 	sound_winter->loop = true;
 
@@ -23,13 +23,13 @@ FieldBgmPlayer::FieldBgmPlayer(void)
 	}
 }
 
-void FieldBgmPlayer::SetSummer(void)
+void SeasonSoundPlayer::SetSummer(void)
 {
 	player_summer->FadeVolume(1.0f);
 	player_winter->FadeVolume(0.0f);
 }
 
-void FieldBgmPlayer::SetWinter(void)
+void SeasonSoundPlayer::SetWinter(void)
 {
 	player_summer->FadeVolume(0.0f);
 	player_winter->FadeVolume(1.0f);

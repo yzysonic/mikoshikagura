@@ -14,15 +14,9 @@ void SceneYangTest::Init(void)
 	// リソースのロード
 	ModelData::Load("field_summer");
 	ModelData::Load("field_winter");
-	Texture::Load("00_Kuroko_face");
-	Texture::Load("00_Kuroko_Face_Eye");
-	Texture::Load("00_Kuroko_Fuku_BR_No_Sode");
-	Texture::Load("00_Kuroko_hair");
 	Texture::Load("mushroom");
 	Texture::Load("particle");
-	VertexShader::Load("InstancingVS.hlsl");
 	Sound::Load("bgm_demo");
-	Sound::LoadSerial("foot_mud", 7);
 
 	// 季節初期化
 	SeasonManager::Create(SeasonType::Summer);
@@ -35,7 +29,7 @@ void SceneYangTest::Init(void)
 	item->transform.position = Vector3(30.f, 15.f+ 0.5f*item->GetSize().y, 0.f);
 
 	bgm_player = new SeasonBgmPlayerTest;
-	bgm_player->Play();
+	//bgm_player->Play();
 
 	// カメラ初期化
 	camera = new MainCamera;
@@ -105,14 +99,9 @@ void SceneYangTest::Uninit(void)
 
 	ModelData::Release("field_summer");
 	ModelData::Release("field_winter");
-	Texture::Release("00_Kuroko_face");
-	Texture::Release("00_Kuroko_Face_Eye");
-	Texture::Release("00_Kuroko_Fuku_BR_No_Sode");
-	Texture::Release("00_Kuroko_hair");
 	Texture::Release("mushroom");
 	Texture::Release("snow");
 	Sound::Release("bgm_demo");
-	Sound::ReleaseSerial("foot_mud");
 
 	SeasonManager::Destroy();
 }

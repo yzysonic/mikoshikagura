@@ -80,7 +80,8 @@ void SceneTest::Init(void)
 
 	FadeScreen::FadeIn(Color::white, 1.0f);
 
-	field_bgm_player = new FieldBgmPlayer;
+	field_bgm_player = new SeasonSoundPlayer("field");
+	environment_sound_player = new SeasonSoundPlayer("environment");
 }
 
 void SceneTest::Update(void)

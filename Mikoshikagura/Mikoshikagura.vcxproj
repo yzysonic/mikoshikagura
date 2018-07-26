@@ -213,7 +213,7 @@
     <ClInclude Include="Source\DebugMenu.h" />
     <ClInclude Include="Source\FadeScreen.h" />
     <ClInclude Include="Source\FallingSnow.h" />
-    <ClInclude Include="Source\FieldBgmPlayer.h" />
+    <ClInclude Include="Source\SeasonSoundPlayer.h" />
     <ClInclude Include="Source\FreeCamera.h" />
     <ClInclude Include="Source\GoalObject.h" />
     <ClInclude Include="Source\InspectorContentCamera.h" />
@@ -307,7 +307,7 @@
     <ClCompile Include="Source\DebugMenu.cpp" />
     <ClCompile Include="Source\FadeScreen.cpp" />
     <ClCompile Include="Source\FallingSnow.cpp" />
-    <ClCompile Include="Source\FieldBgmPlayer.cpp" />
+    <ClCompile Include="Source\SeasonSoundPlayer.cpp" />
     <ClCompile Include="Source\FreeCamera.cpp" />
     <ClCompile Include="Source\Holdable.cpp" />
     <ClCompile Include="Source\InspectorContentCamera.cpp" />

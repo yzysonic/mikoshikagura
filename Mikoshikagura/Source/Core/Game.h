@@ -1,9 +1,12 @@
 #pragma once
+#include <functional>
 
 // ゲームフレームワーク
 class Game
 {
 public:
+	static std::function<void()> EndProcess;
+
 	// ゲーム初期化
 	static void Init(void);	
 
@@ -14,7 +17,7 @@ public:
 	static void Uninit(void);
 
 	// ゲーム終了確認
-	static bool End(void);
+	static bool EndPrompt(void);
 
 	// ゲーム終了
 	static void Stop(void);

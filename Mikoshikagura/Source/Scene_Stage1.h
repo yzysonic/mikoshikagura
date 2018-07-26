@@ -9,7 +9,7 @@
 #include "SceneClear.h"
 #include "FallingSnow.h"
 #include "SunLight.h"
-#include "FieldBgmPlayer.h"
+#include "SeasonSoundPlayer.h"
 
 #include "ParticleOfLight.h"
 
@@ -29,7 +29,8 @@ private:
 	MapManager		*mapdata;
 	Hukidashi		*hukidashi;
 	Player			*player;
-	FieldBgmPlayer	*field_bgm_player;
+	SeasonSoundPlayer	*field_bgm_player;
+	SeasonSoundPlayer	*environment_sound_player;
 	GoalObject<SceneClear> *goal;
 	SunLight		*sun_light[20];
 

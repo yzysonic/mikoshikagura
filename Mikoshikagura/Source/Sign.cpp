@@ -17,8 +17,11 @@ void Sign::Update(void)
 
 void Sign::OnCollisionEnter(Object * object)
 {
-	if(object->type == ObjectType::Player)
+	if (object->type == ObjectType::Player)
+	{
+		Sound::Get("popup")->Play();
 		this->hukidashi->Pop(this->message);
+	}
 }
 
 void Sign::OnCollisionExit(Object * object)

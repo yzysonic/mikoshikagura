@@ -14,12 +14,6 @@ void Scene_Stage2::Init(void)
 	Texture::Load("misaki_head.tga");
 	Texture::Load("bark01_bottom.tga");			//–Ø
 	Texture::Load("branch01.tga");
-	Texture::Load("background_summer_layer0");
-	Texture::Load("background_summer_layer1");
-	Texture::Load("background_summer_layer2");
-	Texture::Load("background_winter_layer0");
-	Texture::Load("background_winter_layer1");
-	Texture::Load("background_winter_layer2");
 	Texture::Load("particle");
 	Texture::Load("particle_light");
 	Texture::Load("hukidashi");
@@ -36,7 +30,6 @@ void Scene_Stage2::Init(void)
 	ModelData::Load("torii");
 	Sound::Load("field_summer");
 	Sound::Load("field_winter");
-	//Sound::LoadSerial("foot_mud", 7);
 
 	Light::Init();
 	SeasonManager::Create(SeasonType::Summer);
@@ -68,7 +61,8 @@ void Scene_Stage2::Init(void)
 	background = new Background;
 	hukidashi = new Hukidashi;
 
-	field_bgm_player = new FieldBgmPlayer;
+	field_bgm_player = new SeasonSoundPlayer("field");
+	environment_sound_player = new SeasonSoundPlayer("environment");
 
 	mapdata = new MapManager();
 	mapdata->Load("Data/Map/prototype_map2_new.tmx");
@@ -97,12 +91,6 @@ void Scene_Stage2::Uninit(void)
 	Texture::Release("map");
 	Texture::Release("body_sum.tga");
 	Texture::Release("misaki_head.tga");
-	Texture::Release("background_summer_layer0");
-	Texture::Release("background_summer_layer1");
-	Texture::Release("background_summer_layer2");
-	Texture::Release("background_winter_layer0");
-	Texture::Release("background_winter_layer1");
-	Texture::Release("background_winter_layer2");
 	Texture::Release("particle");
 	Texture::Release("particle_light");
 	Texture::Release("hukidashi");
@@ -117,7 +105,6 @@ void Scene_Stage2::Uninit(void)
 	ModelData::Release("tree_tekito");
 	Sound::Release("field_summer");
 	Sound::Release("field_winter");
-	//Sound::ReleaseSerial("foot_mud");
 
 	((SceneGlobal*)GameManager::GetInstance()->GetGlobalScene())->SetCameraActive(false);
 }

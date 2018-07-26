@@ -9,6 +9,11 @@ void SeasonManager::Create(SeasonType season)
 
 void SeasonManager::SetSeason(SeasonType season, Action callback)
 {
+	if(season == SeasonType::Summer)
+		m_pInstance->to_summer_sound->Play();
+	else
+		m_pInstance->to_winter_sound->Play();
+
 	FadeScreen::FadeOut(Color::white, 0.3f, [&, season, callback]
 	{
 		InternalSetSeason(season);
@@ -76,4 +81,10 @@ void SeasonManager::InternalSetSeason(SeasonType season)
 		}
 	}
 	m_pInstance->current_season = season;
+}
+
+SeasonManager::SeasonManager(void) : current_season(SeasonType::None)
+{
+	to_summer_sound = Sound::Get("to_summer");
+	to_winter_sound = Sound::Get("to_winter");
 }

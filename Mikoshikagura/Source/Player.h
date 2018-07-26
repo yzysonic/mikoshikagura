@@ -1,5 +1,6 @@
 #pragma once
 #include "Core/Core.h"
+#include "ISeason.h"
 #include <set>
 
 #define KeyJump			DIK_SPACE
@@ -14,7 +15,7 @@
 #define PlayerSpeed (40.0f)
 #define PlayerJumpSpeed (45.0f)
 
-class Player : public Object
+class Player : public Object, public ISeason
 {
 	friend class InspectorContentPlayer;
 public:
@@ -132,6 +133,8 @@ public:
 	void OnCollisionEnter(Object*  other) override;
 	void OnCollisionStay(Object* other) override;
 	void OnCollisionExit(Object* other) override;
+	void SetSummer(void) override;
+	void SetWinter(void) override;
 	void SetPosition(Vector3 pos);
 
 
@@ -143,11 +146,13 @@ private:
 	BoxCollider2D* collider;
 	std::set<Collider*> ground_colliders;
 	Rigidbody* rigidbody;
-	SoundPlayer* sound_player;
 	std::vector<Sound*> foot_sounds;
+	std::vector<Sound*> jump_sounds;
+	Sound * skill_sound;
 	Vector3 control;
 	Vector3 last_position;
 	FrameTimer anime_timer;
+	FrameTimer jump_timer;
 	float speed;
 	bool is_grounded;
 	bool is_holding_item;
